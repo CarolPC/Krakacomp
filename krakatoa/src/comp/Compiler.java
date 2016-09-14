@@ -131,8 +131,6 @@ public class Compiler {
 		if(symbolTable.getInGlobal(className) != null)
 			signalError.showError("Class "+className+" has already been declared");
 		KraClass currentClass = new KraClass(className);
-		ClassVariableList classVarList = new ClassVariableList();
-		InstanceVariableList instanceVarList = new InstanceVariableList();
 
 		symbolTable.putInGlobal(className, currentClass);
 		lexer.nextToken();
@@ -152,6 +150,9 @@ public class Compiler {
 			kraClass.setSuperclass(superClass);
 			lexer.nextToken();
 		}
+
+		ClassVariableList classVarList = new ClassVariableList();
+		InstanceVariableList instanceVarList = new InstanceVariableList();
 
 		if ( lexer.token != Symbol.LEFTCURBRACKET )
 			signalError.showError("{ expected", true);
@@ -202,6 +203,26 @@ public class Compiler {
 		return currentClass;
 	}
 
+	private void classVarDec(Type type, String name, ClassVariableList classVarList) {
+		// InstVarDec ::= "static" "private" Type IdList ";"
+		classVarList.addElement(new ClassVariable(name, type));
+
+		while (lexer.token == Symbol.COMMA) {
+			lexer.nextToken();
+			if ( lexer.token != Symbol.IDENT )
+				signalError.showError("Identifier expected");
+
+			String variableName = lexer.getStringValue();
+			if (!classVarList.addElement(new ClassVariable(variableName, type))) {
+				signalError.show("Unique identifier expected");
+			}
+			lexer.nextToken();
+		}
+		if ( lexer.token != Symbol.SEMICOLON )
+			signalError.show(ErrorSignaller.semicolon_expected);
+		lexer.nextToken();
+	}
+
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
 		// InstVarDec ::= [ "static" ] "private" Type IdList ";"
 		instanceVarList.addElement(new InstanceVariable(name, type));
@@ -210,9 +231,11 @@ public class Compiler {
 			lexer.nextToken();
 			if ( lexer.token != Symbol.IDENT )
 				signalError.showError("Identifier expected");
-			//Henrique - Talvez verificar se nome ja foi usado.
+
 			String variableName = lexer.getStringValue();
-			instanceVarList.addElement(new InstanceVariable(variableName, type));
+			if (!instanceVarList.addElement(new InstanceVariable(variableName, type))) {
+				signalError.show("Unique identifier expected");
+			}
 			lexer.nextToken();
 		}
 		if ( lexer.token != Symbol.SEMICOLON )
@@ -229,7 +252,7 @@ public class Compiler {
 		lexer.nextToken();
 		ParamList parameterList = null;
 
-		if ( lexer.token != Symbol.RIGHTPAR ) parameterList = formalParamDec();
+		if ( lexer.token != Symbol.LEFTPAR ) parameterList = formalParamDec();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 
 		lexer.nextToken();

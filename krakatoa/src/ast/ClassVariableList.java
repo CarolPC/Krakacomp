@@ -8,8 +8,13 @@ public class ClassVariableList {
        classVariableList = new ArrayList<ClassVariable>();
     }
 
-    public void addElement(ClassVariable classVariable) {
-       classVariableList.add( classVariable );
+    public boolean addElement(ClassVariable classVariable) {
+      if (classVariableList.contains(classVariable))
+        return false;
+
+      classVariableList.add( classVariable );
+
+      return true;
     }
 
     public Iterator<InstanceVariable> elements() {
