@@ -141,6 +141,9 @@ public class Compiler {
 				signalError.show(ErrorSignaller.ident_expected);
 			String superclassName = lexer.getStringValue();
 
+			if (!isType(superClassName))
+				signalError.showError("The specified superclass '" + superclassName + "' doesn't have been declared.");
+
 			KraClass superClass = symbolTable.getInGlobal(superclassName);
 
 			if (superClass == null)
@@ -183,7 +186,9 @@ public class Compiler {
 			String name = lexer.getStringValue();
 			lexer.nextToken();
 			if ( lexer.token == Symbol.LEFTPAR )
-				methodDec(t, name, qualifier); // TODO Como fazer para métodos estáticos e/ou finais?
+				// NOTE Se tiver métodos estáticos também, teremos que mexer
+				// TODO MessageSend seria nossa classe para método? '-'
+				methodDec(t, name, qualifier, finalQualifier);
 			else if ( qualifier != Symbol.PRIVATE )
 				signalError.showError("Attempt to declare a public instance variable");
 			else if (finalQualifier)
@@ -224,7 +229,7 @@ public class Compiler {
 	}
 
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
-		// InstVarDec ::= [ "static" ] "private" Type IdList ";"
+		// InstVarDec ::= "private" Type IdList ";"
 		instanceVarList.addElement(new InstanceVariable(name, type));
 
 		while (lexer.token == Symbol.COMMA) {
@@ -243,7 +248,7 @@ public class Compiler {
 		lexer.nextToken();
 	}
 
-	private void methodDec(Type type, String name, Symbol qualifier) {
+	private void methodDec(Type type, String name, Symbol qualifier, boolean isFinal) {
 		/*
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
 		 *                StatementList "}"
