@@ -1,5 +1,6 @@
 package ast;
 
+
 public class Variable {
 
     public Variable( String name, Type type ) {
@@ -12,7 +13,7 @@ public class Variable {
     public Type getType() {
         return type;
     }
-
+    
     private String name;
     private Type type;
 }

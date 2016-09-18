@@ -120,7 +120,7 @@ public class Compiler {
 		 * MethodDec ::= Qualifier Type Id "("[ FormalParamDec ] ")" "{" StatementList "}"
 		 * Qualifier ::= [ "static" ]  ( "private" | "public" )
 		 */
-		// TODO o modificador final para classe vai onde?
+		// TODO o modificador final para classe vai onde?(Não vai ter FINAL ass: Rich)
 		if ( lexer.token != Symbol.CLASS ) signalError.showError("'class' expected");
 		lexer.nextToken();
 		if ( lexer.token != Symbol.IDENT )
@@ -141,7 +141,7 @@ public class Compiler {
 				signalError.show(ErrorSignaller.ident_expected);
 			String superclassName = lexer.getStringValue();
 
-			if (!isType(superClassName))
+			if (!isType(superclassName))
 				signalError.showError("The specified superclass '" + superclassName + "' doesn't have been declared.");
 
 			KraClass superClass = symbolTable.getInGlobal(superclassName);
@@ -154,17 +154,15 @@ public class Compiler {
 			lexer.nextToken();
 		}
 
-		ClassVariableList classVarList = new ClassVariableList();
 		InstanceVariableList instanceVarList = new InstanceVariableList();
-
+		MethodList publicMethodList = new MethodList();
+		MethodList privateMethodList = new MethodList();
+		
 		if ( lexer.token != Symbol.LEFTCURBRACKET )
 			signalError.showError("{ expected", true);
 		lexer.nextToken();
 
-		while (lexer.token == Symbol.STATIC || lexer.token == Symbol.FINAL || lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
-
-			boolean finalQualifier = (lexer.token == Symbol.FINAL);
-			boolean staticQualifier = (lexer.token == Symbol.STATIC);
+		while (lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
 
 			Symbol qualifier;
 			switch (lexer.token) {
@@ -186,19 +184,19 @@ public class Compiler {
 			String name = lexer.getStringValue();
 			lexer.nextToken();
 			if ( lexer.token == Symbol.LEFTPAR )
-				// NOTE Se tiver métodos estáticos também, teremos que mexer
+				// NOTE Se tiver métodos estáticos também, teremos que mexer(Não vai ter ass: Rich =P)
 				// TODO MessageSend seria nossa classe para método? '-'
-				methodDec(t, name, qualifier, finalQualifier);
+				
+				if(qualifier == Symbol.PRIVATE)
+					methodDec(t, name, qualifier,privateMethodList);
+				else
+					methodDec(t, name, qualifier,publicMethodList);
 			else if ( qualifier != Symbol.PRIVATE )
 				signalError.showError("Attempt to declare a public instance variable");
-			else if (finalQualifier)
-				signalError.showError("Attempt to not declare finals variables");
-			else if (staticQualifier)
-				classVarDec(t, name, classVarList);
 			else
 				instanceVarDec(t, name, instanceVarList);
 		}
-		currentClass.setClassVariableList(classVarList);
+		
 		currentClass.setInstanceVariableList(instanceVarList);
 
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
@@ -208,29 +206,12 @@ public class Compiler {
 		return currentClass;
 	}
 
-	private void classVarDec(Type type, String name, ClassVariableList classVarList) {
-		// InstVarDec ::= "static" "private" Type IdList ";"
-		classVarList.addElement(new ClassVariable(name, type));
-
-		while (lexer.token == Symbol.COMMA) {
-			lexer.nextToken();
-			if ( lexer.token != Symbol.IDENT )
-				signalError.showError("Identifier expected");
-
-			String variableName = lexer.getStringValue();
-			if (!classVarList.addElement(new ClassVariable(variableName, type))) {
-				signalError.show("Unique identifier expected");
-			}
-			lexer.nextToken();
-		}
-		if ( lexer.token != Symbol.SEMICOLON )
-			signalError.show(ErrorSignaller.semicolon_expected);
-		lexer.nextToken();
-	}
-
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
-		// InstVarDec ::= "private" Type IdList ";"
-		instanceVarList.addElement(new InstanceVariable(name, type));
+		// InstVarDec ::= "private" Type IdList ";"		
+		InstanceVariable instanceVar = new InstanceVariable(name, type);
+				
+		if (!instanceVarList.addElement(instanceVar)) {
+			signalError.showError("Unique identifier expected");
 
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
@@ -238,8 +219,9 @@ public class Compiler {
 				signalError.showError("Identifier expected");
 
 			String variableName = lexer.getStringValue();
-			if (!instanceVarList.addElement(new InstanceVariable(variableName, type))) {
-				signalError.show("Unique identifier expected");
+			
+			if (!instanceVarList.addElement(instanceVar)) {
+				signalError.showError("Unique identifier expected");
 			}
 			lexer.nextToken();
 		}
@@ -247,8 +229,9 @@ public class Compiler {
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
 	}
+}
 
-	private void methodDec(Type type, String name, Symbol qualifier, boolean isFinal) {
+	private void methodDec(Type type, String name, Symbol qualifier,MethodList methodList) {
 		/*
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
 		 *                StatementList "}"
@@ -256,7 +239,8 @@ public class Compiler {
 
 		lexer.nextToken();
 		ParamList parameterList = null;
-
+		StatementList stmtList = null;
+		
 		if ( lexer.token != Symbol.LEFTPAR ) parameterList = formalParamDec();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 
@@ -268,17 +252,29 @@ public class Compiler {
 		if ( lexer.token != Symbol.RIGHTCURBRACKET ) signalError.showError("} expected");
 
 		lexer.nextToken();
+		
+		symbolTable.removeLocalIdent();
 
+		methodList.addElement(new MethodDec(qualifier,type,name,parameterList,stmtList));
 	}
 
 	private LocalVariableList localDec() {
 		// LocalDec ::= Type IdList ";"
 		LocalVariableList localDecList = new LocalVariableList();
-
+		
+		
 		Type type = type();
-		if ( lexer.token != Symbol.IDENT ) signalError.showError("Identifier expected");
-		Variable v = new Variable(lexer.getStringValue(), type);
+		if ( lexer.token != Symbol.IDENT ) 
+			signalError.showError("Identifier expected");
+		String variableName = lexer.getStringValue();
+		
+		if(symbolTable.getInLocal(variableName) != null)
+			signalError.showError("Unique identifier expected");
+		
+		Variable v = new Variable(variableName, type);
 
+		symbolTable.putInLocal(variableName, v);
+		
 		localDecList.addElement(v);
 
 		lexer.nextToken();
@@ -287,10 +283,18 @@ public class Compiler {
 			lexer.nextToken();
 			if ( lexer.token != Symbol.IDENT )
 				signalError.showError("Identifier expected");
-			v = new Variable(lexer.getStringValue(), type);
+			
+			variableName = lexer.getStringValue();
+			
+			if(symbolTable.getInLocal(variableName) != null)
+				signalError.showError("Unique identifier expected");
+			
+			v = new Variable(variableName, type);
 
+			symbolTable.putInLocal(variableName, v);
+			
 			localDecList.addElement(v);
-
+			
 			lexer.nextToken();
 		}
 
@@ -322,8 +326,11 @@ public class Compiler {
 			signalError.showError("Parameter name "+identName+" has been previously declared in this method");
 
 		lexer.nextToken();
-
-		return new Parameter(identName, t);
+		Parameter p = new Parameter(identName,t);
+		
+		symbolTable.putInLocal(identName, p);
+		
+		return p;
 	}
 
 	private Type type() {
@@ -571,10 +578,10 @@ public class Compiler {
 
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
-		lexer.nextToken();
+			lexer.nextToken();
 		exprList();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
-		lexer.nextToken();
+			lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
@@ -748,7 +755,7 @@ public class Compiler {
 			/*
 			 * return an object representing the creation of an object
 			 */
-			return;
+			return new NewExpr(aClass);
 			/*
           	 * PrimaryExpr ::= "super" "." Id "(" [ ExpressionList ] ")"  |
           	 *                 Id  |
