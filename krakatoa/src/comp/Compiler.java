@@ -161,7 +161,7 @@ public class Compiler {
 		if ( lexer.token != Symbol.LEFTCURBRACKET )
 			signalError.showError("{ expected", true);
 		lexer.nextToken();
-
+		//System.out.println("164: " + lexer.token);
 		while (lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
 
 			Symbol qualifier;
@@ -178,11 +178,14 @@ public class Compiler {
 				signalError.showError("private, or public expected");
 				qualifier = Symbol.PUBLIC;
 			}
+			//System.out.println("181: " + lexer.token);
 			Type t = type();
+			//System.out.println("183: " + lexer.token);
 			if ( lexer.token != Symbol.IDENT )
 				signalError.showError("Identifier expected");
 			String name = lexer.getStringValue();
 			lexer.nextToken();
+			//System.out.println("188: " + lexer.token);
 			if ( lexer.token == Symbol.LEFTPAR )
 				// NOTE Se tiver métodos estáticos também, teremos que mexer(Não vai ter ass: Rich =P)
 				// NOTE MessageSend seria nossa classe para método? '-'
@@ -195,6 +198,7 @@ public class Compiler {
 				signalError.showError("Attempt to declare a public instance variable");
 			else
 				instanceVarDec(t, name, instanceVarList);
+			//System.out.println("201: " + lexer.token);
 		}
 
 		currentClass.setInstanceVariableList(instanceVarList);
@@ -209,9 +213,7 @@ public class Compiler {
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
 		// InstVarDec ::= "private" Type IdList ";"
 		InstanceVariable instanceVar = new InstanceVariable(name, type);
-
-		if (!instanceVarList.addElement(instanceVar)) {
-			signalError.showError("Unique identifier expected");
+		//System.out.println("216: " + lexer.token);
 
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
@@ -225,11 +227,13 @@ public class Compiler {
 			}
 			lexer.nextToken();
 		}
+		//System.out.println("232: " + lexer.token);
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+		//System.out.println("236: " + lexer.token);
 	}
-}
+
 
 	private void methodDec(Type type, String name, Symbol qualifier,MethodList methodList) {
 		/*
@@ -305,6 +309,8 @@ public class Compiler {
 		// FormalParamDec ::= ParamDec { "," ParamDec }
 
 		ParamList parameterList = new ParamList();
+		if (lexer.token == Symbol.RIGHTPAR)
+			return parameterList;
 		parameterList.addElement(paramDec());
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
@@ -336,7 +342,7 @@ public class Compiler {
 	private Type type() {
 		// Type ::= BasicType | Id
 		Type result;
-
+		
 		switch (lexer.token) {
 		case VOID:
 			result = Type.voidType;
@@ -398,6 +404,8 @@ public class Compiler {
 		 */
 
 		 Statement stmt = null;
+		 // NOTE o que raios deve ser um '++i' ou 'i++'?
+		 System.out.println("407: " + lexer.token);
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
