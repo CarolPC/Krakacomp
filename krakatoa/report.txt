@@ -1,0 +1,280 @@
+Relat�rio do Compilador
+
+0 de um total de 53 erros que deveriam ser sinalizados n�o o foram (0%)
+32 erros foram sinalizados na linha errada (60%)
+15 erros foram sinalizados em 17 arquivos sem erro (88%)
+Todos os erros que deveriam ter sido sinalizados o foram
+######################################################
+Erros que foram sinalizados na linha errada:
+
+ER-SIN03.KRA
+    correto:    8, Identifier expected (comp.Compiler.localDec())
+    sinalizado: 6, Type expected
+
+ER-SIN02.KRA
+    correto:    8, Missing identifier (comp.Compiler.localDec())
+    sinalizado: 6, Type expected
+
+ER-SIN18.KRA
+    correto:    9, Missing ';' (comp.Compiler.assignExprLocalDec())
+    sinalizado: 6, Type expected
+
+ER-SIN16.KRA
+    correto:    9, Identifier expected (comp.Compiler.localDec())
+    sinalizado: 8, Type expected
+
+ER-SIN26.KRA
+    correto:    9, Expression expected OR invalid sequence of symbols (comp.Compiler.ifStatement() OR lexer.Lexer.nextToken())
+    sinalizado: 7, Type expected
+
+ER-SIN10.KRA
+    correto:    9, '(' expected after 'read' command (comp.Compiler.readStatement())
+    sinalizado: 6, Type expected
+
+ER-SIN30.KRA
+    correto:    7, Unknown character '#' (lexer.Lexer.nextToken())
+    sinalizado: 6, Type expected
+
+ER-SIN38.KRA
+    correto:    13, '}' expected (comp.Compiler.classDec())
+    sinalizado: 6, Type expected
+
+ER-SIN58.KRA
+    correto:    10, ')' expected (comp.Compiler.factor())
+    sinalizado: 7, Type expected
+
+ER-SIN22.KRA
+    correto:    11, Missing ';' (comp.Compiler.assignExprLocalDec())
+    sinalizado: 6, Type expected
+
+ER-SIN23.KRA
+    correto:    8, Statement expected (comp.Compiler.statement())
+    sinalizado: 6, Type expected
+
+ER-SIN21.KRA
+    correto:    11, Missing ';' (comp.Compiler.assignExprLocalDec)
+    sinalizado: 6, Type expected
+
+ER-SIN12.KRA
+    correto:    10, Expression expected (comp.Compiler.factor())
+    sinalizado: 6, Type expected
+
+ER-SIN01.KRA
+    correto:    8, '{' expected (comp.Compiler.methodDec())
+    sinalizado: 7, Type expected
+
+ER-SIN24.KRA
+    correto:    9, Expression expected OR Unknown sequence of symbols (comp.Compiler.expr() OR lexer.Lexer.nextToken())
+    sinalizado: 7, Type expected
+
+ER-SIN04.KRA
+    correto:    8, Statement expected (comp.Compiler.assignExprLocalDec())
+    sinalizado: 6, Type expected
+
+ER-SIN37.KRA
+    correto:    8, Expression expected (comp.Compiler.factor())
+    sinalizado: 6, Type expected
+
+ER-SIN07.KRA
+    correto:    9, Command 'read' without arguments (comp.Compiler.readStatement())
+    sinalizado: 7, Type expected
+
+ER-SIN05.KRA
+    correto:    10, Expression expected (comp.Compiler.factor())
+    sinalizado: 7, Type expected
+
+ER-SIN25.KRA
+    correto:    9, Expression expected OR invalid sequence of symbols (comp.Compiler.expr() OR lexer.Lexer.nextToken())
+    sinalizado: 7, Type expected
+
+ER-SIN14.KRA
+    correto:    14, 'class' expected (comp.Compiler.program())
+    sinalizado: 6, Type expected
+
+ER-SIN08.KRA
+    correto:    9, Command 'write' without arguments (comp.Compiler.writeStatement())
+    sinalizado: 7, Type expected
+
+ER-SIN11.KRA
+    correto:    7, Missing '(' (comp.Compiler.writeStatement())
+    sinalizado: 6, Type expected
+
+ER-SIN09.KRA
+    correto:    10, ')' expected (comp.Compiler.ifStatement())
+    sinalizado: 8, Type expected
+
+ER-SIN20.KRA
+    correto:    7, Missing ';' (comp.Compiler.writeStatement())
+    sinalizado: 6, Type expected
+
+ER-SIN60.KRA
+    correto:    14, '(' expected after 'while' (comp.Compiler.doWhileStatement())
+    sinalizado: 7, Type expected
+
+ER-SIN15.KRA
+    correto:    8, ')' expected (comp.Compiler.writeStatement())
+    sinalizado: 7, Type expected
+
+ER-SIN19.KRA
+    correto:    9, Missing ';' (comp.Compiler.readStatement())
+    sinalizado: 6, Type expected
+
+ER-SIN59.KRA
+    correto:    12, '{' expected after 'do' (comp.Compiler.doWhileStatement())
+    sinalizado: 7, Type expected
+
+ER-SIN27.KRA
+    correto:    8, ')' expected OR Unknown sequence of symbols (comp.Compiler.ifStatement OR lexer.Lexer.nextToken())
+    sinalizado: 7, Type expected
+
+ER-SIN06.KRA
+    correto:    8, Expression expected (comp.Compiler.factor())
+    sinalizado: 6, Type expected
+
+ER-SIN17.KRA
+    correto:    7, Missing ';' (comp.Compiler.localDec())
+    sinalizado: 6, Type expected
+
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-SIN13.KRA, 11, Type expected
+
+OK-SIN08.KRA, 20, Type expected
+
+OK-SIN06.KRA, 28, Type expected
+
+OK-SIN15.KRA, 21, Type expected
+
+OK-SIN14.KRA, 14, public/private or "}" expected
+
+OK-SIN11.KRA, 11, Type expected
+
+OK-SIN04.KRA, 13, Type expected
+
+OK-SIN03.KRA, 13, Type expected
+
+OK-SIN16.KRA, 13, Type expected
+
+OK-SIN10.KRA, 11, public/private or "}" expected
+
+OK-SIN09.KRA, 14, public/private or "}" expected
+
+OK-SIN02.KRA, 13, Type expected
+
+OK-SIN07.KRA, 14, public/private or "}" expected
+
+OK-SIN12.KRA, 11, Type expected
+
+OK-SIN05.KRA, 14, Type expected
+
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER-SIN34.KRA
+The compiler message was: ") expected"
+The 'ce' message is:      "')' expected"
+
+
+ER-SIN55.KRA
+The compiler message was: "Class static has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN13.KRA
+The compiler message was: "Type expected"
+The 'ce' message is:      "'{' expected"
+
+
+ER-SIN43.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SIN39.KRA
+The compiler message was: "Type expected"
+The 'ce' message is:      "'{' expected"
+
+
+ER-SIN41.KRA
+The compiler message was: "Identifier expected"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN32.KRA
+The compiler message was: "Type expected"
+The 'ce' message is:      "Type expected"
+
+
+ER-SIN33.KRA
+The compiler message was: "Class x has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN28.KRA
+The compiler message was: "'class' expected"
+The 'ce' message is:      "'class' expected"
+
+
+ER-SIN51.KRA
+The compiler message was: "Class static has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN44.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SIN53.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'private' expected"
+
+
+ER-SIN31.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SIN57.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'public', 'private' or '}' expected"
+
+
+ER-SIN54.KRA
+The compiler message was: "Class static has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN36.KRA
+The compiler message was: "Class m has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN52.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'public' or 'private' expected"
+
+
+ER-SIN56.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN40.KRA
+The compiler message was: "Attempt to declare a public instance variable"
+The 'ce' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER-SIN35.KRA
+The compiler message was: ") expected"
+The 'ce' message is:      "')' expected"
+
+
+ER-SIN29.KRA
+The compiler message was: "public/private or "}" expected"
+The 'ce' message is:      "'private',  'public', or '}' expected"
+
+

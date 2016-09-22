@@ -366,10 +366,10 @@ public class Compiler {
 		return result;
 	}
 
-	private void compositeStatement() {
+	private StatementList compositeStatement() {
 
 		lexer.nextToken();
-		StatementList stmtList = atementList();
+		StatementList stmtList = statementList();
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
 			signalError.showError("} expected");
 		else
@@ -397,7 +397,7 @@ public class Compiler {
 		 *               ``break'' ``;'' | ``;'' | CompStatement | LocalDec
 		 */
 
-		 Statement stmt;
+		 Statement stmt = null;
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -405,7 +405,7 @@ public class Compiler {
 		case INT:
 		case BOOLEAN:
 		case STRING:
-			stmt = assignExprLocalDec();
+			Expr expr = assignExprLocalDec();
 			break;
 		case ASSERT:
 			stmt = assertStatement();
@@ -529,7 +529,7 @@ public class Compiler {
 		Expr e = expr();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 		lexer.nextToken();
-		Stamente stmt = statement();
+		Statement stmt = statement();
 
 		return new WhileStatement(e, stmt);
 	}
@@ -545,10 +545,10 @@ public class Compiler {
 		Statement ifStmt = statement();
 		if ( lexer.token == Symbol.ELSE ) {
 			lexer.nextToken();
-			return new IfElseStatement(e, statement, statement());
+			return new IfElseStatement(e, ifStmt, statement());
 		}
 
-		return new IfStatement(e, statement);
+		return new IfStatement(e, ifStmt);
 	}
 
 	private ReturnStatement returnStatement() {
@@ -563,7 +563,7 @@ public class Compiler {
 	}
 
 	// NOTE não sei o quê, ainda mais como fazer aqui
-	private ReadStatement readStatement() {
+	private ReadStatement readStatement() {		
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
@@ -590,7 +590,7 @@ public class Compiler {
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
 
-		return new ReadStatement(nam);
+		return new ReadStatement();
 	}
 
 	private WriteStatement writeStatement() {
@@ -613,14 +613,14 @@ public class Compiler {
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
-		WriteLineStatement el = exprList();
+		WriteLineStatement writeStmt = new WriteLineStatement(exprList());
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 		lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
 
-		return el;
+		return writeStmt;
 	}
 
 	// NOTE não sei se é útil, mas BreakStatement pode estar vazio só para
@@ -634,10 +634,10 @@ public class Compiler {
 		return new BreakStatement();
 	}
 
-	// NOTE não vejo necessidade de criar uma classe, a não ser com o mesmo motivo
-	// de BreakStatement
-	private void nullStatement() {
+	private NullStatement nullStatement() {
 		lexer.nextToken();
+		
+		return new NullStatement();
 	}
 
 	private ExprList exprList() {
