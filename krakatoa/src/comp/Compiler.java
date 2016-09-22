@@ -157,7 +157,7 @@ public class Compiler {
 		InstanceVariableList instanceVarList = new InstanceVariableList();
 		MethodList publicMethodList = new MethodList();
 		MethodList privateMethodList = new MethodList();
-		
+
 		if ( lexer.token != Symbol.LEFTCURBRACKET )
 			signalError.showError("{ expected", true);
 		lexer.nextToken();
@@ -185,8 +185,8 @@ public class Compiler {
 			lexer.nextToken();
 			if ( lexer.token == Symbol.LEFTPAR )
 				// NOTE Se tiver métodos estáticos também, teremos que mexer(Não vai ter ass: Rich =P)
-				// TODO MessageSend seria nossa classe para método? '-'
-				
+				// NOTE MessageSend seria nossa classe para método? '-'
+
 				if(qualifier == Symbol.PRIVATE)
 					methodDec(t, name, qualifier,privateMethodList);
 				else
@@ -196,7 +196,7 @@ public class Compiler {
 			else
 				instanceVarDec(t, name, instanceVarList);
 		}
-		
+
 		currentClass.setInstanceVariableList(instanceVarList);
 
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
@@ -207,9 +207,9 @@ public class Compiler {
 	}
 
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
-		// InstVarDec ::= "private" Type IdList ";"		
+		// InstVarDec ::= "private" Type IdList ";"
 		InstanceVariable instanceVar = new InstanceVariable(name, type);
-				
+
 		if (!instanceVarList.addElement(instanceVar)) {
 			signalError.showError("Unique identifier expected");
 
@@ -219,7 +219,7 @@ public class Compiler {
 				signalError.showError("Identifier expected");
 
 			String variableName = lexer.getStringValue();
-			
+
 			if (!instanceVarList.addElement(instanceVar)) {
 				signalError.showError("Unique identifier expected");
 			}
@@ -240,7 +240,7 @@ public class Compiler {
 		lexer.nextToken();
 		ParamList parameterList = null;
 		StatementList stmtList = null;
-		
+
 		if ( lexer.token != Symbol.LEFTPAR ) parameterList = formalParamDec();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 
@@ -248,11 +248,11 @@ public class Compiler {
 		if ( lexer.token != Symbol.LEFTCURBRACKET ) signalError.showError("{ expected");
 
 		lexer.nextToken();
-		statementList();
+		stmtList = statementList();
 		if ( lexer.token != Symbol.RIGHTCURBRACKET ) signalError.showError("} expected");
 
 		lexer.nextToken();
-		
+
 		symbolTable.removeLocalIdent();
 
 		methodList.addElement(new MethodDec(qualifier,type,name,parameterList,stmtList));
@@ -261,20 +261,20 @@ public class Compiler {
 	private LocalVariableList localDec() {
 		// LocalDec ::= Type IdList ";"
 		LocalVariableList localDecList = new LocalVariableList();
-		
-		
+
+
 		Type type = type();
-		if ( lexer.token != Symbol.IDENT ) 
+		if ( lexer.token != Symbol.IDENT )
 			signalError.showError("Identifier expected");
 		String variableName = lexer.getStringValue();
-		
+
 		if(symbolTable.getInLocal(variableName) != null)
 			signalError.showError("Unique identifier expected");
-		
+
 		Variable v = new Variable(variableName, type);
 
 		symbolTable.putInLocal(variableName, v);
-		
+
 		localDecList.addElement(v);
 
 		lexer.nextToken();
@@ -283,18 +283,18 @@ public class Compiler {
 			lexer.nextToken();
 			if ( lexer.token != Symbol.IDENT )
 				signalError.showError("Identifier expected");
-			
+
 			variableName = lexer.getStringValue();
-			
+
 			if(symbolTable.getInLocal(variableName) != null)
 				signalError.showError("Unique identifier expected");
-			
+
 			v = new Variable(variableName, type);
 
 			symbolTable.putInLocal(variableName, v);
-			
+
 			localDecList.addElement(v);
-			
+
 			lexer.nextToken();
 		}
 
@@ -327,9 +327,9 @@ public class Compiler {
 
 		lexer.nextToken();
 		Parameter p = new Parameter(identName,t);
-		
+
 		symbolTable.putInLocal(identName, p);
-		
+
 		return p;
 	}
 
@@ -369,29 +369,35 @@ public class Compiler {
 	private void compositeStatement() {
 
 		lexer.nextToken();
-		statementList();
+		StatementList stmtList = atementList();
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
 			signalError.showError("} expected");
 		else
 			lexer.nextToken();
+
+		return stmtList;
 	}
 
-	private void statementList() {
+	private StatementList statementList() {
 		// CompStatement ::= "{" { Statement } "}"
 		Symbol tk;
+		StatementList stmtList = new StatementList();
 		// statements always begin with an identifier, if, read, write, ...
 		while ((tk = lexer.token) != Symbol.RIGHTCURBRACKET
 				&& tk != Symbol.ELSE)
-			statement();
+			stmtList.addElement(statement());
+
+		return stmtList;
 	}
 
-	private void statement() {
+	private Statement statement() {
 		/*
 		 * Statement ::= Assignment ``;'' | IfStat |WhileStat | MessageSend
 		 *                ``;'' | ReturnStat ``;'' | ReadStat ``;'' | WriteStat ``;'' |
 		 *               ``break'' ``;'' | ``;'' | CompStatement | LocalDec
 		 */
 
+		 Statement stmt;
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -399,41 +405,45 @@ public class Compiler {
 		case INT:
 		case BOOLEAN:
 		case STRING:
-			assignExprLocalDec();
+			stmt = assignExprLocalDec();
 			break;
 		case ASSERT:
-			assertStatement();
+			stmt = assertStatement();
 			break;
 		case RETURN:
-			returnStatement();
+			stmt = returnStatement();
 			break;
 		case READ:
-			readStatement();
+			stmt = readStatement();
 			break;
 		case WRITE:
-			writeStatement();
+			stmt = writeStatement();
 			break;
 		case WRITELN:
-			writelnStatement();
+			stmt = writelnStatement();
 			break;
 		case IF:
-			ifStatement();
+			stmt = ifStatement();
 			break;
 		case BREAK:
-			breakStatement();
+			stmt = breakStatement();
 			break;
 		case WHILE:
-			whileStatement();
+			stmt = whileStatement();
 			break;
 		case SEMICOLON:
-			nullStatement();
+			stmt = nullStatement();
 			break;
 		case LEFTCURBRACKET:
+		// NOTE Houston, temos um problema! Tecnicamente, um CopositeStatement não
+		// é um Statemente, ou é?
 			compositeStatement();
 			break;
 		default:
 			signalError.showError("Statement expected");
 		}
+
+		return stmt;
 	}
 
 	private Statement assertStatement() {
@@ -481,7 +491,7 @@ public class Compiler {
 			 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] | LocalDec
 			 * LocalDec ::= Type IdList ``;''
 			 */
-			localDec();
+					localDec();
 		}
 		else {
 			/*
@@ -511,42 +521,49 @@ public class Compiler {
 		return anExprList;
 	}
 
-	private void whileStatement() {
+	private WhileStatement whileStatement() {
 
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
-		expr();
+		Expr e = expr();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 		lexer.nextToken();
-		statement();
+		Stamente stmt = statement();
+
+		return new WhileStatement(e, stmt);
 	}
 
-	private void ifStatement() {
+	private IfStatement ifStatement() {
 
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
-		expr();
+		Expr e = expr();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 		lexer.nextToken();
-		statement();
+		Statement ifStmt = statement();
 		if ( lexer.token == Symbol.ELSE ) {
 			lexer.nextToken();
-			statement();
+			return new IfElseStatement(e, statement, statement());
 		}
+
+		return new IfStatement(e, statement);
 	}
 
-	private void returnStatement() {
+	private ReturnStatement returnStatement() {
 
 		lexer.nextToken();
-		expr();
+		Expr e = expr();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+
+		return new ReturnStatement(e);
 	}
 
-	private void readStatement() {
+	// NOTE não sei o quê, ainda mais como fazer aqui
+	private ReadStatement readStatement() {
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
@@ -572,41 +589,53 @@ public class Compiler {
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+
+		return new ReadStatement(nam);
 	}
 
-	private void writeStatement() {
+	private WriteStatement writeStatement() {
 
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 			lexer.nextToken();
-		exprList();
+		ExprList el = exprList();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 			lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+
+		return new WriteStatement(el);
 	}
 
-	private void writelnStatement() {
+	private WriteLineStatement writelnStatement() {
 
 		lexer.nextToken();
 		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
 		lexer.nextToken();
-		exprList();
+		WriteLineStatement el = exprList();
 		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
 		lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+
+		return el;
 	}
 
-	private void breakStatement() {
+	// NOTE não sei se é útil, mas BreakStatement pode estar vazio só para
+	// checarmos que temos um break e devemos cancelar e sair fora do laço corrente
+	private BreakStatement breakStatement() {
 		lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
+
+		return new BreakStatement();
 	}
 
+	// NOTE não vejo necessidade de criar uma classe, a não ser com o mesmo motivo
+	// de BreakStatement
 	private void nullStatement() {
 		lexer.nextToken();
 	}
