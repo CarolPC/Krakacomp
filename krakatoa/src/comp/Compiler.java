@@ -159,7 +159,7 @@ public class Compiler {
 		MethodList privateMethodList = new MethodList();
 
 		if ( lexer.token != Symbol.LEFTCURBRACKET )
-			signalError.showError("{ expected", true);
+			signalError.showError("'{' expected", true);
 		lexer.nextToken();
 		//System.out.println("164: " + lexer.token);
 		while (lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
@@ -204,7 +204,7 @@ public class Compiler {
 		currentClass.setInstanceVariableList(instanceVarList);
 
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
-			signalError.showError("public/private or \"}\" expected");
+			signalError.showError("'public', 'private', or '}' expected");
 		lexer.nextToken();
 
 		return currentClass;
@@ -246,14 +246,14 @@ public class Compiler {
 		StatementList stmtList = null;
 
 		if ( lexer.token != Symbol.LEFTPAR ) parameterList = formalParamDec();
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTCURBRACKET ) signalError.showError("{ expected");
+		if ( lexer.token != Symbol.LEFTCURBRACKET ) signalError.showError("'{' expected");
 
 		lexer.nextToken();
 		stmtList = statementList();
-		if ( lexer.token != Symbol.RIGHTCURBRACKET ) signalError.showError("} expected");
+		if ( lexer.token != Symbol.RIGHTCURBRACKET ) signalError.showError("'}' expected");
 
 		lexer.nextToken();
 
@@ -301,6 +301,9 @@ public class Compiler {
 
 			lexer.nextToken();
 		}
+		
+		if (lexer.token != Symbol.SEMICOLON)
+			signalError.showError("Missing ';'");
 
 		return localDecList;
 	}
@@ -377,7 +380,7 @@ public class Compiler {
 		lexer.nextToken();
 		StatementList stmtList = statementList();
 		if ( lexer.token != Symbol.RIGHTCURBRACKET )
-			signalError.showError("} expected");
+			signalError.showError("'}' expected");
 		else
 			lexer.nextToken();
 
@@ -404,8 +407,7 @@ public class Compiler {
 		 */
 
 		 Statement stmt = null;
-		 // NOTE o que raios deve ser um '++i' ou 'i++'?
-		 System.out.println("407: " + lexer.token);
+		 //System.out.println("407: " + lexer.token);
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -413,7 +415,8 @@ public class Compiler {
 		case INT:
 		case BOOLEAN:
 		case STRING:
-			Expr expr = assignExprLocalDec();
+			assignExprLocalDec();
+			//stmt = new AssignStatement(assignExprLocalDec());
 			break;
 		case ASSERT:
 			stmt = assertStatement();
@@ -439,13 +442,34 @@ public class Compiler {
 		case WHILE:
 			stmt = whileStatement();
 			break;
+		/*case DO:
+			stmt = doWhileStatement();
+			break;*/
 		case SEMICOLON:
 			stmt = nullStatement();
 			break;
 		case LEFTCURBRACKET:
-		// NOTE Houston, temos um problema! Tecnicamente, um CopositeStatement não
-		// é um Statemente, ou é?
+		// NOTE Houston, temos um problema! Tecnicamente, um CompositeStatement não
+		// é um Statement, ou é?
 			compositeStatement();
+			break;
+		// NOTE Foi o que eu pensei para tratarmos incremento e decremento, 
+		// veja primeiro se concorda Henrique, acho que daí precisamos criar 
+		// tipo uma classe para cada um dos tipos (inc e dec), talvez até diferenciar 
+		// se é prefixo ou sufixo, não sei. (Gois)
+		case PLUS:
+			lexer.nextToken();
+			if (lexer.token != Symbol.PLUS)
+				signalError.showError("Missing '+'");
+			lexer.nextToken();
+			//stmt = new IncrementStatement(new Variable(lexer.token()));
+			break;
+		case MINUS:
+			lexer.nextToken();
+			if (lexer.token != Symbol.MINUS)
+				signalError.showError("Missing '-'");
+			lexer.nextToken();
+			//stmt = new DecrementStatement(new Variable(lexer.token()));
 			break;
 		default:
 			signalError.showError("Statement expected");
@@ -510,7 +534,7 @@ public class Compiler {
 				lexer.nextToken();
 				expr();
 				if ( lexer.token != Symbol.SEMICOLON )
-					signalError.showError("';' expected", true);
+					signalError.showError("Missing ':'" , true);
 				else
 					lexer.nextToken();
 			}
@@ -521,10 +545,10 @@ public class Compiler {
 	private ExprList realParameters() {
 		ExprList anExprList = null;
 
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 		lexer.nextToken();
 		if ( startExpr(lexer.token) ) anExprList = exprList();
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 		lexer.nextToken();
 		return anExprList;
 	}
@@ -532,10 +556,10 @@ public class Compiler {
 	private WhileStatement whileStatement() {
 
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 		lexer.nextToken();
 		Expr e = expr();
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 		lexer.nextToken();
 		Statement stmt = statement();
 
@@ -545,10 +569,10 @@ public class Compiler {
 	private IfStatement ifStatement() {
 
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 		lexer.nextToken();
 		Expr e = expr();
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 		lexer.nextToken();
 		Statement ifStmt = statement();
 		if ( lexer.token == Symbol.ELSE ) {
@@ -573,7 +597,7 @@ public class Compiler {
 	// NOTE não sei o quê, ainda mais como fazer aqui
 	private ReadStatement readStatement() {		
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected after 'read' commandUnkno");
 		lexer.nextToken();
 		while (true) {
 			if ( lexer.token == Symbol.THIS ) {
@@ -592,7 +616,7 @@ public class Compiler {
 				break;
 		}
 
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 		lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
@@ -604,10 +628,10 @@ public class Compiler {
 	private WriteStatement writeStatement() {
 
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 			lexer.nextToken();
 		ExprList el = exprList();
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 			lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
@@ -619,10 +643,10 @@ public class Compiler {
 	private WriteLineStatement writelnStatement() {
 
 		lexer.nextToken();
-		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+		if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 		lexer.nextToken();
 		WriteLineStatement writeStmt = new WriteLineStatement(exprList());
-		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+		if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 		lexer.nextToken();
 		if ( lexer.token != Symbol.SEMICOLON )
 			signalError.show(ErrorSignaller.semicolon_expected);
@@ -753,7 +777,7 @@ public class Compiler {
 		case LEFTPAR:
 			lexer.nextToken();
 			anExpr = expr();
-			if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+			if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 			lexer.nextToken();
 			return new ParenthesisExpr(anExpr);
 
@@ -785,9 +809,9 @@ public class Compiler {
 
 
 			lexer.nextToken();
-			if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("( expected");
+			if ( lexer.token != Symbol.LEFTPAR ) signalError.showError("'(' expected");
 			lexer.nextToken();
-			if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError(") expected");
+			if ( lexer.token != Symbol.RIGHTPAR ) signalError.showError("')' expected");
 			lexer.nextToken();
 			/*
 			 * return an object representing the creation of an object
