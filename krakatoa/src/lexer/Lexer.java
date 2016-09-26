@@ -134,10 +134,10 @@ public class Lexer {
                 try {
                    numberValue = Integer.valueOf(number.toString()).intValue();
                 } catch ( NumberFormatException e ) {
-                   error.showError("Number out of limits");
+                   error.showError("literal int out of limits");
                 }
                 if ( numberValue > MaxValueInteger )
-                   error.showError("Number out of limits");
+                   error.showError("literal int out of limits");
             }
             else {
                 tokenPos++;
@@ -234,7 +234,7 @@ public class Lexer {
                     	token = Symbol.MOCall;
                     	break;
                     case '_' :
-                      error.showError("'_' cannot start an indentifier");
+                      error.showError("Identifier starting with underscore");
                       break;
                     case '"' :
                        StringBuffer s = new StringBuffer();
