@@ -34,12 +34,12 @@ The 'ce' message is:      "Identifier expected"
 
 
 ER-SIN02.KRA
-The compiler message was: "Identifier expected"
+The compiler message was: "Missing Identifier"
 The 'ce' message is:      "Missing identifier"
 
 
 ER-SIN18.KRA
-The compiler message was: "Missing ':'"
+The compiler message was: "Missing ';'"
 The 'ce' message is:      "Missing ';'"
 
 
@@ -74,12 +74,12 @@ The 'ce' message is:      "'{' expected"
 
 
 ER-SIN10.KRA
-The compiler message was: "'(' expected after 'read' commandUnkno"
+The compiler message was: "'(' expected after 'read' command"
 The 'ce' message is:      "'(' expected after 'read' command"
 
 
 ER-SIN30.KRA
-The compiler message was: "Invalid Character: '#'"
+The compiler message was: "Unknown character '#'"
 The 'ce' message is:      "Unknown character '#'"
 
 
@@ -94,7 +94,7 @@ The 'ce' message is:      "')' expected"
 
 
 ER-SIN22.KRA
-The compiler message was: "Missing ':'"
+The compiler message was: "Missing ';'"
 The 'ce' message is:      "Missing ';'"
 
 
@@ -124,7 +124,7 @@ The 'ce' message is:      "Statement expected"
 
 
 ER-SIN21.KRA
-The compiler message was: "Missing ':'"
+The compiler message was: "Missing ';'"
 The 'ce' message is:      "Missing ';'"
 
 
