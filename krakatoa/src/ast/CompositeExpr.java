@@ -59,4 +59,11 @@ public class CompositeExpr extends Expr {
         arrayOper.put(Symbol.AND, "&&");
         arrayOper.put(Symbol.OR, "||");
     }
+    
+	@Override
+	public void genKra(PW pw) {
+		left.genKra(pw);
+		pw.print(" " + oper.name() + " ");
+		right.genKra(pw);
+	}
 }

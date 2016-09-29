@@ -18,4 +18,9 @@ public class LiteralInt extends Expr {
     }
     
     private int value;
+
+	@Override
+	public void genKra(PW pw) {
+		pw.print(Integer.toString(value));
+	}
 }

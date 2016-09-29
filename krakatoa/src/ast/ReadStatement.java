@@ -8,4 +8,10 @@ public class ReadStatement extends Statement {
 
 	}
 
+	@Override
+	public void genKra(PW pw) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

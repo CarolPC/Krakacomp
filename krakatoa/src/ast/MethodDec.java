@@ -19,4 +19,16 @@ public class MethodDec {
 	private Type returnType;
 	private StatementList stmtList;
 	
+	public void genKra(PW pw) {
+		pw.printIdent(qualifier.name() + " " + returnType.getName() + " " + name + "(");
+		paramList.genKra(pw);
+		pw.println(") {");
+		
+		pw.add();
+		stmtList.genKra(pw);
+		pw.sub();
+		
+		pw.printlnIdent("}");
+	}
+	
 }

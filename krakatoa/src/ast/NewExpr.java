@@ -18,4 +18,10 @@ public class NewExpr extends Expr{
 	{
 		//Segunda fase
 	}
+
+	@Override
+	public void genKra(PW pw) {
+		// E se o construtor tiver parâmetros?
+		pw.print("new " + classType.getName() + "();");
+	}
 }

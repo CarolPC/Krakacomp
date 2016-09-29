@@ -204,6 +204,8 @@ public class Compiler {
 		}
 
 		currentClass.setInstanceVariableList(instanceVarList);
+		currentClass.setPrivateMethodList(privateMethodList);
+		currentClass.setPublicMethodList(publicMethodList);
 
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'public', 'private', or '}' expected");
@@ -216,6 +218,9 @@ public class Compiler {
 		// InstVarDec ::= "private" Type IdList ";"
 		InstanceVariable instanceVar = new InstanceVariable(name, type);
 		// System.out.println("216: " + lexer.token);
+		if (!instanceVarList.addElement(instanceVar)) {
+			signalError.showError("Unique identifier expected");
+		}
 
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
@@ -223,6 +228,7 @@ public class Compiler {
 				signalError.showError("Identifier expected");
 
 			String variableName = lexer.getStringValue();
+			instanceVar = new InstanceVariable(variableName, type);
 
 			if (!instanceVarList.addElement(instanceVar)) {
 				signalError.showError("Unique identifier expected");

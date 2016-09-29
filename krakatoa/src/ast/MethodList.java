@@ -22,4 +22,9 @@ public class MethodList {
 	    }
 
 	    private ArrayList<MethodDec> methodList;
+
+		public void genKra(PW pw) {
+			for (Iterator<MethodDec> iterator = elements(); iterator.hasNext();)
+				iterator.next().genKra(pw);
+		}
 }

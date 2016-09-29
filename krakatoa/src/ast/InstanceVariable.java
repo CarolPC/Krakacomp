@@ -1,7 +1,5 @@
 package ast;
 
-import javax.management.RuntimeErrorException;
-
 public class InstanceVariable extends Variable {
 
     public InstanceVariable( String name, Type type ) {
@@ -21,5 +19,9 @@ public class InstanceVariable extends Variable {
         
         return v.getName() == this.getName();
     }
+
+	public void genKra(PW pw) {
+		pw.printlnIdent(getType().getName() + " " + getName() + ";");
+	}
 
 }

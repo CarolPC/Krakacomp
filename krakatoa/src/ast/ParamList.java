@@ -22,4 +22,15 @@ public class ParamList {
 
     private ArrayList<Variable> paramList;
 
+	public void genKra(PW pw) {
+		Variable param = null;
+		int i = 0;
+		while (i < getSize() - 1) {
+			param = paramList.get(i++);
+			pw.print(param.getType().getName() + " " + param.getName() + ", ");
+		}
+		param = paramList.get(i);
+		pw.print(param.getType().getName() + " " + param.getName());
+	}
+
 }

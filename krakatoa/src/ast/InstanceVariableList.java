@@ -27,4 +27,10 @@ public class InstanceVariableList {
 
     private ArrayList<InstanceVariable> instanceVariableList;
 
+	public void genKra(PW pw) {
+		for (Iterator<InstanceVariable> iterator = elements(); iterator.hasNext(); ) {
+			iterator.next().genKra(pw);
+		}
+	}
+
 }

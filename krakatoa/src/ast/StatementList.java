@@ -23,4 +23,9 @@ public class StatementList {
 
 	    private ArrayList<Statement> stmtList;
 
+		public void genKra(PW pw) {
+			for (Iterator<Statement> iterator = elements(); iterator.hasNext();)
+				iterator.next().genKra(pw);
+		}
+
 }
