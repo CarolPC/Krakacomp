@@ -16,6 +16,17 @@ public class InstanceVariableList {
       
       return true;
     }
+    
+    public Variable searchVariable(Variable v)
+    {
+ 	  	for(Variable vSearch: this.instanceVariableList) {
+ 	   		if(v == vSearch)
+ 	  			return vSearch;
+ 	   	}
+ 	  	
+ 	    return null;
+
+    }
 
     public Iterator<InstanceVariable> elements() {
     	return this.instanceVariableList.iterator();

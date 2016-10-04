@@ -132,7 +132,8 @@ public class Compiler {
 		if (symbolTable.getInGlobal(className) != null)
 			signalError.showError("Class " + className + " has already been declared");
 		KraClass currentClass = new KraClass(className);
-
+		this.currClass = currentClass;
+		
 		symbolTable.putInGlobal(className, currentClass);
 		lexer.nextToken();
 
@@ -188,10 +189,7 @@ public class Compiler {
 			lexer.nextToken();
 			// System.out.println("188: " + lexer.token);
 			if (lexer.token == Symbol.LEFTPAR)
-				// NOTE Se tiver métodos estáticos também, teremos que mexer(Não
-				// vai ter ass: Rich =P)
-				// NOTE MessageSend seria nossa classe para método? '-'
-
+				
 				if (qualifier == Symbol.PRIVATE)
 					methodDec(t, name, qualifier, privateMethodList);
 				else
@@ -256,6 +254,10 @@ public class Compiler {
 			parameterList = formalParamDec();
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
+		
+		MethodDec m = new MethodDec(qualifier, type, name, parameterList);
+		if(!methodList.addElement(m))
+			signalError.showError("Method has already been declared");
 
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTCURBRACKET)
@@ -263,6 +265,8 @@ public class Compiler {
 
 		lexer.nextToken();
 		stmtList = statementList();
+		m.setStatementList(stmtList);
+		
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'}' expected");
 
@@ -270,7 +274,7 @@ public class Compiler {
 
 		symbolTable.removeLocalIdent();
 
-		methodList.addElement(new MethodDec(qualifier, type, name, parameterList, stmtList));
+		
 	}
 
 	private LocalVariableList localDec() {
@@ -779,7 +783,10 @@ public class Compiler {
 		Expr anExpr;
 		ExprList exprList;
 		String messageName, id;
-
+		MethodDec m;
+		Variable v;
+		KraClass tmpClass;
+		
 		switch (lexer.token) {
 		// IntValue
 		case LITERALINT:
@@ -865,6 +872,12 @@ public class Compiler {
 			 */
 			lexer.nextToken();
 			exprList = realParameters();
+			m = this.currClass.getSuperclass().searchPublicMethod(new MethodDec(messageName,exprList));
+			
+			if(m == null)
+				signalError.showError("method \""+ messageName + "\"doesn't exist on superclass or its superclasses");
+			
+			//retornar alguma coisa depois, provavelmente algum tipo de messageSend 
 			break;
 		case IDENT:
 			/*
@@ -877,12 +890,34 @@ public class Compiler {
 			if (lexer.token != Symbol.DOT) {
 				// Id
 				// retorne um objeto da ASA que representa um identificador
-				return null;
+				
+				v = symbolTable.getInLocal(firstId);
+				
+				if(v == null)
+				{
+					v = this.currClass.searchInstanceVariable(v);
+					if(v == null)
+						signalError.showError("variable \""+firstId+"\" was not declared in this scope.");
+					else
+						signalError.showError("variable \""+firstId+"\" is a private variable.");
+				}
+				
+				return new VariableExpr(v);
+				
 			} else { // Id "."
+								
+				v = symbolTable.getInLocal(firstId);
+				tmpClass = symbolTable.getInGlobal(v.getType().toString());
+				
+				if(tmpClass == null)
+					signalError.showError(firstId+" is not a class instance");
+				
 				lexer.nextToken(); // coma o "."
+				
 				if (lexer.token != Symbol.IDENT) {
 					signalError.showError("Identifier expected");
-				} else {
+				} 
+				else {
 					// Id "." Id
 					lexer.nextToken();
 					id = lexer.getStringValue();
@@ -896,6 +931,7 @@ public class Compiler {
 						 * erro neste ponto.
 						 */
 						signalError.showError("Static variables are not permitted");
+						
 						lexer.nextToken();
 						if (lexer.token != Symbol.IDENT)
 							signalError.showError("Identifier expected");
@@ -910,8 +946,23 @@ public class Compiler {
 						 * para fazer as confer�ncias sem�nticas, procure por
 						 * m�todo 'ident' na classe de 'firstId'
 						 */
+						
+						
+						m = tmpClass.searchPublicMethod(new MethodDec(id, exprList));
+						
+						if(m == null)
+							signalError.showError("method doesn't exist in class \""+tmpClass.getName() + "\" or its superclasses");
+						
+						//retornar alguma coisa depois, provavelmente algum tipo de messageSend
+						
 					} else {
 						// retorne o objeto da ASA que representa Id "." Id
+						
+						v = tmpClass.searchInstanceVariable(new Variable(id, null));
+						if(v == null)
+							signalError.showError(tmpClass.getName()+" has no variable with name \""+ v.getName() +"\"");
+						else
+							signalError.showError("you cannot access private variable");
 					}
 				}
 			}
@@ -942,6 +993,11 @@ public class Compiler {
 					 * 'ident' e que pode tomar os par�metros de ExpressionList
 					 */
 					exprList = this.realParameters();
+					m = this.currClass.searchMethod(new MethodDec(id, exprList));
+					
+					if(m == null)
+						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
+					
 				} else if (lexer.token == Symbol.DOT) {
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
 					lexer.nextToken();
@@ -955,6 +1011,11 @@ public class Compiler {
 					 * confira se a classe corrente realmente possui uma
 					 * vari�vel de inst�ncia 'ident'
 					 */
+					
+					v = this.currClass.searchInstanceVariable(new Variable(id, null));
+					if(v == null)
+						signalError.showError(this.currClass.getName()+" has no variable with name \""+ v.getName() +"\"");
+					
 					return null;
 				}
 			}
@@ -986,6 +1047,7 @@ public class Compiler {
 	}
 
 	private SymbolTable symbolTable;
+	private KraClass currClass;
 	private Lexer lexer;
 	private ErrorSignaller signalError;
 

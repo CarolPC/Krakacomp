@@ -23,6 +23,48 @@ public class KraClass extends Type {
    // métodos públicos get e set para obter e iniciar as variáveis acima,
    // entre outros métodos
    
+   public MethodDec searchPublicMethod( MethodDec m) {
+	   
+	   MethodDec mSearch = this.publicMethodList.searchMethod(m);
+	   
+	   if(mSearch == null && getSuperclass() != null)
+		   return this.getSuperclass().searchPublicMethod(m);
+	   
+	   return mSearch;
+   }
+   
+   public Variable searchInstanceVariable(Variable v)
+   {
+	   Variable vSearch = this.instanceVariableList.searchVariable(v);
+	   
+	   if(v == null && this.getSuperclass() != null)
+		   return this.getSuperclass().searchInstanceVariable(v);
+	   
+	   return vSearch;
+   }
+   
+   
+   public MethodDec searchPrivateMethod( MethodDec m) {
+	   
+	   MethodDec mSearch =  this.privateMethodList.searchMethod(m);
+	   
+	   if(mSearch == null && getSuperclass() != null)
+		   return this.getSuperclass().searchPrivateMethod(m);
+	   
+	   return mSearch;
+   }
+   
+   public MethodDec searchMethod(MethodDec m) {
+	   MethodDec returnMethod;
+	   
+	   returnMethod = this.searchPublicMethod(m);
+	   
+	   if(returnMethod != null)
+		   return returnMethod;
+	   
+	   return this.searchPrivateMethod(m);
+   }
+   
    public InstanceVariableList getInstanceVariableList() {
 	   return instanceVariableList;
    }
