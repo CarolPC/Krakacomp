@@ -907,7 +907,7 @@ public class Compiler {
 			} else { // Id "."
 								
 				v = symbolTable.getInLocal(firstId);
-				tmpClass = symbolTable.getInGlobal(v.getType().toString());
+				tmpClass = symbolTable.getInGlobal(v.getType().getName());
 				
 				if(tmpClass == null)
 					signalError.showError(firstId+" is not a class instance");

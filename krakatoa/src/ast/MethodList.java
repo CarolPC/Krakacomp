@@ -28,7 +28,7 @@ public class MethodList {
 	    
 	    public MethodDec searchMethod(MethodDec m) {
 	    	for(MethodDec mSearch: this.methodList) {
-	    		if(m == mSearch)
+	    		if(m.equals(mSearch))
 	    			return mSearch;
 	    	}
 	    	

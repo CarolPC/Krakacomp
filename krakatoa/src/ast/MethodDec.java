@@ -61,12 +61,11 @@ public class MethodDec {
             throw new RuntimeException("parameter is not MethodDec Type");
         }
         
-        MethodDec m = (MethodDec)obj;
-        
-        if(m.name != this.name)
+        MethodDec m = (MethodDec)obj;;
+        if(!m.name.equals(this.name))
         	return false;
         
-        if(m.paramList != this.paramList)
+        if(!m.paramList.equals(this.paramList))
         	return false;
         
         return true;
