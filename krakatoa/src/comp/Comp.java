@@ -65,6 +65,7 @@ public class Comp {
         				   System.out.println(filename);
         			       compileProgram(f, filename, outError);
         			   } catch (RuntimeException e ) {
+        				   e.printStackTrace();
         				   System.out.println("Runtime exception");
         			   }
         			   catch (Throwable t) {
@@ -262,6 +263,7 @@ public class Comp {
                    return ;
                }
                PrintWriter printWriter = new PrintWriter(outputStream);
+               //PrintWriter printWriter = new PrintWriter(System.out);
         	   
         	   
               PW pw = new PW();

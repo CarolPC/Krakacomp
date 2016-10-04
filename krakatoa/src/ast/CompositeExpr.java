@@ -63,7 +63,7 @@ public class CompositeExpr extends Expr {
 	@Override
 	public void genKra(PW pw) {
 		left.genKra(pw);
-		pw.print(" " + oper.name() + " ");
+		pw.print(" " + oper + " ");
 		right.genKra(pw);
 	}
 }

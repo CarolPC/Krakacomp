@@ -126,7 +126,9 @@ public class KraClass extends Type {
 		   pw.sub();
 	   }
 	   
-	   pw.printIdent("}");
+	   pw.printlnIdent("}");
+	   
+	   pw.println();
    }
    
 }

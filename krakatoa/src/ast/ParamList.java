@@ -30,6 +30,10 @@ public class ParamList {
 	public void genKra(PW pw) {
 		Variable param = null;
 		int i = 0;
+		
+		if (getSize() == 0)
+			return;
+		
 		while (i < getSize() - 1) {
 			param = paramList.get(i++);
 			pw.print(param.getType().getName() + " " + param.getName() + ", ");

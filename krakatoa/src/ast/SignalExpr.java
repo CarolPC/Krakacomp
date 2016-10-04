@@ -29,7 +29,7 @@ public class SignalExpr extends Expr {
     
 	@Override
 	public void genKra(PW pw) {
-		pw.print(oper.name());
+		pw.print("" + oper);
 		expr.genKra(pw);
 	}
 }

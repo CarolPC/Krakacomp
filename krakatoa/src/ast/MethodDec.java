@@ -40,7 +40,7 @@ public class MethodDec {
 		this.stmtList = s;
 	}
 	public void genKra(PW pw) {
-		pw.printIdent(qualifier.name() + " " + returnType.getName() + " " + name + "(");
+		pw.printIdent(qualifier + " " + returnType.getName() + " " + name + "(");
 		paramList.genKra(pw);
 		pw.println(") {");
 		

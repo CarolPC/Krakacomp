@@ -33,12 +33,13 @@ public class Compiler {
 			while (lexer.token == Symbol.MOCall) {
 				metaobjectCallList.add(metaobjectCall());
 			}
-			classDec();
+			kraClassList.add(classDec());
 			while (lexer.token == Symbol.CLASS)
 				kraClassList.add(classDec());
 			if (lexer.token != Symbol.EOF) {
 				signalError.showError("End of file expected");
 			}
+			if(program.getClassList().isEmpty())System.out.println("Program::isEmpty");
 		} catch (RuntimeException e) {
 			// if there was an exception, there is a compilation signalError
 		}
@@ -265,6 +266,7 @@ public class Compiler {
 
 		lexer.nextToken();
 		stmtList = statementList();
+		if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		m.setStatementList(stmtList);
 		
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
@@ -404,12 +406,13 @@ public class Compiler {
 
 	private StatementList statementList() {
 		// CompStatement ::= "{" { Statement } "}"
+		System.out.println("statementList");
 		Symbol tk;
 		StatementList stmtList = new StatementList();
 		// statements always begin with an identifier, if, read, write, ...
 		while ((tk = lexer.token) != Symbol.RIGHTCURBRACKET && tk != Symbol.ELSE)
 			stmtList.addElement(statement());
-
+if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		return stmtList;
 	}
 
@@ -527,7 +530,7 @@ public class Compiler {
 	 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] | LocalDec
 	 */
 	private Expr assignExprLocalDec() {
-
+System.out.println("assignExprLocalDec");
 		if (lexer.token == Symbol.INT || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.STRING ||
 		// token � uma classe declarada textualmente antes desta
 		// instru��o
@@ -613,17 +616,19 @@ public class Compiler {
 		if (lexer.token != Symbol.SEMICOLON)
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
-
+System.out.println("Type name: " + e.getType().getName());
 		return new ReturnStatement(e);
 	}
 
 	// NOTE não sei o quê, ainda mais como fazer aqui
 	private ReadStatement readStatement() {
+		System.out.println("readStatement");
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected after 'read' command");
 		lexer.nextToken();
-		while (true) {
+		ExprList el = exprList();
+		/*while (true) {
 			if (lexer.token == Symbol.THIS) {
 				lexer.nextToken();
 				if (lexer.token != Symbol.DOT)
@@ -639,7 +644,7 @@ public class Compiler {
 				lexer.nextToken();
 			else
 				break;
-		}
+		}*/
 
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
@@ -648,11 +653,11 @@ public class Compiler {
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
 
-		return new ReadStatement();
+		return new ReadStatement(el);
 	}
 
 	private WriteStatement writeStatement() {
-
+		System.out.println("writeStatement");
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
@@ -705,18 +710,20 @@ public class Compiler {
 
 	private ExprList exprList() {
 		// ExpressionList ::= Expression { "," Expression }
-
+System.out.println("exprList");
 		ExprList anExprList = new ExprList();
 		anExprList.addElement(expr());
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
 			anExprList.addElement(expr());
 		}
+		//for (Expr e : anExprList.getList())
+			//System.out.println(e.getType());
 		return anExprList;
 	}
 
 	private Expr expr() {
-
+		//System.out.println("expr");
 		Expr left = simpleExpr();
 		Symbol op = lexer.token;
 		if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT || op == Symbol.GE
@@ -726,7 +733,7 @@ public class Compiler {
 			Symbol opAux = lexer.token;
 			if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT || op == Symbol.GE
 					|| op == Symbol.GT)
-				System.out.println("Expression expected OR invalidsequence of symbols");
+				System.out.println("Expression expected OR invalid sequence of symbols");
 			
 			Expr right = simpleExpr();
 			left = new CompositeExpr(left, op, right);

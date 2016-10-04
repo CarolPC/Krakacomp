@@ -15,6 +15,7 @@ public class Program {
 
 	public void genKra(PW pw) {
 		System.out.println("Program::genKra");
+		if(classList.isEmpty())		System.out.println("Program::genKra");
 		for (KraClass kraClass : classList) {
 			System.out.println("Program::" + kraClass.getName() + "::genKra");
 			kraClass.genKra(pw);
