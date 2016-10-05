@@ -287,7 +287,6 @@ public class Compiler {
 		if (lexer.token != Symbol.IDENT)
 			signalError.showError("Identifier expected");
 		String variableName = lexer.getStringValue();
-
 		if (symbolTable.getInLocal(variableName) != null)
 			signalError.showError("Unique identifier expected");
 
@@ -424,7 +423,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		 */
 
 		Statement stmt = null;
-		// System.out.println("407: " + lexer.token);
+		//System.out.println("426: " + lexer.token);
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -459,9 +458,9 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		case WHILE:
 			stmt = whileStatement();
 			break;
-		/*
-		 * case DO: stmt = doWhileStatement(); break;
-		 */
+		case DO:
+			stmt = doWhileStatement(); 
+			break;
 		case SEMICOLON:
 			stmt = nullStatement();
 			break;
@@ -491,6 +490,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			// stmt = new DecrementStatement(new Variable(lexer.token()));
 			break;
 		default:
+			System.out.println("493: " + lexer.token);
 			signalError.showError("Statement expected");
 		}
 
@@ -588,6 +588,30 @@ System.out.println("assignExprLocalDec");
 		Statement stmt = statement();
 
 		return new WhileStatement(e, stmt);
+	}
+
+	private DoWhileStatement doWhileStatement() {
+		
+		if (lexer.token != Symbol.DO)
+			signalError.showError("expected 'do'");
+		lexer.nextToken();
+		if (lexer.token != Symbol.LEFTCURBRACKET)
+			signalError.showError("'{' expected after do");
+		Statement stmt = statement();
+		
+		if (lexer.token != Symbol.WHILE)
+			signalError.showError("expected 'while'");
+		
+		lexer.nextToken();
+		if (lexer.token != Symbol.LEFTPAR)
+			signalError.showError("'(' expected");
+		lexer.nextToken();
+		Expr e = expr();
+		if (lexer.token != Symbol.RIGHTPAR)
+			signalError.showError("')' expected");
+		lexer.nextToken();
+
+		return new DoWhileStatement(e, stmt);
 	}
 
 	private IfStatement ifStatement() {

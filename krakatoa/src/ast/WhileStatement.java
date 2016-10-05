@@ -10,6 +10,14 @@ public class WhileStatement extends Statement {
 		this.statement = statement;
 	}
 
+	public Expr getExpr() {
+		return expr;
+	}
+
+	public Statement getStatement() {
+		return statement;
+	}
+
 	@Override
 	public void genC(PW pw) {
 		// TODO Auto-generated method stub
