@@ -282,7 +282,7 @@ public class Compiler {
 	private LocalVariableList localDec() {
 		// LocalDec ::= Type IdList ";"
 		LocalVariableList localDecList = new LocalVariableList();
-
+System.out.println("localDec");
 		Type type = type();
 		if (lexer.token != Symbol.IDENT)
 			signalError.showError("Identifier expected");
@@ -431,8 +431,16 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		case INT:
 		case BOOLEAN:
 		case STRING:
-			assignExprLocalDec();
-			// stmt = new AssignStatement(assignExprLocalDec());
+			Expr expr = assignExprLocalDec();
+			if (expr instanceof AssignExpr)
+				stmt = new AssignStatement((AssignExpr) expr);
+			else if (expr instanceof MessageSendToSelf)
+				stmt = new MessageSendStatement((MessageSendToSelf) expr);
+			else if (expr instanceof MessageSendToSuper)
+				stmt = new MessageSendStatement((MessageSendToSuper) expr);
+			else if (expr instanceof MessageSendToVariable)
+				stmt = new MessageSendStatement((MessageSendToVariable) expr);
+			
 			break;
 		case ASSERT:
 			stmt = assertStatement();
@@ -530,7 +538,6 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 	 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] | LocalDec
 	 */
 	private Expr assignExprLocalDec() {
-System.out.println("assignExprLocalDec");
 		if (lexer.token == Symbol.INT || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.STRING ||
 		// token � uma classe declarada textualmente antes desta
 		// instru��o
@@ -542,21 +549,34 @@ System.out.println("assignExprLocalDec");
 			 * LocalDec LocalDec ::= Type IdList ``;''
 			 */
 			localDec();
+		} else if (lexer.token == Symbol.SUPER) {
+			return (MessageSendToSuper) expr();
+		} else if (lexer.token == Symbol.THIS) {
+			return (MessageSendToSelf) expr();
 		} else {
+			Expr left  = null;
+			Expr right = null;
+			
 			/*
 			 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ]
 			 * 
 			 * NOTE ER-SIN04.kra está vindo pra cá na linha 8, não sei como verificar se é um statement ou não.
 			 */
-			expr();
+			System.out.println(lexer.token);
+			left = expr();
+			System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
 				lexer.nextToken();
-				expr();
+				right = expr();
 				if (lexer.token != Symbol.SEMICOLON)
 					signalError.showError("Missing ';'", true);
 				else
 					lexer.nextToken();
+				
+				return new AssignExpr(left, right);
 			}
+				
+			return (MessageSendToVariable) left;
 		}
 		return null;
 	}
