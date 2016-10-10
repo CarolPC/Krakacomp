@@ -1,0 +1,18 @@
+Relat�rio do Compilador
+
+6 erros foram sinalizados em 23 arquivos sem erro (26%)
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-GER23.KRA, 24, Missing ';'
+
+OK-GER19.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER17.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER20.KRA, 12, 'public', 'private', or '}' expected
+
+OK-GER18.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER22.KRA, 14, 'public', 'private', or '}' expected
+

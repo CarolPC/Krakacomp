@@ -657,7 +657,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 
 		lexer.nextToken();
 		Expr e = expr();
-		if (lexer.token != Symbol.SEMICOLON)
+		if (lexer.token != Symbol.SEMICOLON)	
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
 System.out.println("Type name: " + e.getType().getName());
