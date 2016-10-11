@@ -1,13 +1,9 @@
 Relat�rio do Compilador
 
-1 de um total de 53 erros que deveriam ser sinalizados n�o o foram (1%)
+0 de um total de 53 erros que deveriam ser sinalizados n�o o foram (0%)
 1 erros foram sinalizados na linha errada (1%)
 0 erros foram sinalizados em 17 arquivos sem erro (0%)
-
-Erros que deveriam ser sinalizados mas n�o foram:
-
-ER-SIN04.KRA, 8, Statement expected (comp.Compiler.assignExprLocalDec())
-
+Todos os erros que deveriam ter sido sinalizados o foram
 ######################################################
 Erros que foram sinalizados na linha errada:
 
@@ -169,6 +165,11 @@ The 'ce' message is:      "Identifier expected"
 ER-SIN24.KRA
 The compiler message was: "Expression expected"
 The 'ce' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER-SIN04.KRA
+The compiler message was: "Statement expected"
+The 'ce' message is:      "Statement expected"
 
 
 ER-SIN37.KRA

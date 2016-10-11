@@ -282,7 +282,7 @@ public class Compiler {
 	private LocalVariableList localDec() {
 		// LocalDec ::= Type IdList ";"
 		LocalVariableList localDecList = new LocalVariableList();
-System.out.println("localDec");
+
 		Type type = type();
 		if (lexer.token != Symbol.IDENT)
 			signalError.showError("Identifier expected");
@@ -423,7 +423,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		 */
 
 		Statement stmt = null;
-		//System.out.println("426: " + lexer.token);
+		System.out.println("426: " + lexer.token);
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -431,16 +431,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		case INT:
 		case BOOLEAN:
 		case STRING:
-			Expr expr = assignExprLocalDec();
-			if (expr instanceof AssignExpr)
-				stmt = new AssignStatement((AssignExpr) expr);
-			else if (expr instanceof MessageSendToSelf)
-				stmt = new MessageSendStatement((MessageSendToSelf) expr);
-			else if (expr instanceof MessageSendToSuper)
-				stmt = new MessageSendStatement((MessageSendToSuper) expr);
-			else if (expr instanceof MessageSendToVariable)
-				stmt = new MessageSendStatement((MessageSendToVariable) expr);
-			
+			stmt = assignExprLocalDec();
 			break;
 		case ASSERT:
 			stmt = assertStatement();
@@ -488,12 +479,24 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			if (lexer.token != Symbol.PLUS)
 				signalError.showError("Missing '+'");
 			lexer.nextToken();
+			if (lexer.token != Symbol.IDENT)
+				signalError.showError("Identifier expected");
+			lexer.nextToken();
+			if (lexer.token != Symbol.SEMICOLON)
+				signalError.showError("Missing ';'");
+			lexer.nextToken();
 			// stmt = new IncrementStatement(new Variable(lexer.token()));
 			break;
 		case MINUS:
 			lexer.nextToken();
 			if (lexer.token != Symbol.MINUS)
 				signalError.showError("Missing '-'");
+			lexer.nextToken();
+			if (lexer.token != Symbol.IDENT)
+				signalError.showError("Identifier expected");
+			lexer.nextToken();
+			if (lexer.token != Symbol.SEMICOLON)
+				signalError.showError("Missing ';'");
 			lexer.nextToken();
 			// stmt = new DecrementStatement(new Variable(lexer.token()));
 			break;
@@ -537,7 +540,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 	/*
 	 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] | LocalDec
 	 */
-	private Expr assignExprLocalDec() {
+	private Statement assignExprLocalDec() {
 		if (lexer.token == Symbol.INT || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.STRING ||
 		// token � uma classe declarada textualmente antes desta
 		// instru��o
@@ -548,11 +551,11 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] |
 			 * LocalDec LocalDec ::= Type IdList ``;''
 			 */
-			localDec();
+			return localDec();
 		} else if (lexer.token == Symbol.SUPER) {
-			return (MessageSendToSuper) expr();
+			return new MessageSendStatement((MessageSendToSuper) expr());
 		} else if (lexer.token == Symbol.THIS) {
-			return (MessageSendToSelf) expr();
+			return new MessageSendStatement((MessageSendToSelf) expr());
 		} else {
 			Expr left  = null;
 			Expr right = null;
@@ -562,7 +565,9 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			 * 
 			 * NOTE ER-SIN04.kra está vindo pra cá na linha 8, não sei como verificar se é um statement ou não.
 			 */
-			System.out.println(lexer.token);
+			//if ((lexer.token == Symbol.IDENT && isType(lexer.getStringValue())))
+				//signalError.showError("Statement expected");
+			System.out.println("558:" + lexer.token);
 			left = expr();
 			System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
@@ -573,12 +578,15 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 				else
 					lexer.nextToken();
 				
-				return new AssignExpr(left, right);
+				return new AssignStatement(left, right);
 			}
+			
+			if (lexer.token == Symbol.SEMICOLON )
+				signalError.showError("Statement expected");
+			lexer.nextToken();
 				
-			return (MessageSendToVariable) left;
+			return new MessageSendStatement((MessageSendToVariable) left);
 		}
-		return null;
 	}
 
 	private ExprList realParameters() {
@@ -611,6 +619,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 	}
 
 	private DoWhileStatement doWhileStatement() {
+		System.out.println("doWhileStatement in");
 		
 		if (lexer.token != Symbol.DO)
 			signalError.showError("expected 'do'");
@@ -630,6 +639,8 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
+		
+		System.out.println("doWhileStatement out");
 
 		return new DoWhileStatement(e, stmt);
 	}
@@ -769,6 +780,7 @@ System.out.println("exprList");
 	private Expr expr() {
 		//System.out.println("expr");
 		Expr left = simpleExpr();
+		System.out.println("758:" + lexer.token);
 		Symbol op = lexer.token;
 		if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT || op == Symbol.GE
 				|| op == Symbol.GT) {
@@ -789,6 +801,7 @@ System.out.println("exprList");
 		Symbol op;
 
 		Expr left = term();
+		System.out.println("789:" + lexer.token);
 		while ((op = lexer.token) == Symbol.MINUS || op == Symbol.PLUS || op == Symbol.OR) {
 			lexer.nextToken();
 			Expr right = term();
@@ -801,6 +814,7 @@ System.out.println("exprList");
 		Symbol op;
 
 		Expr left = signalFactor();
+		System.out.println("802:" + lexer.token);
 		while ((op = lexer.token) == Symbol.DIV || op == Symbol.MULT || op == Symbol.AND) {
 			lexer.nextToken();
 			Expr right = signalFactor();
@@ -837,7 +851,7 @@ System.out.println("exprList");
 		MethodDec m;
 		Variable v;
 		KraClass tmpClass;
-		
+		System.out.println("839:" + lexer.token);
 		switch (lexer.token) {
 		// IntValue
 		case LITERALINT:
@@ -935,28 +949,32 @@ System.out.println("exprList");
 			 * PrimaryExpr ::= Id | Id "." Id | Id "." Id "(" [ ExpressionList ]
 			 * ")" | Id "." Id "." Id "(" [ ExpressionList ] ")" |
 			 */
-
+			System.out.println("937:" + lexer.token);
 			String firstId = lexer.getStringValue();
 			lexer.nextToken();
+			System.out.println("940:" + lexer.token);
 			if (lexer.token != Symbol.DOT) {
 				// Id
 				// retorne um objeto da ASA que representa um identificador
-				
+				System.out.println("944:" + lexer.token);
 				v = symbolTable.getInLocal(firstId);
-				
-				if(v == null)
+				System.out.println("946:" + lexer.token);
+				/*if(v == null)
 				{
+					System.out.println("949:" + lexer.token);
 					v = this.currClass.searchInstanceVariable(v);
+					System.out.println("950:" + lexer.token);
 					if(v == null)
 						signalError.showError("variable \""+firstId+"\" was not declared in this scope.");
 					else
 						signalError.showError("variable \""+firstId+"\" is a private variable.");
-				}
-				
+				}*/
+				System.out.println("955:" + lexer.token);
 				return new VariableExpr(v);
 				
 			} else { // Id "."
-								
+				System.out.println("960:" + lexer.token);
+				
 				v = symbolTable.getInLocal(firstId);
 				tmpClass = symbolTable.getInGlobal(v.getType().getName());
 				

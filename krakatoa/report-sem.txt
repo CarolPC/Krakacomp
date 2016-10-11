@@ -1,8 +1,8 @@
 Relat�rio do Compilador
 
-49 de um total de 79 erros que deveriam ser sinalizados n�o o foram (62%)
-16 erros foram sinalizados na linha errada (20%)
-6 erros foram sinalizados em 22 arquivos sem erro (27%)
+48 de um total de 79 erros que deveriam ser sinalizados n�o o foram (60%)
+17 erros foram sinalizados na linha errada (21%)
+7 erros foram sinalizados em 22 arquivos sem erro (31%)
 
 Erros que deveriam ser sinalizados mas n�o foram:
 
@@ -90,8 +90,6 @@ ER-SEM57.KRA, 21, Incompatible types cannot be compared with '==' because the re
 
 ER-SEM04.KRA, 11, Type error: value of the right-hand side is not subtype of the variable of the left-hand side. (comp.Compiler.assignExprLocalDec())
 
-ER-SEM51.KRA, 17, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
-
 ER-SEM70.KRA, 10, Method 'm' is being redefined (comp.Compiler.methodDec())
 
 ER-SEM12.KRA, 9, operator '+' of 'int' expects an 'int' value (comp.Compiler.simpleExpr())
@@ -171,8 +169,14 @@ ER-SEM74.KRA
     correto:    12, '.' or '=' expected after identifier OR statement expected (comp.Compiler.factor())
     sinalizado: 6, 'public', 'private', or '}' expected
 
+ER-SEM51.KRA
+    correto:    17, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
+    sinalizado: 29, Statement expected
+
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-SEM10.KRA, 44, Statement expected
 
 OK-SEM18.KRA, 11, 'public', 'private', or '}' expected
 

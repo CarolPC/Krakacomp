@@ -2,21 +2,27 @@ package ast;
 
 public class AssignStatement extends Statement {
 	
-	private AssignExpr assignExpr;
+	private Expr left;
+	private Expr right;
 
-	public AssignStatement(AssignExpr assignExpr) {
-		this.assignExpr = assignExpr;
+	public AssignStatement(Expr left, Expr right) {
+		this.left = left;
+		this.right = right;
 	}
 
 	@Override
 	public void genC(PW pw) {
 		// TODO Auto-generated method stub
 
-	}
+	}	
 
 	@Override
 	public void genKra(PW pw) {
-		assignExpr.genKra(pw);
+		pw.printIdent("");
+		left.genKra(pw);
+		pw.print(" = ");
+		right.genKra(pw);
+		pw.println(";");
 	}
 
 }
