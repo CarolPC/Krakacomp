@@ -1,6 +1,6 @@
 Relat�rio do Compilador
 
-7 erros foram sinalizados em 23 arquivos sem erro (30%)
+6 erros foram sinalizados em 23 arquivos sem erro (26%)
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
@@ -15,6 +15,4 @@ OK-GER20.KRA, 12, 'public', 'private', or '}' expected
 OK-GER18.KRA, 11, 'public', 'private', or '}' expected
 
 OK-GER22.KRA, 14, 'public', 'private', or '}' expected
-
-OK-GER08.KRA, 40, Statement expected
 

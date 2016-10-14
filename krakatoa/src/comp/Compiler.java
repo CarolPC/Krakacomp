@@ -39,7 +39,7 @@ public class Compiler {
 			if (lexer.token != Symbol.EOF) {
 				signalError.showError("End of file expected");
 			}
-			if(program.getClassList().isEmpty())System.out.println("Program::isEmpty");
+			//if(program.getClassList().isEmpty())System.out.println("Program::isEmpty");
 		} catch (RuntimeException e) {
 			// if there was an exception, there is a compilation signalError
 		}
@@ -128,7 +128,7 @@ public class Compiler {
 			signalError.show(ErrorSignaller.ident_expected);
 
 		String className = lexer.getStringValue();
-		System.out.println(className);
+		//System.out.println(className);
 
 		if (symbolTable.getInGlobal(className) != null)
 			signalError.showError("Class " + className + " has already been declared");
@@ -164,7 +164,7 @@ public class Compiler {
 		if (lexer.token != Symbol.LEFTCURBRACKET)
 			signalError.showError("'{' expected", true);
 		lexer.nextToken();
-		// System.out.println("164: " + lexer.token);
+		// //System.out.println("164: " + lexer.token);
 		while (lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
 
 			Symbol qualifier;
@@ -181,14 +181,14 @@ public class Compiler {
 				signalError.showError("'public' or 'private' expected");
 				qualifier = Symbol.PUBLIC;
 			}
-			// System.out.println("181: " + lexer.token);
+			// //System.out.println("181: " + lexer.token);
 			Type t = type();
-			// System.out.println("183: " + lexer.token);
+			// //System.out.println("183: " + lexer.token);
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("cldec Identifier expected");
 			String name = lexer.getStringValue();
 			lexer.nextToken();
-			// System.out.println("188: " + lexer.token);
+			// //System.out.println("188: " + lexer.token);
 			if (lexer.token == Symbol.LEFTPAR)
 				
 				if (qualifier == Symbol.PRIVATE)
@@ -199,7 +199,7 @@ public class Compiler {
 				signalError.showError("Attempt to declare a public instance variable");
 			else
 				instanceVarDec(t, name, instanceVarList);
-			// System.out.println("201: " + lexer.token);
+			// //System.out.println("201: " + lexer.token);
 		}
 
 		currentClass.setInstanceVariableList(instanceVarList);
@@ -216,29 +216,29 @@ public class Compiler {
 	private void instanceVarDec(Type type, String name, InstanceVariableList instanceVarList) {
 		// InstVarDec ::= "private" Type IdList ";"
 		InstanceVariable instanceVar = new InstanceVariable(name, type);
-		// System.out.println("216: " + lexer.token);
+		// //System.out.println("216: " + lexer.token);
 		if (!instanceVarList.addElement(instanceVar)) {
-			signalError.showError("Unique identifier expected");
+			signalError.showError("ivd Unique identifier expected");
 		}
 
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("ivd while Identifier expected");
 
 			String variableName = lexer.getStringValue();
 			instanceVar = new InstanceVariable(variableName, type);
 
 			if (!instanceVarList.addElement(instanceVar)) {
-				signalError.showError("Unique identifier expected");
+				signalError.showError("ivd while Unique identifier expected");
 			}
 			lexer.nextToken();
 		}
-		// System.out.println("232: " + lexer.token);
+		// //System.out.println("232: " + lexer.token);
 		if (lexer.token != Symbol.SEMICOLON)
 			signalError.show(ErrorSignaller.semicolon_expected);
 		lexer.nextToken();
-		// System.out.println("236: " + lexer.token);
+		// //System.out.println("236: " + lexer.token);
 	}
 
 	private void methodDec(Type type, String name, Symbol qualifier, MethodList methodList) {
@@ -246,6 +246,8 @@ public class Compiler {
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
 		 * StatementList "}"
 		 */
+		
+		currentMethodReturnType = type;
 
 		lexer.nextToken();
 		ParamList parameterList = null;
@@ -266,7 +268,7 @@ public class Compiler {
 
 		lexer.nextToken();
 		stmtList = statementList();
-		if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
+		if (stmtList.getSize() == 0)//System.out.println("stmtList.getSize()");
 		m.setStatementList(stmtList);
 		
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
@@ -276,7 +278,7 @@ public class Compiler {
 
 		symbolTable.removeLocalIdent();
 
-		
+		currentMethodReturnType = null;
 	}
 
 	private LocalVariableList localDec() {
@@ -285,10 +287,10 @@ public class Compiler {
 
 		Type type = type();
 		if (lexer.token != Symbol.IDENT)
-			signalError.showError("Identifier expected");
+			signalError.showError("ldec Identifier expected");
 		String variableName = lexer.getStringValue();
 		if (symbolTable.getInLocal(variableName) != null)
-			signalError.showError("Unique identifier expected");
+			signalError.showError("ldec Unique identifier expected");
 
 		Variable v = new Variable(variableName, type);
 
@@ -306,7 +308,7 @@ public class Compiler {
 			variableName = lexer.getStringValue();
 
 			if (symbolTable.getInLocal(variableName) != null)
-				signalError.showError("Unique identifier expected");
+				signalError.showError("ldec while Unique identifier expected");
 
 			v = new Variable(variableName, type);
 
@@ -343,7 +345,7 @@ public class Compiler {
 
 		Type t = type();
 		if (lexer.token != Symbol.IDENT)
-			signalError.showError("Identifier expected");
+			signalError.showError("pdec Identifier expected");
 
 		String identName = lexer.getStringValue();
 
@@ -405,13 +407,13 @@ public class Compiler {
 
 	private StatementList statementList() {
 		// CompStatement ::= "{" { Statement } "}"
-		System.out.println("statementList");
+		//System.out.println("statementList");
 		Symbol tk;
 		StatementList stmtList = new StatementList();
 		// statements always begin with an identifier, if, read, write, ...
 		while ((tk = lexer.token) != Symbol.RIGHTCURBRACKET && tk != Symbol.ELSE)
 			stmtList.addElement(statement());
-if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
+
 		return stmtList;
 	}
 
@@ -423,7 +425,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		 */
 
 		Statement stmt = null;
-		System.out.println("426: " + lexer.token);
+		//System.out.println("426: " + lexer.token);
 		switch (lexer.token) {
 		case THIS:
 		case IDENT:
@@ -480,7 +482,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 				signalError.showError("Missing '+'");
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("stat case + Identifier expected");
 			lexer.nextToken();
 			if (lexer.token != Symbol.SEMICOLON)
 				signalError.showError("Missing ';'");
@@ -493,7 +495,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 				signalError.showError("Missing '-'");
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("stat case - Identifier expected");
 			lexer.nextToken();
 			if (lexer.token != Symbol.SEMICOLON)
 				signalError.showError("Missing ';'");
@@ -501,8 +503,8 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			// stmt = new DecrementStatement(new Variable(lexer.token()));
 			break;
 		default:
-			System.out.println("493: " + lexer.token);
-			signalError.showError("Statement expected");
+			////System.out.println("493: " + lexer.token);
+			signalError.showError("stat def Statement expected");
 		}
 
 		return stmt;
@@ -544,7 +546,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		if (lexer.token == Symbol.INT || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.STRING ||
 		// token � uma classe declarada textualmente antes desta
 		// instru��o
-				(lexer.token == Symbol.IDENT && isType(lexer.getStringValue()))) {
+				(lexer.token == Symbol.IDENT && symbolTable.getInLocal(lexer.getLiteralStringValue()) == null  && isType(lexer.getStringValue()))) {
 			/*
 			 * uma declara��o de vari�vel. 'lexer.token' � o tipo da vari�vel
 			 *
@@ -567,9 +569,9 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			 */
 			//if ((lexer.token == Symbol.IDENT && isType(lexer.getStringValue())))
 				//signalError.showError("Statement expected");
-			System.out.println("558:" + lexer.token);
+			//System.out.println("558:" + lexer.token);
 			left = expr();
-			System.out.println(lexer.token);
+			//System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
 				lexer.nextToken();
 				right = expr();
@@ -581,8 +583,8 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 				return new AssignStatement(left, right);
 			}
 			
-			if (lexer.token == Symbol.SEMICOLON )
-				signalError.showError("Statement expected");
+			if (lexer.token != Symbol.SEMICOLON )
+				signalError.showError("aeld ; Statement expected");
 			lexer.nextToken();
 				
 			return new MessageSendStatement((MessageSendToVariable) left);
@@ -619,7 +621,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 	}
 
 	private DoWhileStatement doWhileStatement() {
-		System.out.println("doWhileStatement in");
+		//System.out.println("doWhileStatement in");
 		
 		if (lexer.token != Symbol.DO)
 			signalError.showError("expected 'do'");
@@ -640,7 +642,7 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 			signalError.showError("')' expected");
 		lexer.nextToken();
 		
-		System.out.println("doWhileStatement out");
+		//System.out.println("doWhileStatement out");
 
 		return new DoWhileStatement(e, stmt);
 	}
@@ -670,14 +672,18 @@ if (stmtList.getSize() == 0)System.out.println("stmtList.getSize()");
 		Expr e = expr();
 		if (lexer.token != Symbol.SEMICOLON)	
 			signalError.show(ErrorSignaller.semicolon_expected);
+		
+		if (e.getType() != currentMethodReturnType)
+			signalError.showError("Illegal 'return' statement. Method returns'" + currentMethodReturnType.getName() + "'");
+		
 		lexer.nextToken();
-System.out.println("Type name: " + e.getType().getName());
+		
 		return new ReturnStatement(e);
 	}
 
 	// NOTE não sei o quê, ainda mais como fazer aqui
 	private ReadStatement readStatement() {
-		System.out.println("readStatement");
+		//System.out.println("readStatement");
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected after 'read' command");
@@ -712,7 +718,7 @@ System.out.println("Type name: " + e.getType().getName());
 	}
 
 	private WriteStatement writeStatement() {
-		System.out.println("writeStatement");
+		//System.out.println("writeStatement");
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
@@ -765,7 +771,7 @@ System.out.println("Type name: " + e.getType().getName());
 
 	private ExprList exprList() {
 		// ExpressionList ::= Expression { "," Expression }
-System.out.println("exprList");
+//System.out.println("exprList");
 		ExprList anExprList = new ExprList();
 		anExprList.addElement(expr());
 		while (lexer.token == Symbol.COMMA) {
@@ -773,14 +779,14 @@ System.out.println("exprList");
 			anExprList.addElement(expr());
 		}
 		//for (Expr e : anExprList.getList())
-			//System.out.println(e.getType());
+			////System.out.println(e.getType());
 		return anExprList;
 	}
 
 	private Expr expr() {
-		//System.out.println("expr");
+		////System.out.println("expr");
 		Expr left = simpleExpr();
-		System.out.println("758:" + lexer.token);
+		//System.out.println("758:" + lexer.token);
 		Symbol op = lexer.token;
 		if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT || op == Symbol.GE
 				|| op == Symbol.GT) {
@@ -801,7 +807,7 @@ System.out.println("exprList");
 		Symbol op;
 
 		Expr left = term();
-		System.out.println("789:" + lexer.token);
+		//System.out.println("789:" + lexer.token);
 		while ((op = lexer.token) == Symbol.MINUS || op == Symbol.PLUS || op == Symbol.OR) {
 			lexer.nextToken();
 			Expr right = term();
@@ -814,7 +820,7 @@ System.out.println("exprList");
 		Symbol op;
 
 		Expr left = signalFactor();
-		System.out.println("802:" + lexer.token);
+		//System.out.println("802:" + lexer.token);
 		while ((op = lexer.token) == Symbol.DIV || op == Symbol.MULT || op == Symbol.AND) {
 			lexer.nextToken();
 			Expr right = signalFactor();
@@ -851,7 +857,7 @@ System.out.println("exprList");
 		MethodDec m;
 		Variable v;
 		KraClass tmpClass;
-		System.out.println("839:" + lexer.token);
+		//System.out.println("839:" + lexer.token);
 		switch (lexer.token) {
 		// IntValue
 		case LITERALINT:
@@ -891,7 +897,7 @@ System.out.println("exprList");
 		case NEW:
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("fact new Identifier expected");
 
 			String className = lexer.getStringValue();
 			/*
@@ -929,7 +935,7 @@ System.out.println("exprList");
 			} else
 				lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Identifier expected");
+				signalError.showError("fact sup Identifier expected");
 			messageName = lexer.getStringValue();
 			/*
 			 * para fazer as confer�ncias sem�nticas, procure por 'messageName'
@@ -949,31 +955,31 @@ System.out.println("exprList");
 			 * PrimaryExpr ::= Id | Id "." Id | Id "." Id "(" [ ExpressionList ]
 			 * ")" | Id "." Id "." Id "(" [ ExpressionList ] ")" |
 			 */
-			System.out.println("937:" + lexer.token);
+			//System.out.println("937:" + lexer.token);
 			String firstId = lexer.getStringValue();
 			lexer.nextToken();
-			System.out.println("940:" + lexer.token);
+			//System.out.println("940:" + lexer.token);
 			if (lexer.token != Symbol.DOT) {
 				// Id
 				// retorne um objeto da ASA que representa um identificador
-				System.out.println("944:" + lexer.token);
+				//System.out.println("944:" + lexer.token);
 				v = symbolTable.getInLocal(firstId);
-				System.out.println("946:" + lexer.token);
+				//System.out.println("946:" + lexer.token);
 				/*if(v == null)
 				{
-					System.out.println("949:" + lexer.token);
+					//System.out.println("949:" + lexer.token);
 					v = this.currClass.searchInstanceVariable(v);
-					System.out.println("950:" + lexer.token);
+					//System.out.println("950:" + lexer.token);
 					if(v == null)
 						signalError.showError("variable \""+firstId+"\" was not declared in this scope.");
 					else
 						signalError.showError("variable \""+firstId+"\" is a private variable.");
 				}*/
-				System.out.println("955:" + lexer.token);
+				//System.out.println("955:" + lexer.token);
 				return new VariableExpr(v);
 				
 			} else { // Id "."
-				System.out.println("960:" + lexer.token);
+				//System.out.println("960:" + lexer.token);
 				
 				v = symbolTable.getInLocal(firstId);
 				tmpClass = symbolTable.getInGlobal(v.getType().getName());
@@ -984,7 +990,7 @@ System.out.println("exprList");
 				lexer.nextToken(); // coma o "."
 				
 				if (lexer.token != Symbol.IDENT) {
-					signalError.showError("Identifier expected");
+					signalError.showError("fact not id Identifier expected");
 				} 
 				else {
 					// Id "." Id
@@ -1003,7 +1009,7 @@ System.out.println("exprList");
 						
 						lexer.nextToken();
 						if (lexer.token != Symbol.IDENT)
-							signalError.showError("Identifier expected");
+							signalError.showError("fact Identifier expected");
 						messageName = lexer.getStringValue();
 						lexer.nextToken();
 						exprList = this.realParameters();
@@ -1051,7 +1057,7 @@ System.out.println("exprList");
 			} else {
 				lexer.nextToken();
 				if (lexer.token != Symbol.IDENT)
-					signalError.showError("Identifier expected");
+					signalError.showError("fact dot not ident Identifier expected");
 				id = lexer.getStringValue();
 				lexer.nextToken();
 				// j� analisou "this" "." Id
@@ -1071,7 +1077,7 @@ System.out.println("exprList");
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
 					lexer.nextToken();
 					if (lexer.token != Symbol.IDENT)
-						signalError.showError("Identifier expected");
+						signalError.showError("fact dot Identifier expected");
 					lexer.nextToken();
 					exprList = this.realParameters();
 				} else {
@@ -1119,5 +1125,7 @@ System.out.println("exprList");
 	private KraClass currClass;
 	private Lexer lexer;
 	private ErrorSignaller signalError;
+	
+	private Type currentMethodReturnType;
 
 }
