@@ -62,7 +62,7 @@ The 'ce' message is:      "'public', 'private', or '}' expected"
 
 
 ER-SIN26.KRA
-The compiler message was: "')' expected"
+The compiler message was: "boolean expression expected in an if statement"
 The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
 
 
@@ -257,7 +257,7 @@ The 'ce' message is:      "Attempt to declare public instance variable 'i'"
 
 
 ER-SIN27.KRA
-The compiler message was: "')' expected"
+The compiler message was: "boolean expression expected in an if statement"
 The 'ce' message is:      "')' expected OR Unknown sequence of symbols"
 
 

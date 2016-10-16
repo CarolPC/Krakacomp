@@ -143,6 +143,9 @@ public class Compiler {
 			if (lexer.token != Symbol.IDENT)
 				signalError.show(ErrorSignaller.ident_expected);
 			String superclassName = lexer.getStringValue();
+			
+			if (className.equals(superclassName))
+				signalError.showError("Class '" + className + "' is inheriting from itself");
 
 			if (!isType(superclassName))
 				signalError.showError("The specified superclass '" + superclassName + "' doesn't have been declared.");
@@ -246,6 +249,11 @@ public class Compiler {
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
 		 * StatementList "}"
 		 */
+		if (name.equals("run"))
+			if(qualifier == Symbol.PRIVATE)
+				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot be private");
+			else if (type != Type.voidType)
+				signalError.showError("Method 'run' of class '" + currClass.getName() + "' with a return value type different from 'void'");
 		
 		currentMethodReturnType = type;
 
@@ -255,6 +263,8 @@ public class Compiler {
 
 		if (lexer.token != Symbol.LEFTPAR)
 			parameterList = formalParamDec();
+		if (name.equals("run") && parameterList.getSize() > 0)
+				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot take parameters");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		
@@ -580,6 +590,29 @@ public class Compiler {
 				else
 					lexer.nextToken();
 				
+				if (left.getType() != Type.undefinedType && right.getType() == Type.undefinedType)
+					signalError.showError("Type error: type of the left-hand sido of the assignment is a basic type and the type of the right-hand side is a class");
+				if (left.getType() == Type.undefinedType && right.getType() != Type.undefinedType)
+					signalError.showError("Type error: type of the right-hand sido of the assignment is a basic type and the type of the left-hand side is a class");
+				if (left.getType() != Type.undefinedType && right.getType() == Type.voidType)
+					signalError.showError("Type error: 'null' cannot be assigned to a variable of a basic type");
+				if (left.getType() != right.getType())
+					signalError.showError("Type error: '" + right.getType().getName() + "' cannot be assigned to " + left.getType().getName());
+				// Check subtype
+				if (left.getType() == Type.undefinedType && right.getType() == Type.undefinedType) {
+					KraClass leftClassType = this.symbolTable.getInGlobal(left.getType().getName());
+					KraClass rightClassType = this.symbolTable.getInGlobal(right.getType().getName());
+					
+					while (rightClassType.getSuperclass() != null)
+						if (rightClassType.getSuperclass().getName().equals(leftClassType.getName()))
+							break;
+						else
+							rightClassType = rightClassType.getSuperclass();
+					
+					if (rightClassType == null)
+						signalError.showError("Type error: '" + right.getType().getName() + "' is not a subtype of " + left.getType().getName());
+				}
+				
 				return new AssignStatement(left, right);
 			}
 			
@@ -612,6 +645,8 @@ public class Compiler {
 			signalError.showError("'(' expected");
 		lexer.nextToken();
 		Expr e = expr();
+		if (e.getType() != Type.booleanType)
+			signalError.showError("boolean expression expected in a while statement");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -638,6 +673,8 @@ public class Compiler {
 			signalError.showError("'(' expected");
 		lexer.nextToken();
 		Expr e = expr();
+		if (e.getType() != Type.booleanType)
+			signalError.showError("boolean expression expected in a do-while statement");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -654,6 +691,8 @@ public class Compiler {
 			signalError.showError("'(' expected");
 		lexer.nextToken();
 		Expr e = expr();
+		if (e.getType() != Type.booleanType)
+			signalError.showError("boolean expression expected in an if statement");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -689,6 +728,13 @@ public class Compiler {
 			signalError.showError("'(' expected after 'read' command");
 		lexer.nextToken();
 		ExprList el = exprList();
+		for (Expr e : el.getList())
+			if (e.getType() == Type.booleanType)
+				signalError.showError("Command 'write' does not accept 'boolean' variables");
+			else if (e.getType() == Type.voidType)
+				signalError.showError("Command 'write' does not accept 'void' variables");
+			else if (e.getType() == Type.undefinedType)
+				signalError.showError("Command 'write' does not accept non-primitives variables");
 		/*while (true) {
 			if (lexer.token == Symbol.THIS) {
 				lexer.nextToken();
@@ -724,6 +770,13 @@ public class Compiler {
 			signalError.showError("'(' expected");
 		lexer.nextToken();
 		ExprList el = exprList();
+		for (Expr e : el.getList())
+			if (e.getType() == Type.booleanType)
+				signalError.showError("Command 'write' does not accept 'boolean' variables");
+			else if (e.getType() == Type.voidType)
+				signalError.showError("Command 'write' does not accept 'void' variables");
+			else if (e.getType() == Type.undefinedType)
+				signalError.showError("Command 'write' does not accept non-primitives variables");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -740,7 +793,15 @@ public class Compiler {
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
 		lexer.nextToken();
-		WriteLineStatement writeStmt = new WriteLineStatement(exprList());
+		ExprList el = exprList();
+		for (Expr e : el.getList())
+			if (e.getType() == Type.booleanType)
+				signalError.showError("Command 'write' does not accept 'boolean' variables");
+			else if (e.getType() == Type.voidType)
+				signalError.showError("Command 'write' does not accept 'void' variables");
+			else if (e.getType() == Type.undefinedType)
+				signalError.showError("Command 'writeln' does not accept non-primitives variables");
+		WriteLineStatement writeStmt = new WriteLineStatement(el);
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -928,6 +989,8 @@ public class Compiler {
 		 * ")"
 		 */
 		case SUPER:
+			if (currClass.getSuperclass() == null)
+				signalError.showError("'super' used in class '" + currClass.getName() + "' that does not have a superclass");
 			// "super" "." Id "(" [ ExpressionList ] ")"
 			lexer.nextToken();
 			if (lexer.token != Symbol.DOT) {
