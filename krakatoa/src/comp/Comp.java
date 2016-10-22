@@ -37,7 +37,10 @@ public class Comp {
 				PrintWriter report;
 				FileOutputStream reportStream = null;
 				try {
+					// Para todos os testes
 					reportStream = new FileOutputStream("report-" + fileOrDirName.split("/")[2] + ".txt");
+					// Para apenas um teste
+					//reportStream = new FileOutputStream("report-" + fileOrDirName.split("/")[0] + ".txt");
 				} catch (FileNotFoundException e) {
 					outError.println("Could not create 'report.txt'");
 					return;

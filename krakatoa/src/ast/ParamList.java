@@ -56,7 +56,7 @@ public class ParamList {
         
         for(int i = 0; i < pList.getSize(); i++)
         {
-        	if(this.getList().get(i).getType() != pList.getList().get(i).getType())
+        	if(this.getList().get(i).getType().getName().equals(pList.getList().get(i).getType()))
         		return false;
         }
         

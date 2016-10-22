@@ -1,7 +1,7 @@
 Relat�rio do Compilador
 
-1 de um total de 53 erros que deveriam ser sinalizados n�o o foram (1%)
-1 erros foram sinalizados na linha errada (1%)
+1 de um total de 47 erros que deveriam ser sinalizados n�o o foram (2%)
+1 erros foram sinalizados na linha errada (2%)
 0 erros foram sinalizados em 17 arquivos sem erro (0%)
 
 Erros que deveriam ser sinalizados mas n�o foram:
@@ -46,18 +46,13 @@ The compiler message was: "ldec Identifier expected"
 The 'ce' message is:      "Identifier expected"
 
 
-ER-SIN55.KRA
-The compiler message was: "Class static has not been declared"
-The 'ce' message is:      "Identifier expected"
-
-
 ER-SIN13.KRA
 The compiler message was: "'{' expected"
 The 'ce' message is:      "'{' expected"
 
 
 ER-SIN43.KRA
-The compiler message was: "'public', 'private', or '}' expected"
+The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private', or '}' expected"
 
 
@@ -112,7 +107,7 @@ The 'ce' message is:      "Identifier expected"
 
 
 ER-SIN28.KRA
-The compiler message was: "'class' expected"
+The compiler message was: "Source code without a class 'Program'"
 The 'ce' message is:      "'class' expected"
 
 
@@ -126,24 +121,14 @@ The compiler message was: "Missing ';'"
 The 'ce' message is:      "Missing ';'"
 
 
-ER-SIN51.KRA
-The compiler message was: "Class static has not been declared"
-The 'ce' message is:      "Identifier expected"
-
-
 ER-SIN12.KRA
 The compiler message was: "Expression expected"
 The 'ce' message is:      "Expression expected"
 
 
 ER-SIN44.KRA
-The compiler message was: "'public', 'private', or '}' expected"
+The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private', or '}' expected"
-
-
-ER-SIN53.KRA
-The compiler message was: "'public', 'private', or '}' expected"
-The 'ce' message is:      "'private' expected"
 
 
 ER-SIN01.KRA
@@ -152,18 +137,13 @@ The 'ce' message is:      "'{' expected"
 
 
 ER-SIN31.KRA
-The compiler message was: "'public', 'private', or '}' expected"
+The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private', or '}' expected"
 
 
 ER-SIN57.KRA
-The compiler message was: "'public', 'private', or '}' expected"
+The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private' or '}' expected"
-
-
-ER-SIN54.KRA
-The compiler message was: "Class static has not been declared"
-The 'ce' message is:      "Identifier expected"
 
 
 ER-SIN24.KRA
@@ -194,11 +174,6 @@ The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
 ER-SIN36.KRA
 The compiler message was: "Class m has not been declared"
 The 'ce' message is:      "Identifier expected"
-
-
-ER-SIN52.KRA
-The compiler message was: "'public', 'private', or '}' expected"
-The 'ce' message is:      "'public' or 'private' expected"
 
 
 ER-SIN14.KRA
@@ -234,11 +209,6 @@ The 'ce' message is:      "'(' expected after 'while'"
 ER-SIN15.KRA
 The compiler message was: "')' expected"
 The 'ce' message is:      "')' expected"
-
-
-ER-SIN56.KRA
-The compiler message was: "'public', 'private', or '}' expected"
-The 'ce' message is:      "Identifier expected"
 
 
 ER-SIN19.KRA

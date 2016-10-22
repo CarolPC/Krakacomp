@@ -7,6 +7,8 @@ import java.io.*;
 import java.util.*;
 
 public class Compiler {
+	
+	//../tests/lex/ ../tests/sin/ ../tests/sem/ ../tests/chk/ ../tests/ger/
 
 	// compile must receive an input with an character less than
 	// p_input.lenght
@@ -33,15 +35,25 @@ public class Compiler {
 			while (lexer.token == Symbol.MOCall) {
 				metaobjectCallList.add(metaobjectCall());
 			}
-			kraClassList.add(classDec());
+			//kraClassList.add(classDec());
 			while (lexer.token == Symbol.CLASS)
 				kraClassList.add(classDec());
+			
+			boolean hasClassProgram = false;
+			for (KraClass kraClass : kraClassList)
+				if (kraClass.getName().equals("Program")) {
+					hasClassProgram = true;
+					break;
+				}
+			if (!hasClassProgram)
+				signalError.showError("Source code without a class 'Program'");
+			
 			if (lexer.token != Symbol.EOF) {
 				signalError.showError("End of file expected");
 			}
-			//if(program.getClassList().isEmpty())System.out.println("Program::isEmpty");
 		} catch (RuntimeException e) {
 			// if there was an exception, there is a compilation signalError
+			e.printStackTrace();
 		}
 		return program;
 	}
@@ -119,8 +131,6 @@ public class Compiler {
 		 * FormalParamDec ] ")" "{" StatementList "}" Qualifier ::= [ "static" ]
 		 * ( "private" | "public" )
 		 */
-		// TODO o modificador final para classe vai onde?(Não vai ter FINAL ass:
-		// Rich)
 		if (lexer.token != Symbol.CLASS)
 			signalError.showError("'class' expected");
 		lexer.nextToken();
@@ -128,8 +138,7 @@ public class Compiler {
 			signalError.show(ErrorSignaller.ident_expected);
 
 		String className = lexer.getStringValue();
-		//System.out.println(className);
-
+		
 		if (symbolTable.getInGlobal(className) != null)
 			signalError.showError("Class " + className + " has already been declared");
 		KraClass currentClass = new KraClass(className);
@@ -167,7 +176,6 @@ public class Compiler {
 		if (lexer.token != Symbol.LEFTCURBRACKET)
 			signalError.showError("'{' expected", true);
 		lexer.nextToken();
-		// //System.out.println("164: " + lexer.token);
 		while (lexer.token == Symbol.PRIVATE || lexer.token == Symbol.PUBLIC) {
 
 			Symbol qualifier;
@@ -184,14 +192,14 @@ public class Compiler {
 				signalError.showError("'public' or 'private' expected");
 				qualifier = Symbol.PUBLIC;
 			}
-			// //System.out.println("181: " + lexer.token);
+			
 			Type t = type();
-			// //System.out.println("183: " + lexer.token);
+			
 			if (lexer.token != Symbol.IDENT)
 				signalError.showError("cldec Identifier expected");
 			String name = lexer.getStringValue();
 			lexer.nextToken();
-			// //System.out.println("188: " + lexer.token);
+
 			if (lexer.token == Symbol.LEFTPAR)
 				
 				if (qualifier == Symbol.PRIVATE)
@@ -202,7 +210,17 @@ public class Compiler {
 				signalError.showError("Attempt to declare a public instance variable");
 			else
 				instanceVarDec(t, name, instanceVarList);
-			// //System.out.println("201: " + lexer.token);
+		}
+		
+		// Isso não está funcionando
+		if (className.equals("Program")) {
+			boolean hasRunMethod = false;
+			for (Iterator<MethodDec> publicMethod = publicMethodList.elements(); publicMethod.hasNext();)
+				if (hasRunMethod = publicMethod.next().getName().equals("run"))
+					break;
+			
+			if (!hasRunMethod)
+				signalError.showError("Method 'run' was not found in class '" + className + "'");
 		}
 
 		currentClass.setInstanceVariableList(instanceVarList);
@@ -254,6 +272,8 @@ public class Compiler {
 				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot be private");
 			else if (type != Type.voidType)
 				signalError.showError("Method 'run' of class '" + currClass.getName() + "' with a return value type different from 'void'");
+		if (currClass.searchInstanceVariable(name) != null)
+			signalError.showError("Method '" + name + "' has name equal to an instance variable");
 		
 		currentMethodReturnType = type;
 
@@ -269,17 +289,21 @@ public class Compiler {
 			signalError.showError("')' expected");
 		
 		MethodDec m = new MethodDec(qualifier, type, name, parameterList);
-		if(!methodList.addElement(m))
-			signalError.showError("Method has already been declared");
 
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTCURBRACKET)
 			signalError.showError("'{' expected");
 
 		lexer.nextToken();
-		stmtList = statementList();
-		if (stmtList.getSize() == 0)//System.out.println("stmtList.getSize()");
-		m.setStatementList(stmtList);
+		m.setStatementList(statementList());
+		
+		if (currentMethodReturnType != Type.voidType) {
+			Iterator<Statement> stmt = stmtList.elements();
+			boolean hasReturnStatement = false;
+			while (stmt.hasNext() && !(hasReturnStatement = stmt.next() instanceof ReturnStatement)) ;
+			if (!hasReturnStatement)
+				signalError.showError("Missing 'return' statement method in '" + name + "'");
+		}
 		
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'}' expected");
@@ -289,6 +313,9 @@ public class Compiler {
 		symbolTable.removeLocalIdent();
 
 		currentMethodReturnType = null;
+		
+		if(!methodList.addElement(m))
+			signalError.showError("Method '" + name + "' is being redeclared");
 	}
 
 	private LocalVariableList localDec() {
@@ -464,7 +491,10 @@ public class Compiler {
 			stmt = ifStatement();
 			break;
 		case BREAK:
+			if (whileStack.size() == 0)
+				signalError.showError("'break' statement found outside a 'while' statement");
 			stmt = breakStatement();
+			whileStack.pop();
 			break;
 		case WHILE:
 			stmt = whileStatement();
@@ -584,7 +614,7 @@ public class Compiler {
 			//System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
 				lexer.nextToken();
-				right = expr();
+				right = expr();	
 				if (lexer.token != Symbol.SEMICOLON)
 					signalError.showError("Missing ';'", true);
 				else
@@ -639,6 +669,7 @@ public class Compiler {
 	}
 
 	private WhileStatement whileStatement() {
+		whileStack.push(true);
 
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
@@ -651,13 +682,14 @@ public class Compiler {
 			signalError.showError("')' expected");
 		lexer.nextToken();
 		Statement stmt = statement();
+		
+		// Acho que deveria ter um pop aqui, mas quando tem, tem um erro que não é reportado
+		//whileStack.pop();
 
 		return new WhileStatement(e, stmt);
 	}
 
-	private DoWhileStatement doWhileStatement() {
-		//System.out.println("doWhileStatement in");
-		
+	private DoWhileStatement doWhileStatement() {		
 		if (lexer.token != Symbol.DO)
 			signalError.showError("expected 'do'");
 		lexer.nextToken();
@@ -678,8 +710,6 @@ public class Compiler {
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
-		
-		//System.out.println("doWhileStatement out");
 
 		return new DoWhileStatement(e, stmt);
 	}
@@ -720,7 +750,6 @@ public class Compiler {
 		return new ReturnStatement(e);
 	}
 
-	// NOTE não sei o quê, ainda mais como fazer aqui
 	private ReadStatement readStatement() {
 		//System.out.println("readStatement");
 		lexer.nextToken();
@@ -730,11 +759,13 @@ public class Compiler {
 		ExprList el = exprList();
 		for (Expr e : el.getList())
 			if (e.getType() == Type.booleanType)
-				signalError.showError("Command 'write' does not accept 'boolean' variables");
+				signalError.showError("Command 'read' does not accept 'boolean' variables");
 			else if (e.getType() == Type.voidType)
-				signalError.showError("Command 'write' does not accept 'void' variables");
+				signalError.showError("Command 'read' does not accept 'void' variables");
 			else if (e.getType() == Type.undefinedType)
-				signalError.showError("Command 'write' does not accept non-primitives variables");
+				signalError.showError("Command 'read' does not accept non-primitives variables");
+			else if (e.getType() instanceof KraClass)
+				signalError.showError("Command 'read' expects a variable");
 		/*while (true) {
 			if (lexer.token == Symbol.THIS) {
 				lexer.nextToken();
@@ -777,6 +808,8 @@ public class Compiler {
 				signalError.showError("Command 'write' does not accept 'void' variables");
 			else if (e.getType() == Type.undefinedType)
 				signalError.showError("Command 'write' does not accept non-primitives variables");
+			else if (e.getType() instanceof KraClass)
+				signalError.showError("Command 'write' does not accept objects");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
@@ -801,6 +834,8 @@ public class Compiler {
 				signalError.showError("Command 'write' does not accept 'void' variables");
 			else if (e.getType() == Type.undefinedType)
 				signalError.showError("Command 'writeln' does not accept non-primitives variables");
+			else if (e.getType() instanceof KraClass)
+				signalError.showError("Command 'write' does not accept objects");
 		WriteLineStatement writeStmt = new WriteLineStatement(el);
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
@@ -815,7 +850,7 @@ public class Compiler {
 	// NOTE não sei se é útil, mas BreakStatement pode estar vazio só para
 	// checarmos que temos um break e devemos cancelar e sair fora do laço
 	// corrente
-	private BreakStatement breakStatement() {
+	private BreakStatement breakStatement() {			
 		lexer.nextToken();
 		if (lexer.token != Symbol.SEMICOLON)
 			signalError.show(ErrorSignaller.semicolon_expected);
@@ -854,11 +889,14 @@ public class Compiler {
 			lexer.nextToken();
 			
 			Symbol opAux = lexer.token;
-			if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT || op == Symbol.GE
-					|| op == Symbol.GT)
+			if (opAux == Symbol.EQ || opAux == Symbol.NEQ || opAux == Symbol.LE || opAux == Symbol.LT || opAux == Symbol.GE
+					|| opAux == Symbol.GT)
 				System.out.println("Expression expected OR invalid sequence of symbols");
 			
 			Expr right = simpleExpr();
+			
+			//if (io == Symbol)
+			
 			left = new CompositeExpr(left, op, right);
 		}
 		return left;
@@ -872,6 +910,9 @@ public class Compiler {
 		while ((op = lexer.token) == Symbol.MINUS || op == Symbol.PLUS || op == Symbol.OR) {
 			lexer.nextToken();
 			Expr right = term();
+			
+			if (left.getType() != right.getType())
+				signalError.showError("operator '" + op + "' of '" + left.getType().getName() + "' expects an '" + right.getType().getName() + "' value");
 			left = new CompositeExpr(left, op, right);
 		}
 		return left;
@@ -1076,6 +1117,10 @@ public class Compiler {
 						messageName = lexer.getStringValue();
 						lexer.nextToken();
 						exprList = this.realParameters();
+						m = this.currClass.searchMethod(new MethodDec(id, exprList));
+						
+						if(m == null)
+							signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
 
 					} else if (lexer.token == Symbol.LEFTPAR) {
 						// Id "." Id "(" [ ExpressionList ] ")"
@@ -1096,7 +1141,7 @@ public class Compiler {
 					} else {
 						// retorne o objeto da ASA que representa Id "." Id
 						
-						v = tmpClass.searchInstanceVariable(new Variable(id, null));
+						v = tmpClass.searchInstanceVariable(id);
 						if(v == null)
 							signalError.showError(tmpClass.getName()+" has no variable with name \""+ v.getName() +"\"");
 						else
@@ -1143,6 +1188,10 @@ public class Compiler {
 						signalError.showError("fact dot Identifier expected");
 					lexer.nextToken();
 					exprList = this.realParameters();
+					m = this.currClass.searchMethod(new MethodDec(id, exprList));
+					
+					if(m == null)
+						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
 				} else {
 					// retorne o objeto da ASA que representa "this" "." Id
 					/*
@@ -1150,7 +1199,7 @@ public class Compiler {
 					 * vari�vel de inst�ncia 'ident'
 					 */
 					
-					v = this.currClass.searchInstanceVariable(new Variable(id, null));
+					v = this.currClass.searchInstanceVariable(id);
 					if(v == null)
 						signalError.showError(this.currClass.getName()+" has no variable with name \""+ v.getName() +"\"");
 					
@@ -1190,5 +1239,6 @@ public class Compiler {
 	private ErrorSignaller signalError;
 	
 	private Type currentMethodReturnType;
+	private Stack<Boolean> whileStack = new Stack<>();
 
 }

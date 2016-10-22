@@ -36,6 +36,10 @@ public class MethodDec {
 	private Type returnType;
 	private StatementList stmtList;
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public void setStatementList(StatementList s) {
 		this.stmtList = s;
 	}
@@ -70,5 +74,12 @@ public class MethodDec {
         
         return true;
     }
+	
+	public boolean equals(MethodDec methodDec) {
+		if (this.name.equals(methodDec.name)
+				|| this.paramList.equals(methodDec.paramList))
+			return false;
+		return true;
+	}
 	
 }

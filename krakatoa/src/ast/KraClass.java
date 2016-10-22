@@ -33,12 +33,12 @@ public class KraClass extends Type {
 	   return mSearch;
    }
    
-   public Variable searchInstanceVariable(Variable v)
+   public Variable searchInstanceVariable(String name)
    {
-	   Variable vSearch = this.instanceVariableList.searchVariable(v);
+	   Variable vSearch = (this.instanceVariableList == null) ? null : this.instanceVariableList.searchVariable(name);
 	   
-	   if(v == null && this.getSuperclass() != null)
-		   return this.getSuperclass().searchInstanceVariable(v);
+	   if(vSearch == null && this.getSuperclass() != null)
+		   return this.getSuperclass().searchInstanceVariable(name);
 	   
 	   return vSearch;
    }

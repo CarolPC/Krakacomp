@@ -1,6 +1,6 @@
 Relat�rio do Compilador
 
-22 de um total de 63 erros que deveriam ser sinalizados n�o o foram (34%)
+22 de um total de 64 erros que deveriam ser sinalizados n�o o foram (34%)
 8 erros foram sinalizados na linha errada (12%)
 2 erros foram sinalizados em 17 arquivos sem erro (11%)
 
@@ -61,10 +61,6 @@ ER-SEM83.KRA
     correto:    7, Class 'Program' is inheriting from final class 'Terra' 
     sinalizado: 3, Source code without a class 'Program'
 
-ER-SEM33.KRA
-    correto:    11, Method 'm' is being redeclared (comp.Compiler.methodDec())
-    sinalizado: 14, Method 'm' is being redeclared
-
 ER-SEM41.KRA
     correto:    14, Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class (comp.Compiler.assignExprLocalDec())
     sinalizado: 15, Type error: 'int' cannot be assigned to A
@@ -72,6 +68,10 @@ ER-SEM41.KRA
 ER-SEM38.KRA
     correto:    20, Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side (comp.Compiler.assignExprLocalDec())
     sinalizado: 21, Type error: 'A' cannot be assigned to B
+
+ER-SEM84.KRA
+    correto:    12, Redeclaration of final method 'finalMethod' (comp.Compiler.methodDec())
+    sinalizado: 6, 'public', 'private', or '}' expected
 
 ER-SEM04.KRA
     correto:    11, Type error: value of the right-hand side is not subtype of the variable of the left-hand side. (comp.Compiler.assignExprLocalDec())
@@ -110,6 +110,11 @@ The 'ce' message is:      "boolean expression expected in a do-while statement"
 ER-SEM49.KRA
 The compiler message was: "Identifier expected"
 The 'ce' message is:      "Class expected"
+
+
+ER-SEM33.KRA
+The compiler message was: "Method has already been declared"
+The 'ce' message is:      "Method 'm' is being redeclared"
 
 
 ER-SEM46.KRA

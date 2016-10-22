@@ -17,10 +17,10 @@ public class InstanceVariableList {
       return true;
     }
     
-    public Variable searchVariable(Variable v)
+    public Variable searchVariable(String name)
     {
  	  	for(Variable vSearch: this.instanceVariableList) {
- 	   		if(v == vSearch)
+ 	   		if(name.equals(vSearch))
  	  			return vSearch;
  	   	}
  	  	
