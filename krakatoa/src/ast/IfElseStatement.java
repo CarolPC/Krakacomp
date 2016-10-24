@@ -16,7 +16,7 @@ public class IfElseStatement extends IfStatement {
 		pw.println(") {");
 		
 		pw.add();
-		getStatement().genKra(pw);
+		getStatements().genKra(pw);
 		pw.sub();
 		
 		pw.printIdent("} else {");

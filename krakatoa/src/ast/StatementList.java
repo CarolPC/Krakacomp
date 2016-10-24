@@ -3,7 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class StatementList {
+public class StatementList extends Statement {
 	
 		public StatementList() {
 	       stmtList = new ArrayList<Statement>();
@@ -31,6 +31,12 @@ public class StatementList {
 				iterator
 					.next()
 					.genKra(pw);
+		}
+
+		@Override
+		public void genC(PW pw) {
+			// TODO Auto-generated method stub
+			
 		}
 
 }

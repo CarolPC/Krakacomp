@@ -131,6 +131,8 @@ public class Compiler {
 		 * FormalParamDec ] ")" "{" StatementList "}" Qualifier ::= [ "static" ]
 		 * ( "private" | "public" )
 		 */
+		boolean hasRunMethod = false;
+		
 		if (lexer.token != Symbol.CLASS)
 			signalError.showError("'class' expected");
 		lexer.nextToken();
@@ -204,8 +206,13 @@ public class Compiler {
 				
 				if (qualifier == Symbol.PRIVATE)
 					methodDec(t, name, qualifier, privateMethodList);
-				else
+				else {
 					methodDec(t, name, qualifier, publicMethodList);
+					
+					if(name.equals("run"))
+						hasRunMethod = true;
+					
+				}
 			else if (qualifier != Symbol.PRIVATE)
 				signalError.showError("Attempt to declare a public instance variable");
 			else
@@ -214,11 +221,6 @@ public class Compiler {
 		
 		// Isso não está funcionando
 		if (className.equals("Program")) {
-			boolean hasRunMethod = false;
-			for (Iterator<MethodDec> publicMethod = publicMethodList.elements(); publicMethod.hasNext();)
-				if (hasRunMethod = publicMethod.next().getName().equals("run"))
-					break;
-			
 			if (!hasRunMethod)
 				signalError.showError("Method 'run' was not found in class '" + className + "'");
 		}
@@ -267,6 +269,7 @@ public class Compiler {
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
 		 * StatementList "}"
 		 */
+		
 		if (name.equals("run"))
 			if(qualifier == Symbol.PRIVATE)
 				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot be private");
@@ -323,6 +326,8 @@ public class Compiler {
 		LocalVariableList localDecList = new LocalVariableList();
 
 		Type type = type();
+		
+		
 		if (lexer.token != Symbol.IDENT)
 			signalError.showError("ldec Identifier expected");
 		String variableName = lexer.getStringValue();
@@ -337,8 +342,10 @@ public class Compiler {
 
 		lexer.nextToken();
 
+				
 		while (lexer.token == Symbol.COMMA) {
 			lexer.nextToken();
+						
 			if (lexer.token != Symbol.IDENT)
 				signalError.showError("Missing Identifier");
 
@@ -356,8 +363,11 @@ public class Compiler {
 			lexer.nextToken();
 		}
 
+		
 		if (lexer.token != Symbol.SEMICOLON)
-			signalError.showError("Missing ';'");
+			signalError.showError("Missing ';'",true);
+		
+		lexer.nextToken();
 
 		return localDecList;
 	}
@@ -432,12 +442,15 @@ public class Compiler {
 
 	private StatementList compositeStatement() {
 
+		if(lexer.token != Symbol.LEFTCURBRACKET)
+			signalError.showError("{ expected",true);
+		
 		lexer.nextToken();
 		StatementList stmtList = statementList();
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'}' expected");
-		else
-			lexer.nextToken();
+
+		lexer.nextToken();
 
 		return stmtList;
 	}
@@ -509,7 +522,7 @@ public class Compiler {
 			// NOTE Houston, temos um problema! Tecnicamente, um
 			// CompositeStatement não
 			// é um Statement, ou é?
-			compositeStatement();
+			stmt = compositeStatement();
 			break;
 		// NOTE Foi o que eu pensei para tratarmos incremento e decremento,
 		// veja primeiro se concorda Henrique, acho que daí precisamos criar
@@ -565,8 +578,11 @@ public class Compiler {
 		}
 		String message = lexer.getLiteralStringValue();
 		lexer.nextToken();
-		if (lexer.token == Symbol.SEMICOLON)
-			lexer.nextToken();
+		
+		if (lexer.token != Symbol.SEMICOLON)
+			signalError.showError("Expected ;",true);
+		
+		lexer.nextToken();
 
 		return new StatementAssert(e, lineNumber, message);
 	}
@@ -617,11 +633,11 @@ public class Compiler {
 				right = expr();	
 				if (lexer.token != Symbol.SEMICOLON)
 					signalError.showError("Missing ';'", true);
-				else
-					lexer.nextToken();
+				
+				lexer.nextToken();
 				
 				if (left.getType() != Type.undefinedType && right.getType() == Type.undefinedType)
-					signalError.showError("Type error: type of the left-hand sido of the assignment is a basic type and the type of the right-hand side is a class");
+					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
 				if (left.getType() == Type.undefinedType && right.getType() != Type.undefinedType)
 					signalError.showError("Type error: type of the right-hand sido of the assignment is a basic type and the type of the left-hand side is a class");
 				if (left.getType() != Type.undefinedType && right.getType() == Type.voidType)
@@ -647,10 +663,10 @@ public class Compiler {
 			}
 			
 			if (lexer.token != Symbol.SEMICOLON )
-				signalError.showError("aeld ; Statement expected");
+				signalError.showError("aeld ; Statement expected",true);
 			lexer.nextToken();
-				
-			return new MessageSendStatement((MessageSendToVariable) left);
+
+			return new MessageSendStatement((MessageSend) left);
 		}
 	}
 
@@ -711,6 +727,11 @@ public class Compiler {
 			signalError.showError("')' expected");
 		lexer.nextToken();
 
+		if(lexer.token != Symbol.SEMICOLON)
+			signalError.showError("expected ; after ) in do-while statement",true);
+		
+		lexer.nextToken();
+		
 		return new DoWhileStatement(e, stmt);
 	}
 
@@ -740,7 +761,7 @@ public class Compiler {
 		lexer.nextToken();
 		Expr e = expr();
 		if (lexer.token != Symbol.SEMICOLON)	
-			signalError.show(ErrorSignaller.semicolon_expected);
+			signalError.showError("; expected after return",true);
 		
 		if (e.getType() != currentMethodReturnType)
 			signalError.showError("Illegal 'return' statement. Method returns'" + currentMethodReturnType.getName() + "'");
@@ -788,7 +809,7 @@ public class Compiler {
 			signalError.showError("')' expected");
 		lexer.nextToken();
 		if (lexer.token != Symbol.SEMICOLON)
-			signalError.show(ErrorSignaller.semicolon_expected);
+			signalError.showError("; expected in read statement",true);
 		lexer.nextToken();
 
 		return new ReadStatement(el);
@@ -814,7 +835,7 @@ public class Compiler {
 			signalError.showError("')' expected");
 		lexer.nextToken();
 		if (lexer.token != Symbol.SEMICOLON)
-			signalError.show(ErrorSignaller.semicolon_expected);
+			signalError.showError("; expected in write statement",true);
 		lexer.nextToken();
 
 		return new WriteStatement(el);
@@ -841,7 +862,7 @@ public class Compiler {
 			signalError.showError("')' expected");
 		lexer.nextToken();
 		if (lexer.token != Symbol.SEMICOLON)
-			signalError.show(ErrorSignaller.semicolon_expected);
+			signalError.showError("; expected in writeln statement",true);
 		lexer.nextToken();
 
 		return writeStmt;
@@ -1052,40 +1073,35 @@ public class Compiler {
 			if(m == null)
 				signalError.showError("method \""+ messageName + "\"doesn't exist on superclass or its superclasses");
 			
-			//retornar alguma coisa depois, provavelmente algum tipo de messageSend 
-			break;
+			return new MessageSendToMethod(new MessageSendToSuper(this.currClass.getSuperclass()), m, exprList);
+			
 		case IDENT:
 			/*
 			 * PrimaryExpr ::= Id | Id "." Id | Id "." Id "(" [ ExpressionList ]
 			 * ")" | Id "." Id "." Id "(" [ ExpressionList ] ")" |
 			 */
-			//System.out.println("937:" + lexer.token);
 			String firstId = lexer.getStringValue();
+			v = symbolTable.getInLocal(firstId);
+			
+			if(v == null) {
+				v = this.currClass.searchInstanceVariable(firstId);
+			
+				if(v == null)
+					signalError.showError("variable \""+firstId+"\" was not declared in this scope.");
+				else
+					signalError.showError("variable \""+firstId+"\" is a private variable.");
+			
+			}
+			
 			lexer.nextToken();
-			//System.out.println("940:" + lexer.token);
+
 			if (lexer.token != Symbol.DOT) {
 				// Id
 				// retorne um objeto da ASA que representa um identificador
-				//System.out.println("944:" + lexer.token);
-				v = symbolTable.getInLocal(firstId);
-				//System.out.println("946:" + lexer.token);
-				/*if(v == null)
-				{
-					//System.out.println("949:" + lexer.token);
-					v = this.currClass.searchInstanceVariable(v);
-					//System.out.println("950:" + lexer.token);
-					if(v == null)
-						signalError.showError("variable \""+firstId+"\" was not declared in this scope.");
-					else
-						signalError.showError("variable \""+firstId+"\" is a private variable.");
-				}*/
-				//System.out.println("955:" + lexer.token);
 				return new VariableExpr(v);
 				
 			} else { // Id "."
-				//System.out.println("960:" + lexer.token);
 				
-				v = symbolTable.getInLocal(firstId);
 				tmpClass = symbolTable.getInGlobal(v.getType().getName());
 				
 				if(tmpClass == null)
@@ -1098,8 +1114,8 @@ public class Compiler {
 				} 
 				else {
 					// Id "." Id
-					lexer.nextToken();
 					id = lexer.getStringValue();
+					lexer.nextToken();
 					if (lexer.token == Symbol.DOT) {
 						// Id "." Id "." Id "(" [ ExpressionList ] ")"
 						/*
@@ -1136,19 +1152,22 @@ public class Compiler {
 						if(m == null)
 							signalError.showError("method doesn't exist in class \""+tmpClass.getName() + "\" or its superclasses");
 						
-						//retornar alguma coisa depois, provavelmente algum tipo de messageSend
+						return new MessageSendToMethod(new VariableExpr(v), m, exprList);
 						
 					} else {
 						// retorne o objeto da ASA que representa Id "." Id
 						
-						v = tmpClass.searchInstanceVariable(id);
-						if(v == null)
-							signalError.showError(tmpClass.getName()+" has no variable with name \""+ v.getName() +"\"");
+						Variable vInstance = tmpClass.searchInstanceVariable(id);
+						if(vInstance == null)
+							signalError.showError(tmpClass.getName()+" has no instance variable with name \""+ id +"\"");
 						else
 							signalError.showError("you cannot access private variable");
+						
+						return new MessageSendToVariable(new VariableExpr(v),vInstance);
 					}
 				}
 			}
+			
 			break;
 		case THIS:
 			/*
@@ -1161,7 +1180,7 @@ public class Compiler {
 				// only 'this'
 				// retorne um objeto da ASA que representa 'this'
 				// confira se n�o estamos em um m�todo est�tico
-				return null;
+				return new MessageSendToSelf(this.currClass);
 			} else {
 				lexer.nextToken();
 				if (lexer.token != Symbol.IDENT)
@@ -1176,13 +1195,17 @@ public class Compiler {
 					 * 'ident' e que pode tomar os par�metros de ExpressionList
 					 */
 					exprList = this.realParameters();
+					
 					m = this.currClass.searchMethod(new MethodDec(id, exprList));
 					
 					if(m == null)
 						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
 					
+					return new MessageSendToMethod(new MessageSendToSelf(this.currClass), m, exprList); 
+										
 				} else if (lexer.token == Symbol.DOT) {
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
+					signalError.showError("Static variables are not permitted");
 					lexer.nextToken();
 					if (lexer.token != Symbol.IDENT)
 						signalError.showError("fact dot Identifier expected");
@@ -1203,7 +1226,7 @@ public class Compiler {
 					if(v == null)
 						signalError.showError(this.currClass.getName()+" has no variable with name \""+ v.getName() +"\"");
 					
-					return null;
+					return new MessageSendToVariable(new MessageSendToSelf(this.currClass),v);
 				}
 			}
 			break;

@@ -14,7 +14,7 @@ public class IfStatement extends Statement {
 		return expr;
 	}
 	
-	public Statement getStatement() {
+	public Statement getStatements() {
 		return statement;
 	}
 

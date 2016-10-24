@@ -26,7 +26,7 @@ public class WhileStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.printIdent("while (");
+		/*pw.printIdent("while (");
 		expr.genKra(pw);
 		pw.println(") {");
 		
@@ -34,7 +34,7 @@ public class WhileStatement extends Statement {
 		statement.genKra(pw);
 		pw.sub();
 		
-		pw.printlnIdent("}");
+		pw.printlnIdent("}");*/
 	}
 
 }

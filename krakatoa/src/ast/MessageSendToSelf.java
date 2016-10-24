@@ -2,9 +2,14 @@ package ast;
 
 
 public class MessageSendToSelf extends MessageSend {
-    
+ 
+	private KraClass type;
+	
+	public MessageSendToSelf(KraClass type) {
+		this.type = type;
+	}
     public Type getType() { 
-        return null;
+        return this.type;
     }
     
     public void genC( PW pw, boolean putParenthesis ) {

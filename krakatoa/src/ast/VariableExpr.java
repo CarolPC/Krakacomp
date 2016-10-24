@@ -1,6 +1,6 @@
 package ast;
 
-public class VariableExpr extends Expr {
+public class VariableExpr extends MessageSend {
     
     public VariableExpr( Variable v ) {
         this.v = v;

@@ -43,6 +43,9 @@ public class MethodDec {
 	public void setStatementList(StatementList s) {
 		this.stmtList = s;
 	}
+	public Type getType() {
+		return this.returnType;
+	}
 	public void genKra(PW pw) {
 		pw.printIdent(qualifier + " " + returnType.getName() + " " + name + "(");
 		paramList.genKra(pw);
@@ -75,11 +78,11 @@ public class MethodDec {
         return true;
     }
 	
-	public boolean equals(MethodDec methodDec) {
+	/*public boolean equals(MethodDec methodDec) {
 		if (this.name.equals(methodDec.name)
 				|| this.paramList.equals(methodDec.paramList))
 			return false;
 		return true;
-	}
+	}*/
 	
 }

@@ -2,8 +2,14 @@ package ast;
 
 public class MessageSendToSuper extends MessageSend { 
 
+	private KraClass type;
+	
+	public MessageSendToSuper(KraClass superClass) {
+		this.type = superClass;
+	}
+	
     public Type getType() { 
-        return null;
+        return this.type;
     }
 
     public void genC( PW pw, boolean putParenthesis ) {
