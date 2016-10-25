@@ -23,15 +23,12 @@ public class Variable {
 	
 	 @Override
 	 public boolean equals(Object obj) {
-		 if (obj == null) {
-			 throw new RuntimeException("parameter is not Variable Type");
-	     }
-	     if (!Variable.class.isAssignableFrom(obj.getClass())) {
-	         throw new RuntimeException("parameter is not InstanceVariable Type");
-	     }
-	        
+			        
 	     Variable v = (Variable)obj;
-	        
-	     return v.getName() == this.getName();
+	    
+	     if(v == null)
+	    	 return false;
+	     
+	     return v.getName().equals(this.getName());
 	 }
 }

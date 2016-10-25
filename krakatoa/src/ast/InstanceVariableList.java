@@ -19,8 +19,9 @@ public class InstanceVariableList {
     
     public Variable searchVariable(String name)
     {
+     	
  	  	for(Variable vSearch: this.instanceVariableList) {
- 	   		if(name.equals(vSearch))
+ 	   		if(name.equals(vSearch.getName()))
  	  			return vSearch;
  	   	}
  	  	

@@ -44,6 +44,11 @@ public class MethodDec {
 		return this.name;
 	}
 	
+	public ParamList getParamList()
+	{
+		return this.paramList;
+	}
+	
 	public void setStatementList(StatementList s) {
 		this.stmtList = s;
 	}
@@ -65,18 +70,15 @@ public class MethodDec {
 	@Override
     public boolean equals(Object obj) {
 		
-        if (obj == null) {
-        	throw new RuntimeException("parameter is not MethodDec Type");
-        }
-        if (!MethodDec.class.isAssignableFrom(obj.getClass())) {
-            throw new RuntimeException("parameter is not MethodDec Type");
-        }
-        
         MethodDec m = (MethodDec)obj;;
-        if(!m.name.equals(this.name))
+        if(!m.getName().equals(this.getName()))
         	return false;
         
-        if(!m.paramList.equals(this.paramList))
+        if(this.paramList == null)
+        	return m.getParamList() == null;
+        
+        
+        if(!m.getParamList().equals(this.paramList))
         	return false;
         
         return true;

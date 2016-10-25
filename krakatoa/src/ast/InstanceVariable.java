@@ -17,7 +17,7 @@ public class InstanceVariable extends Variable {
         
         InstanceVariable v = (InstanceVariable)obj;
         
-        return v.getName() == this.getName();
+        return v.getName().equals(this.getName());
     }
 
 	public void genKra(PW pw) {

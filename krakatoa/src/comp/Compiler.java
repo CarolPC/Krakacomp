@@ -174,6 +174,10 @@ public class Compiler {
 		InstanceVariableList instanceVarList = new InstanceVariableList();
 		MethodList publicMethodList = new MethodList();
 		MethodList privateMethodList = new MethodList();
+		
+		currentClass.setInstanceVariableList(instanceVarList);
+		currentClass.setPrivateMethodList(privateMethodList);
+		currentClass.setPublicMethodList(publicMethodList);
 
 		if (lexer.token != Symbol.LEFTCURBRACKET)
 			signalError.showError("'{' expected", true);
@@ -225,9 +229,6 @@ public class Compiler {
 				signalError.showError("Method 'run' was not found in class '" + className + "'");
 		}
 
-		currentClass.setInstanceVariableList(instanceVarList);
-		currentClass.setPrivateMethodList(privateMethodList);
-		currentClass.setPublicMethodList(publicMethodList);
 
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'public', 'private', or '}' expected");
@@ -292,8 +293,11 @@ public class Compiler {
 			signalError.showError("')' expected");
 		
 		MethodDec m = new MethodDec(qualifier, type, name, parameterList);
-
+		
+		if(!methodList.addElement(m))
+			signalError.showError("Method '" + name + "' is being redeclared");
 		lexer.nextToken();
+		
 		if (lexer.token != Symbol.LEFTCURBRACKET)
 			signalError.showError("'{' expected");
 
@@ -317,8 +321,7 @@ public class Compiler {
 
 		currentMethodReturnType = null;
 		
-		if(!methodList.addElement(m))
-			signalError.showError("Method '" + name + "' is being redeclared");
+		
 	}
 
 	private LocalVariableList localDec() {
@@ -610,11 +613,8 @@ public class Compiler {
 			 * LocalDec LocalDec ::= Type IdList ``;''
 			 */
 			return localDec();
-		} else if (lexer.token == Symbol.SUPER) {
-			return new MessageSendStatement((MessageSend) expr());
-		} else if (lexer.token == Symbol.THIS) {
-			return new MessageSendStatement((MessageSend) expr());
-		} else {
+		} 
+		else {
 			Expr left  = null;
 			Expr right = null;
 			
@@ -642,10 +642,10 @@ public class Compiler {
 					signalError.showError("Type error: type of the right-hand sido of the assignment is a basic type and the type of the left-hand side is a class");
 				if (left.getType() != Type.undefinedType && right.getType() == Type.voidType)
 					signalError.showError("Type error: 'null' cannot be assigned to a variable of a basic type");
-				if (left.getType() != right.getType())
-					signalError.showError("Type error: '" + right.getType().getName() + "' cannot be assigned to " + left.getType().getName());
+				
+				
 				// Check subtype
-				if (left.getType() == Type.undefinedType && right.getType() == Type.undefinedType) {
+				if (left.getType() != right.getType() && left.getType() == Type.undefinedType && right.getType() == Type.undefinedType) {
 					KraClass leftClassType = this.symbolTable.getInGlobal(left.getType().getName());
 					KraClass rightClassType = this.symbolTable.getInGlobal(right.getType().getName());
 					
@@ -655,12 +655,14 @@ public class Compiler {
 						else
 							rightClassType = rightClassType.getSuperclass();
 					
-					if (rightClassType == null)
-						signalError.showError("Type error: '" + right.getType().getName() + "' is not a subtype of " + left.getType().getName());
+				if (rightClassType == null)
+					signalError.showError("Type error: '" + right.getType().getName() + "' is not a subtype of " + left.getType().getName());
+				
 				}
 				
 				return new AssignStatement(left, right);
 			}
+			
 			
 			if (lexer.token != Symbol.SEMICOLON )
 				signalError.showError("aeld ; Statement expected",true);
@@ -668,6 +670,7 @@ public class Compiler {
 
 			return new MessageSendStatement((MessageSend) left);
 		}
+		
 	}
 
 	private ExprList realParameters() {

@@ -1,14 +1,8 @@
 Relat�rio do Compilador
 
-4 erros foram sinalizados em 7 arquivos sem erro (57%)
+1 erros foram sinalizados em 7 arquivos sem erro (14%)
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
-OK-CHK03.KRA, 17, A has no variable with name "n"
-
-OK-CHK07.KRA, 20, Person has no variable with name "course"
-
-OK-CHK04.KRA, 17, A has no variable with name "n"
-
-OK-CHK02.KRA, 24, A has no variable with name "n"
+OK-CHK06.KRA, 26, Method 'run' of class 'B' with a return value type different from 'void'
 

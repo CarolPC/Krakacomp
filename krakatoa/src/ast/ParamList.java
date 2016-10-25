@@ -44,15 +44,14 @@ public class ParamList {
 	
 	@Override
     public boolean equals(Object obj) {
-		if (obj == null) {
-        	throw new RuntimeException("parameter is not ParamList Type");
-        }
-		
-        if (!ParamList.class.isAssignableFrom(obj.getClass())) {
-            throw new RuntimeException("parameter is not ParamList Type");
-        }
         
         ParamList pList = (ParamList)obj;
+        
+        if(pList == null && pList == obj)
+        	return true;
+        
+        if(pList == null && pList != obj)
+        	return false;
         
         for(int i = 0; i < pList.getSize(); i++)
         {
