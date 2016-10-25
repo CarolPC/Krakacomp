@@ -1,8 +1,24 @@
 Relat�rio do Compilador
 
-1 erros foram sinalizados em 18 arquivos sem erro (5%)
+9 erros foram sinalizados em 18 arquivos sem erro (50%)
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
+OK-GER15.KRA, 17, A has no variable with name "i"
+
+OK-GER13.KRA, 15, A has no variable with name "n"
+
+OK-GER09.KRA, 39, method doesn't exist in class "C" or its superclasses
+
+OK-GER14.KRA, 19, A has no variable with name "k"
+
+OK-GER10.KRA, 18, A has no variable with name "k"
+
+OK-GER16.KRA, 16, A has no variable with name "k"
+
+OK-GER21.KRA, 12, A has no variable with name "n"
+
 OK-GER23.KRA, 24, Missing ';'
+
+OK-GER11.KRA, 20, method doesn't exist in class "A" or its superclasses
 

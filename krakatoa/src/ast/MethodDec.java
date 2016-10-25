@@ -1,5 +1,7 @@
 package ast;
 
+import javax.naming.ldap.ExtendedResponse;
+
 import lexer.Symbol;
 
 public class MethodDec {
@@ -17,10 +19,12 @@ public class MethodDec {
 	{
 		this.name = name;
 		this.paramList = new ParamList();
-		for(Expr e : exprList.getList())
-		{
-			this.paramList.addElement(new Parameter("", e.getType()));
-		}
+		
+		if(exprList != null)
+			for(Expr e : exprList.getList())
+			{
+				this.paramList.addElement(new Parameter("", e.getType()));
+			}
 	}
 	public MethodDec(Symbol qualifier,Type returnType,
 		     String name, ParamList paramList)

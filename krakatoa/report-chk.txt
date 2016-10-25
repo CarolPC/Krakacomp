@@ -1,5 +1,14 @@
 Relat�rio do Compilador
 
-0 erros foram sinalizados em 7 arquivos sem erro (0%)
-O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
-Para os casos de teste que voc� utilizou, o compilador est� correto
+4 erros foram sinalizados em 7 arquivos sem erro (57%)
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-CHK03.KRA, 17, A has no variable with name "n"
+
+OK-CHK07.KRA, 20, Person has no variable with name "course"
+
+OK-CHK04.KRA, 17, A has no variable with name "n"
+
+OK-CHK02.KRA, 24, A has no variable with name "n"
+

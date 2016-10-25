@@ -611,9 +611,9 @@ public class Compiler {
 			 */
 			return localDec();
 		} else if (lexer.token == Symbol.SUPER) {
-			return new MessageSendStatement((MessageSendToSuper) expr());
+			return new MessageSendStatement((MessageSend) expr());
 		} else if (lexer.token == Symbol.THIS) {
-			return new MessageSendStatement((MessageSendToSelf) expr());
+			return new MessageSendStatement((MessageSend) expr());
 		} else {
 			Expr left  = null;
 			Expr right = null;
@@ -1224,7 +1224,7 @@ public class Compiler {
 					
 					v = this.currClass.searchInstanceVariable(id);
 					if(v == null)
-						signalError.showError(this.currClass.getName()+" has no variable with name \""+ v.getName() +"\"");
+						signalError.showError(this.currClass.getName()+" has no variable with name \""+ id +"\"");
 					
 					return new MessageSendToVariable(new MessageSendToSelf(this.currClass),v);
 				}

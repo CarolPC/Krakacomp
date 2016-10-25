@@ -1,26 +1,16 @@
 Relat�rio do Compilador
 
-21 de um total de 63 erros que deveriam ser sinalizados n�o o foram (33%)
-7 erros foram sinalizados na linha errada (11%)
-1 erros foram sinalizados em 17 arquivos sem erro (5%)
+13 de um total de 63 erros que deveriam ser sinalizados n�o o foram (20%)
+13 erros foram sinalizados na linha errada (20%)
+7 erros foram sinalizados em 17 arquivos sem erro (41%)
 
 Erros que deveriam ser sinalizados mas n�o foram:
-
-ER-SEM68.KRA, 12, Method 'p' was not found in class 'Program' or its superclasses (comp.Compiler.factor())
 
 ER-SEM28.KRA, 10, Variable 'i' is being redeclared (comp.Compiler.localDec())
 
 ER-SEM57.KRA, 21, Incompatible types cannot be compared with '==' because the result will always be 'false' (comp.Compiler.expr())
 
-ER-SEM61.KRA, 33, Method 's' was not found in class 'C' or its superclasses (comp.Compiler.factor())
-
-ER-SEM40.KRA, 40, Type error: the type of the real parameter is not subclass of the type of the formal parameter (comp.Compiler.factor())
-
 ER-SEM43.KRA, 10, Type error: 'null' cannot be assigned to a variable of a basic type (comp.Compiler.assignExprLocalDec())
-
-ER-SEM60.KRA, 21, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
-
-ER-SEM36.KRA, 20, Expression expected in the right-hand side of assignment (comp.Compiler.assignExprLocalDec())
 
 ER-SEM01.KRA, 16, Missing 'return' statement in method 'm' (comp.Compiler.methodDec())
 
@@ -38,13 +28,7 @@ ER-SEM34.KRA, 19, Message send 'a.m()' returns a value that is not used (comp.Co
 
 ER-SEM08.KRA, 8, type boolean does not support operation '+' (comp.Compiler.simpleExpr())
 
-ER-SEM59.KRA, 25, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
-
-ER-SEM47.KRA, 24, Method 'm' was not found in superclass 'B' or its superclasses (comp.Compiler.factor())
-
 ER-SEM58.KRA, 21, Incompatible types cannot be compared with '!=' because the result will always be 'false' (comp.Compiler.expr())
-
-ER-SEM44.KRA, 26, Command 'write' does not accept objects (comp.Compiler.writeStatement())
 
 ER-SEM32.KRA, 11, Method 'm' is being redeclared (comp.Compiler.methodDec())
 
@@ -59,6 +43,18 @@ ER-SEM42.KRA
     correto:    14, Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class (comp.Compiler.assignExprLocalDec())
     sinalizado: 15, Type error: 'A' cannot be assigned to int
 
+ER-SEM40.KRA
+    correto:    40, Type error: the type of the real parameter is not subclass of the type of the formal parameter (comp.Compiler.factor())
+    sinalizado: 11, A has no variable with name "n"
+
+ER-SEM60.KRA
+    correto:    21, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
+    sinalizado: 13, method doesn't exist in class "A" or its superclasses
+
+ER-SEM36.KRA
+    correto:    20, Expression expected in the right-hand side of assignment (comp.Compiler.assignExprLocalDec())
+    sinalizado: 21, Type error: 'null' cannot be assigned to a variable of a basic type
+
 ER-SEM83.KRA
     correto:    7, Class 'Program' is inheriting from final class 'Terra' 
     sinalizado: 3, Source code without a class 'Program'
@@ -71,9 +67,21 @@ ER-SEM41.KRA
     correto:    14, Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class (comp.Compiler.assignExprLocalDec())
     sinalizado: 15, Type error: 'int' cannot be assigned to A
 
+ER-SEM59.KRA
+    correto:    25, Method 'p' was not found in the public interface of 'A' or its superclasses (comp.Compiler.factor())
+    sinalizado: 13, method doesn't exist in class "A" or its superclasses
+
 ER-SEM04.KRA
     correto:    11, Type error: value of the right-hand side is not subtype of the variable of the left-hand side. (comp.Compiler.assignExprLocalDec())
     sinalizado: 12, Type error: 'boolean' cannot be assigned to int
+
+ER-SEM47.KRA
+    correto:    24, Method 'm' was not found in superclass 'B' or its superclasses (comp.Compiler.factor())
+    sinalizado: 10, A has no variable with name "n"
+
+ER-SEM44.KRA
+    correto:    26, Command 'write' does not accept objects (comp.Compiler.writeStatement())
+    sinalizado: 10, A has no variable with name "n"
 
 ER-SEM38.KRA
     correto:    20, Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side (comp.Compiler.assignExprLocalDec())
@@ -82,7 +90,19 @@ ER-SEM38.KRA
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
+OK-SEM10.KRA, 51, Type error: 'B' cannot be assigned to A
+
+OK-SEM09.KRA, 17, method doesn't exist in class "A" or its superclasses
+
+OK-SEM15.KRA, 16, method doesn't exist in class "A" or its superclasses
+
 OK-SEM12.KRA, 22, ldec Identifier expected
+
+OK-SEM08.KRA, 17, A has no variable with name "i"
+
+OK-SEM05.KRA, 17, A has no variable with name "n"
+
+OK-SEM06.KRA, 17, A has no variable with name "n"
 
 ######################################################
 Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
@@ -92,6 +112,11 @@ A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou
 ER-SEM18.KRA
 The compiler message was: "aeld ; Statement expected"
 The 'ce' message is:      "Type 'k' was not found"
+
+
+ER-SEM68.KRA
+The compiler message was: "method doesn't exist in class "Program" or its superclasses"
+The 'ce' message is:      "Method 'p' was not found in class 'Program' or its superclasses"
 
 
 ER-SEM78.KRA
@@ -107,6 +132,11 @@ The 'ce' message is:      "Method 'run' of class 'Program' cannot be private"
 ER-SEM23.KRA
 The compiler message was: "ldec Identifier expected"
 The 'ce' message is:      "Identifier expected"
+
+
+ER-SEM61.KRA
+The compiler message was: "method doesn't exist in class "C" or its superclasses"
+The 'ce' message is:      "Method 's' was not found in class 'C' or its superclasses"
 
 
 ER-SEM21.KRA

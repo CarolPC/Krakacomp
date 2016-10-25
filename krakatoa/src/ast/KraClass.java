@@ -24,8 +24,12 @@ public class KraClass extends Type {
    // entre outros métodos
    
    public MethodDec searchPublicMethod( MethodDec m) {
+	   MethodDec mSearch;
 	   
-	   MethodDec mSearch = this.publicMethodList.searchMethod(m);
+	   if(this.publicMethodList != null)
+		   mSearch = this.publicMethodList.searchMethod(m);
+	   else
+		   mSearch = null;
 	   
 	   if(mSearch == null && getSuperclass() != null)
 		   return this.getSuperclass().searchPublicMethod(m);
@@ -45,9 +49,15 @@ public class KraClass extends Type {
    
    
    public MethodDec searchPrivateMethod( MethodDec m) {
+	   MethodDec mSearch;
 	   
-	   MethodDec mSearch =  this.privateMethodList.searchMethod(m);
 	   
+	   if(this.privateMethodList != null)
+		   mSearch = this.privateMethodList.searchMethod(m);
+	   else
+		   mSearch = null;
+	   
+	   	   
 	   if(mSearch == null && getSuperclass() != null)
 		   return this.getSuperclass().searchPrivateMethod(m);
 	   
