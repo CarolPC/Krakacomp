@@ -302,7 +302,7 @@ public class Compiler {
 			signalError.showError("'{' expected");
 
 		lexer.nextToken();
-		m.setStatementList(statementList());
+		m.setStatementList(stmtList = statementList());
 		
 		if (currentMethodReturnType != Type.voidType) {
 			Iterator<Statement> stmt = stmtList.elements();
@@ -1128,7 +1128,7 @@ public class Compiler {
 						 * est�ticas n�o estiver nas especifica��es, sinalize um
 						 * erro neste ponto.
 						 */
-						signalError.showError("Static variables are not permitted");
+						//signalError.showError("Static variables are not permitted");
 						
 						lexer.nextToken();
 						if (lexer.token != Symbol.IDENT)
@@ -1208,7 +1208,7 @@ public class Compiler {
 										
 				} else if (lexer.token == Symbol.DOT) {
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
-					signalError.showError("Static variables are not permitted");
+					//signalError.showError("Static variables are not permitted");
 					lexer.nextToken();
 					if (lexer.token != Symbol.IDENT)
 						signalError.showError("fact dot Identifier expected");

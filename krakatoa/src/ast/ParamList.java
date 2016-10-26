@@ -55,8 +55,15 @@ public class ParamList {
         
         for(int i = 0; i < pList.getSize(); i++)
         {
-        	if(!this.getList().get(i).getType().getName().equals(pList.getList().get(i).getType().getName()))
+        	Parameter thisParameter = this.getList().get(i);
+        	Parameter thatParameter = pList.getList().get(i);
+        	try {
+        	if(thisParameter.getType() == null || thatParameter.getType() == null || 
+        			!thisParameter.getType().getName().equals(thatParameter.getType().getName()))
         		return false;
+        	} catch (NullPointerException npe) {
+        		return true;
+        	}
         }
         
         return true;

@@ -1,8 +1,10 @@
 Relat�rio do Compilador
 
-1 erros foram sinalizados em 18 arquivos sem erro (5%)
+2 erros foram sinalizados em 18 arquivos sem erro (11%)
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-GER21.KRA, 19, method doesn't exist in class "Program" or its superclasses
 
 OK-GER23.KRA, 24, Missing ';'
 
