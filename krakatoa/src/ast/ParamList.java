@@ -53,17 +53,18 @@ public class ParamList {
         if(pList == null && pList != obj)
         	return false;
         
+        
         for(int i = 0; i < pList.getSize(); i++)
         {
         	Parameter thisParameter = this.getList().get(i);
         	Parameter thatParameter = pList.getList().get(i);
-        	try {
-        	if(thisParameter.getType() == null || thatParameter.getType() == null || 
-        			!thisParameter.getType().getName().equals(thatParameter.getType().getName()))
+        	
+        	if(thatParameter.getType() == Type.nullType)
+        		continue;
+        	
+        	if(thisParameter.getType() != thatParameter.getType())
         		return false;
-        	} catch (NullPointerException npe) {
-        		return true;
-        	}
+        	
         }
         
         return true;

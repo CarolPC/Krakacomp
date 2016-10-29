@@ -1,12 +1,5 @@
 Relat�rio do Compilador
 
-3 erros foram sinalizados em 7 arquivos sem erro (42%)
-######################################################
-Erros que foram sinalizados mas n�o deveriam ter sido:
-
-OK-CHK06.KRA, 26, Method 'run' of class 'B' with a return value type different from 'void'
-
-OK-CHK02.KRA, 46, Missing 'return' statement method in 'm_integer_returns_boolean'
-
-OK-CHK07.KRA, 75, method doesn't exist in class "Group" or its superclasses
-
+0 erros foram sinalizados em 7 arquivos sem erro (0%)
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para os casos de teste que voc� utilizou, o compilador est� correto

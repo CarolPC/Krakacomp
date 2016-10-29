@@ -213,7 +213,7 @@ public class Compiler {
 				else {
 					methodDec(t, name, qualifier, publicMethodList);
 					
-					if(name.equals("run"))
+					if(name.equals("run") && t == Type.voidType)
 						hasRunMethod = true;
 					
 				}
@@ -271,11 +271,9 @@ public class Compiler {
 		 * StatementList "}"
 		 */
 		
-		if (name.equals("run"))
-			if(qualifier == Symbol.PRIVATE)
-				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot be private");
-			else if (type != Type.voidType)
-				signalError.showError("Method 'run' of class '" + currClass.getName() + "' with a return value type different from 'void'");
+		this.methodHasReturn = false;
+		
+		
 		if (currClass.searchInstanceVariable(name) != null)
 			signalError.showError("Method '" + name + "' has name equal to an instance variable");
 		
@@ -287,8 +285,7 @@ public class Compiler {
 
 		if (lexer.token != Symbol.LEFTPAR)
 			parameterList = formalParamDec();
-		if (name.equals("run") && parameterList.getSize() > 0)
-				signalError.showError("Method 'run' of class '" + currClass.getName() + "' cannot take parameters");
+
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		
@@ -303,22 +300,17 @@ public class Compiler {
 
 		lexer.nextToken();
 		m.setStatementList(stmtList = statementList());
-		
-		if (currentMethodReturnType != Type.voidType) {
-			Iterator<Statement> stmt = stmtList.elements();
-			boolean hasReturnStatement = false;
-			while (stmt.hasNext() && !(hasReturnStatement = stmt.next() instanceof ReturnStatement)) ;
-			if (!hasReturnStatement)
-				signalError.showError("Missing 'return' statement method in '" + name + "'");
-		}
-		
+			
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'}' expected");
 
 		lexer.nextToken();
+		
+		if (currentMethodReturnType != Type.voidType && !this.methodHasReturn)
+			signalError.showError("No return statement inside method "+m.getName());
 
 		symbolTable.removeLocalIdent();
-
+		
 		currentMethodReturnType = null;
 		
 		
@@ -771,6 +763,8 @@ public class Compiler {
 		
 		lexer.nextToken();
 		
+		this.methodHasReturn = true;
+		
 		return new ReturnStatement(e);
 	}
 
@@ -1128,7 +1122,7 @@ public class Compiler {
 						 * est�ticas n�o estiver nas especifica��es, sinalize um
 						 * erro neste ponto.
 						 */
-						//signalError.showError("Static variables are not permitted");
+						signalError.showError("Static variables are not permitted");
 						
 						lexer.nextToken();
 						if (lexer.token != Symbol.IDENT)
@@ -1208,16 +1202,24 @@ public class Compiler {
 										
 				} else if (lexer.token == Symbol.DOT) {
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
-					//signalError.showError("Static variables are not permitted");
+					Variable iv = this.currClass.searchInstanceVariable(id);
+					if(iv == null)
+						signalError.showError(currClass.getName()+" hasn't instance name "+iv.getName());
+					KraClass ivClass = symbolTable.getInGlobal(iv.getType().getName()); 
+					if(ivClass == null)
+						signalError.showError(iv.getName()+" is not an instance variable");
+					
 					lexer.nextToken();
 					if (lexer.token != Symbol.IDENT)
 						signalError.showError("fact dot Identifier expected");
+					String id2 = lexer.getStringValue();
 					lexer.nextToken();
 					exprList = this.realParameters();
-					m = this.currClass.searchMethod(new MethodDec(id, exprList));
+					m = ivClass.searchMethod(new MethodDec(id2, exprList));
 					
 					if(m == null)
 						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
+					return new MessageSendToMethod(new MessageSendToVariable(new MessageSendToSelf(currClass), iv), m, exprList);
 				} else {
 					// retorne o objeto da ASA que representa "this" "." Id
 					/*
@@ -1232,7 +1234,7 @@ public class Compiler {
 					return new MessageSendToVariable(new MessageSendToSelf(this.currClass),v);
 				}
 			}
-			break;
+			
 		default:
 			signalError.showError("Expression expected");
 		}
@@ -1265,6 +1267,7 @@ public class Compiler {
 	private ErrorSignaller signalError;
 	
 	private Type currentMethodReturnType;
+	private boolean methodHasReturn = false;
 	private Stack<Boolean> whileStack = new Stack<>();
 
 }

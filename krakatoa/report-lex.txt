@@ -11,18 +11,18 @@ Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quand
 
 A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
 
-ER-LEX04.KRA
+ER-LEX09.KRA
 The compiler message was: "literal int out of limits"
 The 'ce' message is:      "literal int out of limits"
 
 
-ER-LEX02.KRA
-The compiler message was: "Unknown character '\'"
-The 'ce' message is:      "Unknown character '\'"
-
-
 ER-LEX05.KRA
 The compiler message was: "Unknown character '#'"
+The 'ce' message is:      "Unknown character"
+
+
+ER-LEX07.KRA
+The compiler message was: "Missing ';'"
 The 'ce' message is:      "Unknown character"
 
 
@@ -36,12 +36,12 @@ The compiler message was: "literal int out of limits"
 The 'ce' message is:      "literal int out of limits"
 
 
-ER-LEX07.KRA
-The compiler message was: "Missing ';'"
-The 'ce' message is:      "Unknown character"
+ER-LEX02.KRA
+The compiler message was: "Unknown character '\'"
+The 'ce' message is:      "Unknown character '\'"
 
 
-ER-LEX09.KRA
+ER-LEX04.KRA
 The compiler message was: "literal int out of limits"
 The 'ce' message is:      "literal int out of limits"
 

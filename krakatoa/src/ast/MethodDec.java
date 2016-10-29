@@ -23,7 +23,11 @@ public class MethodDec {
 		if(exprList != null)
 			for(Expr e : exprList.getList())
 			{
-				this.paramList.addElement(new Parameter("", e.getType()));
+				Type t = e.getType();
+				if(t == null)
+					t = Type.voidType;
+				
+				this.paramList.addElement(new Parameter("", t));
 			}
 	}
 	public MethodDec(Symbol qualifier,Type returnType,
