@@ -324,47 +324,47 @@ public class Compiler {
 		
 	}
 
-	private LocalVariableList localDec() {
+	private LocalDecStatement localDec() {
 		// LocalDec ::= Type IdList ";"
-		LocalVariableList localDecList = new LocalVariableList();
+		LocalDecStatement localDecList = new LocalDecStatement();
 
 		Type type = type();
 		
-		
-		if (lexer.token != Symbol.IDENT)
-			signalError.showError("ldec Identifier expected");
-		String variableName = lexer.getStringValue();
-		if (symbolTable.getInLocal(variableName) != null)
-			signalError.showError("ldec Unique identifier expected");
-
-		Variable v = new Variable(variableName, type);
-
-		symbolTable.putInLocal(variableName, v);
-
-		localDecList.addElement(v);
-
-		lexer.nextToken();
-
-				
-		while (lexer.token == Symbol.COMMA) {
-			lexer.nextToken();
-						
+		do{
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("Missing Identifier");
-
-			variableName = lexer.getStringValue();
-
+				signalError.showError("Identifier expected");
+			String variableName = lexer.getStringValue();
 			if (symbolTable.getInLocal(variableName) != null)
-				signalError.showError("ldec while Unique identifier expected");
-
-			v = new Variable(variableName, type);
-
+				signalError.showError("ldec Unique identifier expected");
+	
+			Variable v = new Variable(variableName, type);
+	
 			symbolTable.putInLocal(variableName, v);
-
-			localDecList.addElement(v);
-
+	
 			lexer.nextToken();
-		}
+			
+			if(lexer.token == Symbol.ASSIGN)
+			{
+				lexer.nextToken();
+				Expr e = expr();
+				
+				//verificar subtipo depois
+				if(!this.isTypeOrSubtype(v.getType(),e.getType()))
+					signalError.showError("Expression in RHS is not same type or subtype of variable in LHS");
+				
+				localDecList.addElement(v,e);
+			}
+			else
+			{
+				localDecList.addElement(v);
+			}
+			
+			if(lexer.token != Symbol.COMMA)
+				break;
+			
+			lexer.nextToken();
+
+		}while(true);
 
 		
 		if (lexer.token != Symbol.SEMICOLON)
@@ -581,11 +581,6 @@ public class Compiler {
 		}
 		String message = lexer.getLiteralStringValue();
 		lexer.nextToken();
-		
-		if (lexer.token != Symbol.SEMICOLON)
-			signalError.showError("Expected ;",true);
-		
-		lexer.nextToken();
 
 		return new StatementAssert(e, lineNumber, message);
 	}
@@ -630,60 +625,15 @@ public class Compiler {
 			//System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
 				lexer.nextToken();
-				right = expr();	
+				right = expr();
+				
+				if(!this.isTypeOrSubtype(left.getType(),right.getType()))
+					signalError.showError("RHS is not type or subtype of LHS");
+				
 				if (lexer.token != Symbol.SEMICOLON)
 					signalError.showError("Missing ';'", true);
 				
-				if (left.getType() != Type.undefinedType && right.getType() == Type.undefinedType)
-					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
-				if (left.getType() == Type.undefinedType && right.getType() != Type.undefinedType)
-					signalError.showError("Type error: type of the right-hand sido of the assignment is a basic type and the type of the left-hand side is a class");
-				if (left.getType() != Type.undefinedType && right.getType() == Type.voidType)
-					signalError.showError("Type error: 'null' cannot be assigned to a variable of a basic type");
-				
-				// Se left for primitivo, right também deve ser
-				if ((left.getType() == Type.intType
-						|| left.getType() == Type.booleanType
-						|| left.getType() == Type.stringType)
-					&& (right.getType() != Type.intType
-						&& right.getType() != Type.booleanType
-						&& right.getType() != Type.stringType))
-					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
-				
-				// Se right for primitivo, left também deve ser
-				if ((right.getType() == Type.intType
-						|| right.getType() == Type.booleanType
-						|| right.getType() == Type.stringType)
-					&& (left.getType() != Type.intType
-						&& left.getType() != Type.booleanType
-						&& left.getType() != Type.stringType))
-					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
-				
-				// Check subtype
-				// TODO parece que não funciona com ER-SEM38.KRA
-				// A a;
-				// B b; B extends A
-				// b = a;
-				if (left.getType() != right.getType() && left.getType() == Type.undefinedType && right.getType() == Type.undefinedType) {
-					KraClass leftClassType = this.symbolTable.getInGlobal(left.getType().getName());
-					KraClass rightClassType = this.symbolTable.getInGlobal(right.getType().getName());
-					
-					while (rightClassType.getSuperclass() != null)
-						if (rightClassType.getSuperclass().getName().equals(leftClassType.getName()))
-							break;
-						else
-							rightClassType = rightClassType.getSuperclass();
-					
-				if (rightClassType == null)
-					signalError.showError("Type error: '" + right.getType().getName() + "' is not a subtype of " + left.getType().getName());
-				
-				// TODO deveria funcionar para ER-SEM05.KRA
-				// 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExprLocalDec())
-				if (left.getType() != right.getType())
-					signalError.showError("'" + right.getType() + "' cannot be assigned to '" + left.getType() + "'");
-				
-				}
-				
+										
 				lexer.nextToken();
 				
 				return new AssignStatement(left, right);
@@ -1315,6 +1265,29 @@ public class Compiler {
 				|| token == Symbol.LITERALINT || token == Symbol.SUPER || token == Symbol.LEFTPAR
 				|| token == Symbol.NULL || token == Symbol.IDENT || token == Symbol.LITERALSTRING;
 
+	}
+	
+	//lê-se a isTypeOrSubtype of b
+	private boolean isTypeOrSubtype(Type a, Type b) {
+		
+		if(a == b)
+			return true;
+		
+		
+		KraClass c = this.symbolTable.getInGlobal(b.getName());
+		
+		if(c == null && b == Type.nullType)
+			return true;
+		
+		if(c == null)
+			return false;
+		
+		
+		while((c = c.getSuperclass()) != null)
+			if(a == c)
+				return true;
+		
+		return false;
 	}
 
 	private SymbolTable symbolTable;
