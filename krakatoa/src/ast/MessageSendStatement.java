@@ -17,7 +17,6 @@ public void genC( PW pw ) {
 
 @Override
 public void genKra(PW pw) {
-	// TODO Auto-generated method stub
 	
 }
 

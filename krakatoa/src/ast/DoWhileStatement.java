@@ -8,7 +8,6 @@ public class DoWhileStatement extends WhileStatement {
 	
 	@Override
 	public void genKra(PW pw) {
-		// TODO Auto-generated method stub
 		super.genKra(pw);
 	}
 

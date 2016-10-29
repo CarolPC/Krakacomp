@@ -208,14 +208,20 @@ public class Compiler {
 
 			if (lexer.token == Symbol.LEFTPAR)
 				
-				if (qualifier == Symbol.PRIVATE)
+				if (qualifier == Symbol.PRIVATE) {
+					if (className.equals("Program") && name.equals("run"))
+						signalError.showError("Method 'run' of class 'Program' cannot be private");
+					
 					methodDec(t, name, qualifier, privateMethodList);
-				else {
+				} else {
+					if(className.equals("Program") && name.equals("run")) {
+						if (t == Type.voidType)
+							hasRunMethod = true;
+						else
+							signalError.showError("Method 'run' of class 'Program' with a return type differente from 'void'");
+					}
+					
 					methodDec(t, name, qualifier, publicMethodList);
-					
-					if(name.equals("run") && t == Type.voidType)
-						hasRunMethod = true;
-					
 				}
 			else if (qualifier != Symbol.PRIVATE)
 				signalError.showError("Attempt to declare a public instance variable");
@@ -285,6 +291,9 @@ public class Compiler {
 
 		if (lexer.token != Symbol.LEFTPAR)
 			parameterList = formalParamDec();
+		
+		if (currClass.getName().equals("Program") && name.equals("run") && parameterList != null && parameterList.getSize() > 0)
+			signalError.showError("Method 'run' of class 'Program' cannot take parameters");
 
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
@@ -303,11 +312,10 @@ public class Compiler {
 			
 		if (lexer.token != Symbol.RIGHTCURBRACKET)
 			signalError.showError("'}' expected");
-
-		lexer.nextToken();
-		
 		if (currentMethodReturnType != Type.voidType && !this.methodHasReturn)
 			signalError.showError("No return statement inside method "+m.getName());
+
+		lexer.nextToken();
 
 		symbolTable.removeLocalIdent();
 		
@@ -626,8 +634,6 @@ public class Compiler {
 				if (lexer.token != Symbol.SEMICOLON)
 					signalError.showError("Missing ';'", true);
 				
-				lexer.nextToken();
-				
 				if (left.getType() != Type.undefinedType && right.getType() == Type.undefinedType)
 					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
 				if (left.getType() == Type.undefinedType && right.getType() != Type.undefinedType)
@@ -635,8 +641,29 @@ public class Compiler {
 				if (left.getType() != Type.undefinedType && right.getType() == Type.voidType)
 					signalError.showError("Type error: 'null' cannot be assigned to a variable of a basic type");
 				
+				// Se left for primitivo, right também deve ser
+				if ((left.getType() == Type.intType
+						|| left.getType() == Type.booleanType
+						|| left.getType() == Type.stringType)
+					&& (right.getType() != Type.intType
+						&& right.getType() != Type.booleanType
+						&& right.getType() != Type.stringType))
+					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
+				
+				// Se right for primitivo, left também deve ser
+				if ((right.getType() == Type.intType
+						|| right.getType() == Type.booleanType
+						|| right.getType() == Type.stringType)
+					&& (left.getType() != Type.intType
+						&& left.getType() != Type.booleanType
+						&& left.getType() != Type.stringType))
+					signalError.showError("Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class");
 				
 				// Check subtype
+				// TODO parece que não funciona com ER-SEM38.KRA
+				// A a;
+				// B b; B extends A
+				// b = a;
 				if (left.getType() != right.getType() && left.getType() == Type.undefinedType && right.getType() == Type.undefinedType) {
 					KraClass leftClassType = this.symbolTable.getInGlobal(left.getType().getName());
 					KraClass rightClassType = this.symbolTable.getInGlobal(right.getType().getName());
@@ -650,7 +677,14 @@ public class Compiler {
 				if (rightClassType == null)
 					signalError.showError("Type error: '" + right.getType().getName() + "' is not a subtype of " + left.getType().getName());
 				
+				// TODO deveria funcionar para ER-SEM05.KRA
+				// 'int' cannot be assigned to 'boolean' (comp.Compiler.assignExprLocalDec())
+				if (left.getType() != right.getType())
+					signalError.showError("'" + right.getType() + "' cannot be assigned to '" + left.getType() + "'");
+				
 				}
+				
+				lexer.nextToken();
 				
 				return new AssignStatement(left, right);
 			}
@@ -758,8 +792,20 @@ public class Compiler {
 		if (lexer.token != Symbol.SEMICOLON)	
 			signalError.showError("; expected after return",true);
 		
+		// TODO isso não funciona, ainda temos:
+		// OK-SEM05.KRA, 50, Illegal 'return' statement. Method returns 'A'
+		// no arquivo é 'return new B();', mas B extends A
+		if (e.getType() instanceof KraClass) {
+			KraClass kraClass = (KraClass) e.getType();
+			
+			while (kraClass != null && !kraClass.getName().equals(currentMethodReturnType.getName()))
+				kraClass = kraClass.getSuperclass();
+			if (kraClass == null)
+				signalError.showError("Illegal 'return' statement. Method doesn't returns a subtype of '" + currentMethodReturnType.getName() + "'");
+		}
+		
 		if (e.getType() != currentMethodReturnType)
-			signalError.showError("Illegal 'return' statement. Method returns'" + currentMethodReturnType.getName() + "'");
+			signalError.showError("Illegal 'return' statement. Method returns '" + currentMethodReturnType.getName() + "'");
 		
 		lexer.nextToken();
 		
@@ -782,7 +828,11 @@ public class Compiler {
 				signalError.showError("Command 'read' does not accept 'void' variables");
 			else if (e.getType() == Type.undefinedType)
 				signalError.showError("Command 'read' does not accept non-primitives variables");
-			else if (e.getType() instanceof KraClass)
+			else if (!( // TODO verificar se é um IDENT
+					e.getType() instanceof KraClass
+					|| e.getType() == Type.intType
+					|| e.getType() == Type.stringType
+					))
 				signalError.showError("Command 'read' expects a variable");
 		/*while (true) {
 			if (lexer.token == Symbol.THIS) {
@@ -909,11 +959,15 @@ public class Compiler {
 			Symbol opAux = lexer.token;
 			if (opAux == Symbol.EQ || opAux == Symbol.NEQ || opAux == Symbol.LE || opAux == Symbol.LT || opAux == Symbol.GE
 					|| opAux == Symbol.GT)
-				System.out.println("Expression expected OR invalid sequence of symbols");
+				signalError.showError("Expression expected OR invalid sequence of symbols");
 			
 			Expr right = simpleExpr();
 			
-			//if (io == Symbol)
+			// TODO Não funciona bem para Strings e subtipos
+			if ((op == Symbol.EQ || op == Symbol.NEQ)
+					&& !left.getType().equals(right.getType())) {
+				signalError.showError("Incompatibles types cannot be compared with '" + op + "' because the result will always be 'false'");
+			}
 			
 			left = new CompositeExpr(left, op, right);
 		}
@@ -931,6 +985,8 @@ public class Compiler {
 			
 			if (left.getType() != right.getType())
 				signalError.showError("operator '" + op + "' of '" + left.getType().getName() + "' expects an '" + right.getType().getName() + "' value");
+			if (left.getType() == Type.booleanType && op != Symbol.OR)
+				signalError.showError("type boolean does not supports operation '" + op + "'");
 			left = new CompositeExpr(left, op, right);
 		}
 		return left;
@@ -1068,7 +1124,7 @@ public class Compiler {
 			m = this.currClass.getSuperclass().searchPublicMethod(new MethodDec(messageName,exprList));
 			
 			if(m == null)
-				signalError.showError("method \""+ messageName + "\"doesn't exist on superclass or its superclasses");
+				signalError.showError("method \""+ messageName + "\" doesn't exist on superclass or its superclasses");
 			
 			return new MessageSendToMethod(new MessageSendToSuper(this.currClass.getSuperclass()), m, exprList);
 			

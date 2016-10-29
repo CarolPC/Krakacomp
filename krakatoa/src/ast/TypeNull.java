@@ -7,7 +7,6 @@ public class TypeNull extends Type {
 	}
 	@Override
 	public String getCname() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

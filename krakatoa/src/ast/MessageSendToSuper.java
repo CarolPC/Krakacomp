@@ -18,7 +18,6 @@ public class MessageSendToSuper extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
-		// TODO Auto-generated method stub
 		
 	}
     
