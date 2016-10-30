@@ -20,4 +20,16 @@ abstract public class Type {
     
 
     private String name;
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj == null)
+    		return false;
+    	
+    	if (obj instanceof Type) {
+    		return name.equals(((Type) obj).getName());
+    	}
+    	
+    	return false;
+    }
 }

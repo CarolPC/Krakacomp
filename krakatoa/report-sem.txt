@@ -1,21 +1,9 @@
 Relat�rio do Compilador
 
-5 de um total de 62 erros que deveriam ser sinalizados n�o o foram (8%)
+0 de um total de 62 erros que deveriam ser sinalizados n�o o foram (0%)
 0 erros foram sinalizados na linha errada (0%)
 0 erros foram sinalizados em 17 arquivos sem erro (0%)
-
-Erros que deveriam ser sinalizados mas n�o foram:
-
-ER-SEM30.KRA, 16, Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())
-
-ER-SEM17.KRA, 8, Command 'read' expects a variable (comp.Compiler.readStatement()))
-
-ER-SEM32.KRA, 11, Method 'm' is being redeclared (comp.Compiler.methodDec())
-
-ER-SEM51.KRA, 17, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
-
-ER-SEM70.KRA, 10, Method 'm' is being redefined (comp.Compiler.methodDec())
-
+Todos os erros que deveriam ter sido sinalizados o foram
 Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
 O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 ######################################################
@@ -81,6 +69,11 @@ The 'ce' message is:      "Expression expected in the right-hand side of assignm
 ER-SEM81.KRA
 The compiler message was: "Method 'run' of class 'Program' cannot be private"
 The 'ce' message is:      "Method 'run' of class 'Program' cannot be private"
+
+
+ER-SEM30.KRA
+The compiler message was: "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'"
+The 'ce' message is:      "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'"
 
 
 ER-SEM24.KRA
@@ -183,6 +176,11 @@ The compiler message was: "variable "I" was not declared in this scope."
 The 'ce' message is:      "Variable 'I' was not declared"
 
 
+ER-SEM17.KRA
+The compiler message was: "Command 'read' expects a variable"
+The 'ce' message is:      "Command 'read' expects a variable"
+
+
 ER-SEM03.KRA
 The compiler message was: "ldec Unique identifier expected"
 The 'ce' message is:      "Variable 'i' is being redeclared"
@@ -196,6 +194,11 @@ The 'ce' message is:      "Class 'A' was not found"
 ER-SEM18.KRA
 The compiler message was: "aeld ; Statement expected"
 The 'ce' message is:      "Type 'k' was not found"
+
+
+ER-SEM32.KRA
+The compiler message was: "Method 'm' is being redeclared"
+The 'ce' message is:      "Method 'm' is being redeclared"
 
 
 ER-SEM43.KRA
@@ -283,6 +286,16 @@ The compiler message was: "RHS is not type or subtype of LHS"
 The 'ce' message is:      "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
 
 
+ER-SEM51.KRA
+The compiler message was: "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'"
+The 'ce' message is:      "Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A'"
+
+
+ER-SEM70.KRA
+The compiler message was: "Method 'm' is being redeclared"
+The 'ce' message is:      "Method 'm' is being redefined"
+
+
 ER-SEM12.KRA
 The compiler message was: "operator '+' of 'int' expects an 'boolean' value"
 The 'ce' message is:      "operator '+' of 'int' expects an 'int' value"
@@ -308,3 +321,4 @@ The compiler message was: "'break' statement found outside a 'while' statement"
 The 'ce' message is:      "'break' statement found outside a 'while' statement"
 
 
+Para os casos de teste que voc� utilizou, o compilador est� correto
