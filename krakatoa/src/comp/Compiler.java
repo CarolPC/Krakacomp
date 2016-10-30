@@ -340,6 +340,7 @@ public class Compiler {
 			Variable v = new Variable(variableName, type);
 	
 			symbolTable.putInLocal(variableName, v);
+			System.out.println(symbolTable.getInLocal(variableName));
 	
 			lexer.nextToken();
 			
@@ -349,7 +350,7 @@ public class Compiler {
 				this.insideAssign = true;
 				Expr e = expr();
 				
-				//verificar subtipo depois
+				// TODO verificar subtipo depois
 				if(!this.isTypeOrSupertype(v.getType(),e.getType()))
 					signalError.showError("Expression in RHS is not same type or subtype of variable in LHS");
 				
@@ -604,7 +605,7 @@ public class Compiler {
 		if (lexer.token == Symbol.INT || lexer.token == Symbol.BOOLEAN || lexer.token == Symbol.STRING ||
 		// token � uma classe declarada textualmente antes desta
 		// instru��o
-				(lexer.token == Symbol.IDENT && symbolTable.getInLocal(lexer.getLiteralStringValue()) == null  && isType(lexer.getStringValue()))) {
+				(lexer.token == Symbol.IDENT && symbolTable.getInLocal(lexer.getStringValue()) == null  && isType(lexer.getStringValue()))) {
 			/*
 			 * uma declara��o de vari�vel. 'lexer.token' � o tipo da vari�vel
 			 *

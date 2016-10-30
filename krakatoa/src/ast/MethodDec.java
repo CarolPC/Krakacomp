@@ -1,7 +1,5 @@
 package ast;
 
-import javax.naming.ldap.ExtendedResponse;
-
 import lexer.Symbol;
 
 public class MethodDec {
