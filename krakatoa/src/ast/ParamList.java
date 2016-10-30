@@ -62,12 +62,36 @@ public class ParamList {
         	if(thatParameter.getType() == Type.nullType)
         		continue;
         	
-        	if(thisParameter.getType() != thatParameter.getType())
+        	if(!isTypeOrSupertype(thisParameter.getType(), thatParameter.getType()))
         		return false;
         	
         }
         
         return true;
 	}
+	
+	private boolean isTypeOrSupertype(Type a, Type b) {
+			
+			if(a == b)
+				return true;
+			
+			KraClass c = null;
+			if(b instanceof KraClass)
+				c = (KraClass)b;
+			
+			if((a instanceof KraClass) && b == Type.nullType)
+				return true;
+			
+			if(c == null)
+				return false;
+			
+			
+			while((c = c.getSuperclass()) != null)
+				if(a == c)
+					return true;
+			
+			return false;
+		}
+
 
 }

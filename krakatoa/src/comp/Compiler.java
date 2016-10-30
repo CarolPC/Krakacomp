@@ -346,13 +346,15 @@ public class Compiler {
 			if(lexer.token == Symbol.ASSIGN)
 			{
 				lexer.nextToken();
+				this.insideAssign = true;
 				Expr e = expr();
 				
 				//verificar subtipo depois
-				if(!this.isTypeOrSubtype(v.getType(),e.getType()))
+				if(!this.isTypeOrSupertype(v.getType(),e.getType()))
 					signalError.showError("Expression in RHS is not same type or subtype of variable in LHS");
 				
 				localDecList.addElement(v,e);
+				this.insideAssign = false;
 			}
 			else
 			{
@@ -569,6 +571,7 @@ public class Compiler {
 	private Statement assertStatement() {
 		lexer.nextToken();
 		int lineNumber = lexer.getLineNumber();
+		this.insideAssert = true;
 		Expr e = expr();
 		if (e.getType() != Type.booleanType)
 			signalError.showError("boolean expression expected");
@@ -576,6 +579,7 @@ public class Compiler {
 			this.signalError.showError("',' expected after the expression of the 'assert' statement");
 		}
 		lexer.nextToken();
+		this.insideAssert = false;
 		if (lexer.token != Symbol.LITERALSTRING) {
 			this.signalError.showError("A literal string expected after the ',' of the 'assert' statement");
 		}
@@ -614,9 +618,7 @@ public class Compiler {
 			Expr right = null;
 			
 			/*
-			 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ]
-			 * 
-			 * NOTE ER-SIN04.kra está vindo pra cá na linha 8, não sei como verificar se é um statement ou não.
+			 * AssignExprLocalDec ::= Expression [ ``$=$'' Expression ] 
 			 */
 			//if ((lexer.token == Symbol.IDENT && isType(lexer.getStringValue())))
 				//signalError.showError("Statement expected");
@@ -625,9 +627,10 @@ public class Compiler {
 			//System.out.println(lexer.token);
 			if (lexer.token == Symbol.ASSIGN) {
 				lexer.nextToken();
+				this.insideAssign = true;
 				right = expr();
 				
-				if(!this.isTypeOrSubtype(left.getType(),right.getType()))
+				if(!this.isTypeOrSupertype(left.getType(),right.getType()))
 					signalError.showError("RHS is not type or subtype of LHS");
 				
 				if (lexer.token != Symbol.SEMICOLON)
@@ -635,6 +638,7 @@ public class Compiler {
 				
 										
 				lexer.nextToken();
+				this.insideAssign = false;
 				
 				return new AssignStatement(left, right);
 			}
@@ -643,7 +647,8 @@ public class Compiler {
 			if (lexer.token != Symbol.SEMICOLON )
 				signalError.showError("aeld ; Statement expected",true);
 			lexer.nextToken();
-
+			
+			
 			return new MessageSendStatement((MessageSend) left);
 		}
 		
@@ -651,6 +656,7 @@ public class Compiler {
 
 	private ExprList realParameters() {
 		ExprList anExprList = null;
+		this.insideMethodCall = true;
 
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
@@ -659,6 +665,8 @@ public class Compiler {
 			anExprList = exprList();
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
+		
+		this.insideMethodCall = false;
 		lexer.nextToken();
 		return anExprList;
 	}
@@ -670,12 +678,14 @@ public class Compiler {
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
 		lexer.nextToken();
+		this.insideWhileCond = true;
 		Expr e = expr();
 		if (e.getType() != Type.booleanType)
 			signalError.showError("boolean expression expected in a while statement");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
+		this.insideWhileCond = false;
 		Statement stmt = statement();
 		
 		// Acho que deveria ter um pop aqui, mas quando tem, tem um erro que não é reportado
@@ -698,6 +708,7 @@ public class Compiler {
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
+		this.insideWhileCond = true;
 		lexer.nextToken();
 		Expr e = expr();
 		if (e.getType() != Type.booleanType)
@@ -705,7 +716,8 @@ public class Compiler {
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
-
+		this.insideWhileCond = false;
+		
 		if(lexer.token != Symbol.SEMICOLON)
 			signalError.showError("expected ; after ) in do-while statement",true);
 		
@@ -720,12 +732,14 @@ public class Compiler {
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
 		lexer.nextToken();
+		this.insideIfCond = true;
 		Expr e = expr();
 		if (e.getType() != Type.booleanType)
 			signalError.showError("boolean expression expected in an if statement");
 		if (lexer.token != Symbol.RIGHTPAR)
 			signalError.showError("')' expected");
 		lexer.nextToken();
+		this.insideIfCond = false;
 		Statement ifStmt = statement();
 		if (lexer.token == Symbol.ELSE) {
 			lexer.nextToken();
@@ -738,24 +752,15 @@ public class Compiler {
 	private ReturnStatement returnStatement() {
 
 		lexer.nextToken();
+		this.insideReturn = true;
 		Expr e = expr();
+		this.insideReturn = false;
+		
 		if (lexer.token != Symbol.SEMICOLON)	
 			signalError.showError("; expected after return",true);
 		
-		// TODO isso não funciona, ainda temos:
-		// OK-SEM05.KRA, 50, Illegal 'return' statement. Method returns 'A'
-		// no arquivo é 'return new B();', mas B extends A
-		if (e.getType() instanceof KraClass) {
-			KraClass kraClass = (KraClass) e.getType();
-			
-			while (kraClass != null && !kraClass.getName().equals(currentMethodReturnType.getName()))
-				kraClass = kraClass.getSuperclass();
-			if (kraClass == null)
-				signalError.showError("Illegal 'return' statement. Method doesn't returns a subtype of '" + currentMethodReturnType.getName() + "'");
-		}
-		
-		if (e.getType() != currentMethodReturnType)
-			signalError.showError("Illegal 'return' statement. Method returns '" + currentMethodReturnType.getName() + "'");
+		if(!this.isTypeOrSupertype(currentMethodReturnType, e.getType()))
+			signalError.showError("Illegal 'return' statement. Method doesn't returns a subtype of '" + currentMethodReturnType.getName() + "'");
 		
 		lexer.nextToken();
 		
@@ -766,6 +771,8 @@ public class Compiler {
 
 	private ReadStatement readStatement() {
 		//System.out.println("readStatement");
+		this.insideRead = true;
+		
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected after 'read' command");
@@ -809,11 +816,15 @@ public class Compiler {
 			signalError.showError("; expected in read statement",true);
 		lexer.nextToken();
 
+		this.insideRead = false;
+		
 		return new ReadStatement(el);
 	}
 
 	private WriteStatement writeStatement() {
 		//System.out.println("writeStatement");
+		this.insideWrite = true;
+		
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
@@ -835,11 +846,14 @@ public class Compiler {
 			signalError.showError("; expected in write statement",true);
 		lexer.nextToken();
 
+		this.insideWrite = false;
+		
 		return new WriteStatement(el);
 	}
 
 	private WriteLineStatement writelnStatement() {
 
+		this.insideWrite = true;
 		lexer.nextToken();
 		if (lexer.token != Symbol.LEFTPAR)
 			signalError.showError("'(' expected");
@@ -862,6 +876,7 @@ public class Compiler {
 			signalError.showError("; expected in writeln statement",true);
 		lexer.nextToken();
 
+		this.insideWrite = false;
 		return writeStmt;
 	}
 
@@ -915,7 +930,8 @@ public class Compiler {
 			
 			// TODO Não funciona bem para Strings e subtipos
 			if ((op == Symbol.EQ || op == Symbol.NEQ)
-					&& !left.getType().equals(right.getType())) {
+					&& !this.isTypeOrSupertype(left.getType(), right.getType())
+					&& !this.isTypeOrSupertype(right.getType(), left.getType())) {
 				signalError.showError("Incompatibles types cannot be compared with '" + op + "' because the result will always be 'false'");
 			}
 			
@@ -1076,6 +1092,11 @@ public class Compiler {
 			if(m == null)
 				signalError.showError("method \""+ messageName + "\" doesn't exist on superclass or its superclasses");
 			
+			if(m.getType() != Type.voidType && !this.insideAssign
+					&& ! this.insideReturn && ! this.insideMethodCall
+					&&!this.insideRead && !this.insideWrite && !this.insideWhileCond
+					&& !this.insideIfCond && !this.insideAssert)
+				signalError.showError("Message send 'super."+m.getName()+"' returns a value that is not used (comp.Compiler.statement())");
 			return new MessageSendToMethod(new MessageSendToSuper(this.currClass.getSuperclass()), m, exprList);
 			
 		case IDENT:
@@ -1155,6 +1176,13 @@ public class Compiler {
 						if(m == null)
 							signalError.showError("method doesn't exist in class \""+tmpClass.getName() + "\" or its superclasses");
 						
+
+						if((m.getType() != Type.voidType) && !this.insideAssign
+								&& ! this.insideReturn && ! this.insideMethodCall
+								&&!this.insideRead && !this.insideWrite && !this.insideWhileCond
+								&& !this.insideIfCond && !this.insideAssert)
+							signalError.showError("Message send '"+id+"."+m.getName()+"' returns a value that is not used (comp.Compiler.statement())");
+						
 						return new MessageSendToMethod(new VariableExpr(v), m, exprList);
 						
 					} else {
@@ -1203,7 +1231,12 @@ public class Compiler {
 					
 					if(m == null)
 						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
-					
+
+					if(m.getType() != Type.voidType && !this.insideAssign
+							&& ! this.insideReturn && ! this.insideMethodCall
+							&&!this.insideRead && !this.insideWrite && !this.insideWhileCond
+							&& !this.insideIfCond && !this.insideAssert)
+						signalError.showError("Message send 'this."+m.getName()+"' returns a value that is not used (comp.Compiler.statement())");
 					return new MessageSendToMethod(new MessageSendToSelf(this.currClass), m, exprList); 
 										
 				} else if (lexer.token == Symbol.DOT) {
@@ -1225,6 +1258,13 @@ public class Compiler {
 					
 					if(m == null)
 						signalError.showError("method doesn't exist in class \""+this.currClass.getName() + "\" or its superclasses");
+					
+
+					if(m.getType() != Type.voidType && !this.insideAssign
+							&& ! this.insideReturn && ! this.insideMethodCall
+							&&!this.insideRead && !this.insideWrite && !this.insideWhileCond
+							&& !this.insideIfCond && !this.insideAssert)
+						signalError.showError("Message send 'this."+id+"."+id2+"."+m.getName()+"' returns a value that is not used (comp.Compiler.statement())");
 					return new MessageSendToMethod(new MessageSendToVariable(new MessageSendToSelf(currClass), iv), m, exprList);
 				} else {
 					// retorne o objeto da ASA que representa "this" "." Id
@@ -1267,17 +1307,18 @@ public class Compiler {
 
 	}
 	
-	//lê-se a isTypeOrSubtype of b
-	private boolean isTypeOrSubtype(Type a, Type b) {
+	//lê-se a isTypeOrSupertype of b
+	private boolean isTypeOrSupertype(Type a, Type b) {
 		
 		if(a == b)
 			return true;
 		
+				
+		if((this.symbolTable.getInGlobal(a.getName()) != null || a == Type.stringType)
+				&& b == Type.nullType)
+			return true;
 		
 		KraClass c = this.symbolTable.getInGlobal(b.getName());
-		
-		if(c == null && b == Type.nullType)
-			return true;
 		
 		if(c == null)
 			return false;
@@ -1297,6 +1338,14 @@ public class Compiler {
 	
 	private Type currentMethodReturnType;
 	private boolean methodHasReturn = false;
+	private boolean insideAssign = false;
+	private boolean insideReturn = false;
+	private boolean insideMethodCall = false;
+	private boolean insideRead = false;
+	private boolean insideWrite = false;
+	private boolean insideWhileCond = false;
+	private boolean insideIfCond = false;
+	private boolean insideAssert = false;
 	private Stack<Boolean> whileStack = new Stack<>();
 
 }
