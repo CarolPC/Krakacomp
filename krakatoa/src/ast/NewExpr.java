@@ -22,6 +22,6 @@ public class NewExpr extends Expr{
 	@Override
 	public void genKra(PW pw) {
 		// E se o construtor tiver parâmetros?
-		pw.print("new " + classType.getName() + "();");
+		pw.print("new " + classType.getName() + "()");
 	}
 }

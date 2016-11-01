@@ -24,13 +24,8 @@ public class StatementList extends Statement {
 	    private ArrayList<Statement> stmtList;
 
 		public void genKra(PW pw) {
-			System.out.println(getSize());
-			Iterator<Statement> iterator = elements();
-			// TODO resolver assignExprLocalDec, por isso está dando NPE
-			while (iterator.hasNext())
-				iterator
-					.next()
-					.genKra(pw);
+			for (Statement stmt : stmtList)
+				stmt.genKra(pw);
 		}
 
 		@Override

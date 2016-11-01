@@ -18,6 +18,6 @@ public class LiteralString extends Expr {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.print(literalString);
+		pw.print("\"" + literalString + "\"");
 	}
 }

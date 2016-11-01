@@ -20,6 +20,7 @@ public class IfElseStatement extends IfStatement {
 		pw.sub();
 		
 		pw.printIdent("} else {");
+		pw.println();
 		pw.add();
 		elseStatement.genKra(pw);
 		pw.sub();
