@@ -269,6 +269,7 @@ public class Compiler {
 		lexer.nextToken();
 	}
 
+	@SuppressWarnings("unused")
 	private void methodDec(Type type, String name, Symbol qualifier, MethodList methodList) {
 		/*
 		 * MethodDec ::= Qualifier Return Id "("[ FormalParamDec ] ")" "{"
@@ -493,6 +494,8 @@ public class Compiler {
 		 */
 
 		Statement stmt = null;
+		String variableName = null;
+		Variable variable = null;
 
 		switch (lexer.token) {
 		case THIS:
@@ -553,12 +556,16 @@ public class Compiler {
 				signalError.showError("Missing '+'");
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("stat case + Identifier expected");
+				signalError.showError("Identifier expected");
+			variableName = lexer.getStringValue();
+			variable = symbolTable.getInLocal(variableName);
+			if (variable == null)
+				signalError.showError("Variable '" + variableName + "' in increment statement is not declared.");
 			lexer.nextToken();
 			if (lexer.token != Symbol.SEMICOLON)
 				signalError.showError("Missing ';'");
 			lexer.nextToken();
-			// stmt = new IncrementStatement(new Variable(lexer.token()));
+			stmt = new IncrementStatement(variable);
 			break;
 		case MINUS:
 			lexer.nextToken();
@@ -566,12 +573,16 @@ public class Compiler {
 				signalError.showError("Missing '-'");
 			lexer.nextToken();
 			if (lexer.token != Symbol.IDENT)
-				signalError.showError("stat case - Identifier expected");
+				signalError.showError("Identifier expected");
+			variableName = lexer.getStringValue();
+			variable = symbolTable.getInLocal(variableName);
+			if (variable == null)
+				signalError.showError("Variable '" + variableName + "' in decrement statement is not declared.");
 			lexer.nextToken();
 			if (lexer.token != Symbol.SEMICOLON)
 				signalError.showError("Missing ';'");
 			lexer.nextToken();
-			// stmt = new DecrementStatement(new Variable(lexer.token()));
+			stmt = new DecrementStatement(variable);
 			break;
 		default:
 			signalError.showError("stat def Statement expected");
@@ -652,7 +663,7 @@ public class Compiler {
 			}
 
 			if (lexer.token != Symbol.SEMICOLON)
-				signalError.showError("aeld ; Statement expected", true);
+				signalError.showError("Statement expected", true);
 			lexer.nextToken();
 
 			return new MessageSendStatement((MessageSend) left);
@@ -1224,7 +1235,7 @@ public class Compiler {
 					// "this" "." Id "." Id "(" [ ExpressionList ] ")"
 					Variable iv = this.currClass.searchInstanceVariable(id);
 					if (iv == null)
-						signalError.showError(currClass.getName() + " hasn't instance name " + iv.getName());
+						signalError.showError(currClass.getName() + " hasn't instance name " + id);
 					KraClass ivClass = symbolTable.getInGlobal(iv.getType().getName());
 					if (ivClass == null)
 						signalError.showError(iv.getName() + " is not an instance variable");
@@ -1270,9 +1281,6 @@ public class Compiler {
 	}
 
 	private LiteralInt literalInt() {
-
-		LiteralInt e = null;
-
 		// the number value is stored in lexer.getToken().value as an object of
 		// Integer.
 		// Method intValue returns that value as an value of type int.

@@ -19,6 +19,7 @@ public class ReadStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
+
 		pw.print("read(");
 
 		exprList.genKra(pw);

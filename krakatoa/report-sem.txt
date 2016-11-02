@@ -191,9 +191,15 @@ The compiler message was: "RHS is not type or subtype of LHS"
 The 'ce' message is:      "'int' cannot be assigned to 'boolean'"
 
 
+<<<<<<< HEAD
 ER-SEM20.KRA
 The compiler message was: "Identifier expected"
 The 'ce' message is:      "Identifier expected"
+=======
+ER-SEM18.KRA
+The compiler message was: "Statement expected"
+The 'ce' message is:      "Type 'k' was not found"
+>>>>>>> 75e5819a633d49cc3133b48fe1c33537cb489cb8
 
 
 ER-SEM26.KRA

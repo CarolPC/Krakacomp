@@ -17,7 +17,9 @@ public class MessageSendToSelf extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
+
 		pw.print("this");
+
 	}
     
     

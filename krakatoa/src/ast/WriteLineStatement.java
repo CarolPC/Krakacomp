@@ -8,6 +8,7 @@ public class WriteLineStatement extends WriteStatement {
 	
 	@Override
 	public void genKra(PW pw) {
+
 		pw.print("write(");
 		getExprList().genKra(pw);
 		pw.println(");");

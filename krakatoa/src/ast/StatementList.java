@@ -24,6 +24,7 @@ public class StatementList extends Statement {
 	    private ArrayList<Statement> stmtList;
 
 		public void genKra(PW pw) {
+
 			pw.println("{");
 			pw.add();
 			

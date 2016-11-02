@@ -36,6 +36,7 @@ public class StatementAssert extends Statement {
 	
 	@Override
 	public void genKra(PW pw) {
+
 		pw.print("assert ");
 		expr.genKra(pw);
 		pw.println(", \""+message+"\"");

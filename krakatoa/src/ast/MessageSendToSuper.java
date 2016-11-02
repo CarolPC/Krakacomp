@@ -18,7 +18,9 @@ public class MessageSendToSuper extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
+
 		pw.print("super");
+
 	}
     
 }
