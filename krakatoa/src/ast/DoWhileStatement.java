@@ -8,7 +8,15 @@ public class DoWhileStatement extends WhileStatement {
 	
 	@Override
 	public void genKra(PW pw) {
-		super.genKra(pw);
+		pw.printlnIdent("do {");
+		
+		pw.add();
+		statement.genKra(pw);
+		pw.sub();
+		
+		pw.printIdent("} while (");
+		expr.genKra(pw);
+		pw.println(");");
 	}
 
 }

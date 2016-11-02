@@ -22,8 +22,13 @@ public class MessageSendToVariable extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.print("this." + v.getName());
-		sender.genKra(pw);
+		if (sender instanceof VariableExpr) {
+			pw.print(v.getName() + ".");
+			sender.genKra(pw);
+		} else {
+			sender.genKra(pw);
+			pw.print(v.getName());
+		}
 	}
 
     

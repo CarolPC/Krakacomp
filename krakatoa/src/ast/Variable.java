@@ -18,7 +18,7 @@ public class Variable {
     private Type type;
     
 	public void genKra(PW pw) {
-		pw.print(type.getName() + " " + name);
+		pw.printIdent(type.getName() + " " + name);
 	}
 	
 	 @Override

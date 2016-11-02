@@ -15,10 +15,6 @@ public class LocalDecStatement extends Statement {
     public void addElement(Variable v) {
         localList.put(v, null);
      }
-/*
-    public Iterator<Variable> elements() {
-        return localList.iterator();
-    }*/
 
     public int getSize() {
         return localList.size();
@@ -33,7 +29,18 @@ public class LocalDecStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		
+		Iterator<Variable> iterator = localList.keySet().iterator();
+		while (iterator.hasNext()) {
+			Variable v = iterator.next();
+			Expr e = localList.get(v);
+			
+			v.genKra(pw);
+			
+			if (e != null)
+				e.genKra(pw);
+			
+			pw.println(";");
+		}
 	}
 
 }

@@ -2,8 +2,8 @@ package ast;
 
 public class WhileStatement extends Statement {
 
-	private Expr expr;
-	private Statement statement;
+	protected Expr expr;
+	protected Statement statement;
 
 	public WhileStatement(Expr expr, Statement statement) {
 		this.expr = expr;
@@ -25,7 +25,7 @@ public class WhileStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		/*pw.printIdent("while (");
+		pw.printIdent("while (");
 		expr.genKra(pw);
 		pw.println(") {");
 		
@@ -33,7 +33,7 @@ public class WhileStatement extends Statement {
 		statement.genKra(pw);
 		pw.sub();
 		
-		pw.printlnIdent("}");*/
+		pw.printlnIdent("}");
 	}
 
 }

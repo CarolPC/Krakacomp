@@ -192,7 +192,7 @@ The 'ce' message is:      "Class 'A' was not found"
 
 
 ER-SEM18.KRA
-The compiler message was: "aeld ; Statement expected"
+The compiler message was: "Statement expected"
 The 'ce' message is:      "Type 'k' was not found"
 
 

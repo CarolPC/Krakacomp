@@ -24,7 +24,10 @@ public class MessageSendToMethod extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.print(method.getName() + "(");
+		sender.genKra(pw);
+		if (sender instanceof MessageSendToVariable)
+			pw.print(".");
+		pw.print( method.getName() + "(");
 		if (params != null) params.genKra(pw);
 		pw.print(")");
 	}
