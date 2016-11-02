@@ -25,15 +25,21 @@ public class WhileStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		/*pw.printIdent("while (");
+		pw.print("while (");
 		expr.genKra(pw);
-		pw.println(") {");
+		pw.print(") ");
 		
 		pw.add();
+		
+		if(!(statement instanceof StatementList))
+		{
+			pw.println("");
+			pw.printIdent("");
+		}
+		
 		statement.genKra(pw);
 		pw.sub();
 		
-		pw.printlnIdent("}");*/
 	}
 
 }

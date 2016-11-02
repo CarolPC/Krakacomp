@@ -25,15 +25,22 @@ public class IfStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.printIdent("if (");
+		pw.print("if (");
 		expr.genKra(pw);
-		pw.println(") {");
-		
+		pw.print(") ");
+
 		pw.add();
-		statement.genKra(pw);
-		pw.sub();
 		
-		pw.printlnIdent("}");
+		if(!(statement instanceof StatementList))
+		{
+			pw.println("");
+			pw.printIdent("")
+		}
+	   		
+		statement.genKra(pw);
+		
+		pw.sub();
+	  
 	}
 
 }

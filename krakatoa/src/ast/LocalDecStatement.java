@@ -4,12 +4,15 @@ import java.util.*;
 
 public class LocalDecStatement extends Statement {
 
+	private Type type;
+	
     public LocalDecStatement() {
        localList = new HashMap<Variable,Expr>();
     }
 
     public void addElement(Variable v,Expr preValue) {
-       localList.put(v, preValue);
+    	this.type = v.getType();
+    	localList.put(v, preValue);
     }
     
     public void addElement(Variable v) {
@@ -33,7 +36,18 @@ public class LocalDecStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
+		int size = localList.values().size();
 		
+		pw.print(this.type.getName()+" ");
+		
+		for(Expr e: localList.values())
+		{
+			e.genKra(pw);
+			size--;
+			if(size > 0)
+				pw.print(",");
+		}
+		pw.println(";");
 	}
 
 }

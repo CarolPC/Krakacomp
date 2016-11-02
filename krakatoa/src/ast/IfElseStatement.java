@@ -11,19 +11,22 @@ public class IfElseStatement extends IfStatement {
 	
 	@Override
 	public void genKra(PW pw) {
-		pw.printIdent("if (");
-		getExpr().genKra(pw);
-		pw.println(") {");
+
+		super.genKra(pw);
 		
+		pw.print("else ");
 		pw.add();
-		getStatements().genKra(pw);
-		pw.sub();
 		
-		pw.printIdent("} else {");
-		pw.add();
+		if(!(elseStatement instanceof StatementList))
+		{
+			pw.println("");
+			pw.printIdent("");
+		}
+		
 		elseStatement.genKra(pw);
+		
 		pw.sub();
-		pw.printlnIdent("}");
+		
 	}
 
 }

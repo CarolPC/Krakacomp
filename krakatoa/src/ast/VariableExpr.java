@@ -18,6 +18,6 @@ public class VariableExpr extends MessageSend {
 
 	@Override
 	public void genKra(PW pw) {
-		v.genKra(pw);
+		pw.print(v.getName());
 	}
 }

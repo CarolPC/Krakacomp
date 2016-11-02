@@ -21,11 +21,11 @@ public class AssignExpr extends Expr {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.printIdent("");
+	
 		left.genKra(pw);
 		pw.print(" = ");
 		right.genKra(pw);
-		pw.println(";");
+		
 	}
 
 }

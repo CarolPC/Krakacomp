@@ -19,9 +19,9 @@ public class WriteStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
-		pw.printIdent("write ");
+		pw.print("write(");
 		exprList.genKra(pw);
-		pw.println(";");
+		pw.println(");");
 	}
 
 }
