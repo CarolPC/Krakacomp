@@ -4,43 +4,40 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class StatementList extends Statement {
-	
-		public StatementList() {
-	       stmtList = new ArrayList<Statement>();
-	    }
 
-	    public void addElement(Statement s) {
-	       stmtList.add(s);
-	    }
+	public StatementList() {
+		stmtList = new ArrayList<Statement>();
+	}
 
-	    public Iterator<Statement> elements() {
-	        return stmtList.iterator();
-	    }
+	public void addElement(Statement s) {
+		stmtList.add(s);
+	}
 
-	    public int getSize() {
-	        return stmtList.size();
-	    }
+	public Iterator<Statement> elements() {
+		return stmtList.iterator();
+	}
 
-	    private ArrayList<Statement> stmtList;
+	public int getSize() {
+		return stmtList.size();
+	}
 
-		public void genKra(PW pw) {
+	private ArrayList<Statement> stmtList;
 
-			pw.println("{");
-			pw.add();
-			
-			for(Statement s : stmtList)
-			{
-				pw.printIdent("");
-				s.genKra(pw);
-			}
-			
-			pw.sub();
-			pw.println("}");
-		}
+	public void genKra(PW pw) {
 
-		@Override
-		public void genC(PW pw) {
-			
-		}
+		pw.println(" {");
+		pw.add();
+
+		for (Statement s : stmtList)
+			s.genKra(pw);
+
+		pw.sub();
+		pw.printIdent("}");
+	}
+
+	@Override
+	public void genC(PW pw) {
+
+	}
 
 }

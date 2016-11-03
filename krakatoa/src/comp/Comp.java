@@ -37,8 +37,10 @@ public class Comp {
 				PrintWriter report;
 				FileOutputStream reportStream = null;
 				try {
-					// Para todos os testes
-					reportStream = new FileOutputStream("report-" + fileOrDirName.split("/")[2] + ".txt");
+					// Para todos os testes separados
+					//reportStream = new FileOutputStream("report-" + fileOrDirName.split("/")[2] + ".txt");
+					// Para todos os testes juntos
+					reportStream = new FileOutputStream("report.txt");
 					// Para apenas um teste
 					//reportStream = new FileOutputStream("report-" + fileOrDirName.split("/")[0] + ".txt");
 				} catch (FileNotFoundException e) {
@@ -58,7 +60,6 @@ public class Comp {
 				}
 				if (file.isDirectory()) {
 					// compile all files in this directory
-					System.out.println("aaa");
 					File fileList[] = file.listFiles();
 					for (File f : fileList) {
 						String filename = f.getName();

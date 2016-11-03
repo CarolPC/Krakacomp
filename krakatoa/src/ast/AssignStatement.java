@@ -16,6 +16,7 @@ public class AssignStatement extends Statement {
 
 	@Override
 	public void genKra(PW pw) {
+		pw.printIdent("");
 		left.genKra(pw);
 		pw.print(" = ");
 		right.genKra(pw);

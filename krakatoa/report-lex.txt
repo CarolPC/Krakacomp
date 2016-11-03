@@ -1,0 +1,49 @@
+Relat�rio do Compilador
+
+0 de um total de 7 erros que deveriam ser sinalizados n�o o foram (0%)
+0 erros foram sinalizados na linha errada (0%)
+0 erros foram sinalizados em 10 arquivos sem erro (0%)
+Todos os erros que deveriam ter sido sinalizados o foram
+Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER-LEX04.KRA
+The compiler message was: "literal int out of limits"
+The 'ce' message is:      "literal int out of limits"
+
+
+ER-LEX02.KRA
+The compiler message was: "Unknown character '\'"
+The 'ce' message is:      "Unknown character '\'"
+
+
+ER-LEX05.KRA
+The compiler message was: "Unknown character '#'"
+The 'ce' message is:      "Unknown character"
+
+
+ER-LEX06.KRA
+The compiler message was: "Identifier starting with underscore"
+The 'ce' message is:      "Identifier starting with underscore"
+
+
+ER-LEX03.KRA
+The compiler message was: "literal int out of limits"
+The 'ce' message is:      "literal int out of limits"
+
+
+ER-LEX07.KRA
+The compiler message was: "Missing ';'"
+The 'ce' message is:      "Unknown character"
+
+
+ER-LEX09.KRA
+The compiler message was: "literal int out of limits"
+The 'ce' message is:      "literal int out of limits"
+
+
+Para os casos de teste que voc� utilizou, o compilador est� correto

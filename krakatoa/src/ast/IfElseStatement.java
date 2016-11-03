@@ -14,19 +14,19 @@ public class IfElseStatement extends IfStatement {
 
 		super.genKra(pw);
 		
-		pw.print("else ");
-		pw.add();
-		
-		if(!(elseStatement instanceof StatementList))
-		{
-			pw.println("");
-			pw.printIdent("");
+		if (elseStatement instanceof StatementList)
+			pw.printIdent("else");
+		else {
+			pw.printlnIdent("else");
+			pw.add();
 		}
 		
 		elseStatement.genKra(pw);
 		
-		pw.sub();
+		if (!(elseStatement instanceof StatementList))
+			pw.sub();
 		
+		pw.println();
 	}
 
 }

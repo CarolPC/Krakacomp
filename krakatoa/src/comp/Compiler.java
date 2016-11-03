@@ -345,9 +345,9 @@ public class Compiler {
 
 	private LocalDecStatement localDec() {
 		// LocalDec ::= Type IdList ";"
-		LocalDecStatement localDecList = new LocalDecStatement();
 
 		Type type = type();
+		LocalDecStatement localDecList = new LocalDecStatement(type);
 
 		do {
 			if (lexer.token != Symbol.IDENT)
@@ -609,7 +609,7 @@ public class Compiler {
 		String message = lexer.getLiteralStringValue();
 		lexer.nextToken();
 
-		return new StatementAssert(e, lineNumber, message);
+		return new AssertStatement(e, lineNumber, message);
 	}
 
 	/*

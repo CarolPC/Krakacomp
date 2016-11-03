@@ -11,169 +11,9 @@ Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quand
 
 A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
 
-ER-SIN07.KRA
-The compiler message was: "Expression expected"
-The 'ce' message is:      "Command 'read' without arguments"
-
-
-ER-SIN40.KRA
-The compiler message was: "Attempt to declare a public instance variable"
-The 'ce' message is:      "Attempt to declare public instance variable 'i'"
-
-
-ER-SIN16.KRA
-The compiler message was: "Identifier expected"
-The 'ce' message is:      "Identifier expected"
-
-
-ER-SIN09.KRA
+ER-SIN34.KRA
 The compiler message was: "')' expected"
 The 'ce' message is:      "')' expected"
-
-
-ER-SIN13.KRA
-The compiler message was: "'{' expected"
-The 'ce' message is:      "'{' expected"
-
-
-ER-SIN60.KRA
-The compiler message was: "'(' expected"
-The 'ce' message is:      "'(' expected after 'while'"
-
-
-ER-SIN10.KRA
-The compiler message was: "'(' expected after 'read' command"
-The 'ce' message is:      "'(' expected after 'read' command"
-
-
-ER-SIN33.KRA
-The compiler message was: "Class x has not been declared"
-The 'ce' message is:      "Identifier expected"
-
-
-ER-SIN15.KRA
-The compiler message was: "')' expected"
-The 'ce' message is:      "')' expected"
-
-
-ER-SIN14.KRA
-The compiler message was: "End of file expected"
-The 'ce' message is:      "'class' expected"
-
-
-ER-SIN35.KRA
-The compiler message was: "')' expected"
-The 'ce' message is:      "')' expected"
-
-
-ER-SIN30.KRA
-The compiler message was: "Unknown character '#'"
-The 'ce' message is:      "Unknown character '#'"
-
-
-ER-SIN58.KRA
-The compiler message was: "')' expected"
-The 'ce' message is:      "')' expected"
-
-
-ER-SIN23.KRA
-The compiler message was: "'}' expected"
-The 'ce' message is:      "Statement expected"
-
-
-ER-SIN11.KRA
-The compiler message was: "'(' expected"
-The 'ce' message is:      "Missing '('"
-
-
-ER-SIN21.KRA
-The compiler message was: "Missing ';'"
-The 'ce' message is:      "Missing ';'"
-
-
-ER-SIN18.KRA
-The compiler message was: "Missing ';'"
-The 'ce' message is:      "Missing ';'"
-
-
-ER-SIN28.KRA
-The compiler message was: "Source code without a class 'Program'"
-The 'ce' message is:      "'class' expected"
-
-
-ER-SIN39.KRA
-The compiler message was: "'{' expected"
-The 'ce' message is:      "'{' expected"
-
-
-ER-SIN17.KRA
-The compiler message was: "Missing ';'"
-The 'ce' message is:      "Missing ';'"
-
-
-ER-SIN02.KRA
-The compiler message was: "Identifier expected"
-The 'ce' message is:      "Missing identifier"
-
-
-ER-SIN43.KRA
-The compiler message was: "Method 'run' was not found in class 'Program'"
-The 'ce' message is:      "'public', 'private', or '}' expected"
-
-
-ER-SIN22.KRA
-The compiler message was: "Missing ';'"
-The 'ce' message is:      "Missing ';'"
-
-
-ER-SIN27.KRA
-The compiler message was: "boolean expression expected in an if statement"
-The 'ce' message is:      "')' expected OR Unknown sequence of symbols"
-
-
-ER-SIN19.KRA
-The compiler message was: "; expected in read statement"
-The 'ce' message is:      "Missing ';'"
-
-
-ER-SIN06.KRA
-The compiler message was: "Expression expected"
-The 'ce' message is:      "Expression expected"
-
-
-ER-SIN41.KRA
-The compiler message was: "Identifier expected"
-The 'ce' message is:      "Identifier expected"
-
-
-ER-SIN37.KRA
-The compiler message was: "Expression expected"
-The 'ce' message is:      "Expression expected"
-
-
-ER-SIN08.KRA
-The compiler message was: "Expression expected"
-The 'ce' message is:      "Command 'write' without arguments"
-
-
-ER-SIN26.KRA
-The compiler message was: "boolean expression expected in an if statement"
-The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER-SIN05.KRA
-The compiler message was: "Expression expected"
-The 'ce' message is:      "Expression expected"
-
-
-ER-SIN01.KRA
-The compiler message was: "'{' expected"
-The 'ce' message is:      "'{' expected"
-
-
-ER-SIN59.KRA
-The compiler message was: "'{' expected after do"
-The 'ce' message is:      "'{' expected after 'do'"
 
 
 ER-SIN03.KRA
@@ -181,47 +21,112 @@ The compiler message was: "Identifier expected"
 The 'ce' message is:      "Identifier expected"
 
 
+ER-SIN02.KRA
+The compiler message was: "Identifier expected"
+The 'ce' message is:      "Missing identifier"
+
+
+ER-SIN18.KRA
+The compiler message was: "Missing ';'"
+The 'ce' message is:      "Missing ';'"
+
+
+ER-SIN16.KRA
+The compiler message was: "Identifier expected"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN13.KRA
+The compiler message was: "'{' expected"
+The 'ce' message is:      "'{' expected"
+
+
+ER-SIN43.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SIN26.KRA
+The compiler message was: "boolean expression expected in an if statement"
+The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER-SIN39.KRA
+The compiler message was: "'{' expected"
+The 'ce' message is:      "'{' expected"
+
+
+ER-SIN10.KRA
+The compiler message was: "'(' expected after 'read' command"
+The 'ce' message is:      "'(' expected after 'read' command"
+
+
+ER-SIN30.KRA
+The compiler message was: "Unknown character '#'"
+The 'ce' message is:      "Unknown character '#'"
+
+
 ER-SIN38.KRA
 The compiler message was: "'public', 'private', or '}' expected"
 The 'ce' message is:      "'}' expected"
 
 
-ER-SIN31.KRA
-The compiler message was: "Method 'run' was not found in class 'Program'"
-The 'ce' message is:      "'public', 'private', or '}' expected"
-
-
-ER-SIN34.KRA
+ER-SIN58.KRA
 The compiler message was: "')' expected"
 The 'ce' message is:      "')' expected"
 
 
-ER-SIN25.KRA
-The compiler message was: "Expression expected OR invalid sequence of symbols"
-The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER-SIN20.KRA
-The compiler message was: "; expected in write statement"
+ER-SIN22.KRA
+The compiler message was: "Missing ';'"
 The 'ce' message is:      "Missing ';'"
 
 
-ER-SIN29.KRA
-The compiler message was: "'public', 'private', or '}' expected"
-The 'ce' message is:      "'private',  'public', or '}' expected"
-
-
-ER-SIN04.KRA
-The compiler message was: "variable "i" was not declared in this scope."
-The 'ce' message is:      "Statement expected"
-
-
-ER-SIN36.KRA
-The compiler message was: "Class m has not been declared"
+ER-SIN41.KRA
+The compiler message was: "Identifier expected"
 The 'ce' message is:      "Identifier expected"
 
 
+ER-SIN32.KRA
+The compiler message was: "Type expected"
+The 'ce' message is:      "Type expected"
+
+
+ER-SIN33.KRA
+The compiler message was: "Class x has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN28.KRA
+The compiler message was: "Source code without a class 'Program'"
+The 'ce' message is:      "'class' expected"
+
+
+ER-SIN23.KRA
+The compiler message was: "'}' expected"
+The 'ce' message is:      "Statement expected"
+
+
+ER-SIN21.KRA
+The compiler message was: "Missing ';'"
+The 'ce' message is:      "Missing ';'"
+
+
+ER-SIN12.KRA
+The compiler message was: "Expression expected"
+The 'ce' message is:      "Expression expected"
+
+
 ER-SIN44.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SIN01.KRA
+The compiler message was: "'{' expected"
+The 'ce' message is:      "'{' expected"
+
+
+ER-SIN31.KRA
 The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private', or '}' expected"
 
@@ -236,14 +141,109 @@ The compiler message was: "Expression expected OR invalid sequence of symbols"
 The 'ce' message is:      "Expression expected OR Unknown sequence of symbols"
 
 
-ER-SIN12.KRA
+ER-SIN04.KRA
+The compiler message was: "variable "i" was not declared in this scope."
+The 'ce' message is:      "Statement expected"
+
+
+ER-SIN37.KRA
 The compiler message was: "Expression expected"
 The 'ce' message is:      "Expression expected"
 
 
-ER-SIN32.KRA
-The compiler message was: "Type expected"
-The 'ce' message is:      "Type expected"
+ER-SIN07.KRA
+The compiler message was: "Expression expected"
+The 'ce' message is:      "Command 'read' without arguments"
+
+
+ER-SIN05.KRA
+The compiler message was: "Expression expected"
+The 'ce' message is:      "Expression expected"
+
+
+ER-SIN25.KRA
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER-SIN36.KRA
+The compiler message was: "Class m has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN14.KRA
+The compiler message was: "End of file expected"
+The 'ce' message is:      "'class' expected"
+
+
+ER-SIN08.KRA
+The compiler message was: "Expression expected"
+The 'ce' message is:      "Command 'write' without arguments"
+
+
+ER-SIN11.KRA
+The compiler message was: "'(' expected"
+The 'ce' message is:      "Missing '('"
+
+
+ER-SIN09.KRA
+The compiler message was: "')' expected"
+The 'ce' message is:      "')' expected"
+
+
+ER-SIN20.KRA
+The compiler message was: "; expected in write statement"
+The 'ce' message is:      "Missing ';'"
+
+
+ER-SIN60.KRA
+The compiler message was: "'(' expected"
+The 'ce' message is:      "'(' expected after 'while'"
+
+
+ER-SIN15.KRA
+The compiler message was: "')' expected"
+The 'ce' message is:      "')' expected"
+
+
+ER-SIN19.KRA
+The compiler message was: "; expected in read statement"
+The 'ce' message is:      "Missing ';'"
+
+
+ER-SIN59.KRA
+The compiler message was: "'{' expected after do"
+The 'ce' message is:      "'{' expected after 'do'"
+
+
+ER-SIN40.KRA
+The compiler message was: "Attempt to declare a public instance variable"
+The 'ce' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER-SIN27.KRA
+The compiler message was: "boolean expression expected in an if statement"
+The 'ce' message is:      "')' expected OR Unknown sequence of symbols"
+
+
+ER-SIN06.KRA
+The compiler message was: "Expression expected"
+The 'ce' message is:      "Expression expected"
+
+
+ER-SIN17.KRA
+The compiler message was: "Missing ';'"
+The 'ce' message is:      "Missing ';'"
+
+
+ER-SIN35.KRA
+The compiler message was: "')' expected"
+The 'ce' message is:      "')' expected"
+
+
+ER-SIN29.KRA
+The compiler message was: "'public', 'private', or '}' expected"
+The 'ce' message is:      "'private',  'public', or '}' expected"
 
 
 Para os casos de teste que voc� utilizou, o compilador est� correto

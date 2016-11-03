@@ -1,7 +1,7 @@
 package ast;
 
-public class StatementAssert extends Statement {
-	public StatementAssert(Expr expr, int lineNumber, String message) {
+public class AssertStatement extends Statement {
+	public AssertStatement(Expr expr, int lineNumber, String message) {
 		this.expr = expr;
 		this.lineNumber = lineNumber;
 		this.message = message;
@@ -36,10 +36,8 @@ public class StatementAssert extends Statement {
 	
 	@Override
 	public void genKra(PW pw) {
-
-		pw.print("assert ");
+		pw.printIdent("assert ");
 		expr.genKra(pw);
 		pw.println(", \""+message+"\"");
-		
 	}
 }

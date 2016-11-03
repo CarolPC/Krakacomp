@@ -60,13 +60,11 @@ public class MethodDec {
 	public void genKra(PW pw) {
 		pw.printIdent(qualifier + " " + returnType.getName() + " " + name + "(");
 		paramList.genKra(pw);
-		pw.println(") {");
+		pw.print(")");
 		
-		pw.add();
 		stmtList.genKra(pw);
-		pw.sub();
 		
-		pw.printlnIdent("}");
+		pw.println("");
 	}
 	
 	@Override

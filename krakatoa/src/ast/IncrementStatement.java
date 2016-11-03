@@ -1,8 +1,4 @@
-package comp;
-
-import ast.PW;
-import ast.Statement;
-import ast.Variable;
+package ast;
 
 public class IncrementStatement extends Statement {
 	

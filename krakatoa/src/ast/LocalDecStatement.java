@@ -5,45 +5,50 @@ import java.util.*;
 public class LocalDecStatement extends Statement {
 
 	private Type type;
-	
-    public LocalDecStatement() {
-       localList = new HashMap<Variable,Expr>();
-    }
 
-    public void addElement(Variable v,Expr preValue) {
-    	this.type = v.getType();
-    	localList.put(v, preValue);
-    }
-    
-    public void addElement(Variable v) {
-        localList.put(v, null);
-     }
+	public LocalDecStatement(Type type) {
+		localList = new HashMap<Variable, Expr>();
+		this.type = type;
+	}
 
-    public int getSize() {
-        return localList.size();
-    }
+	public void addElement(Variable v, Expr preValue) {
+		localList.put(v, preValue);
+	}
 
-    private HashMap<Variable,Expr> localList;
+	public void addElement(Variable v) {
+		localList.put(v, null);
+	}
+
+	public int getSize() {
+		return localList.size();
+	}
+
+	private HashMap<Variable, Expr> localList;
 
 	@Override
 	public void genC(PW pw) {
-		
+
 	}
 
 	@Override
 	public void genKra(PW pw) {
 
-		int size = localList.values().size();
+		pw.printIdent(type.getName()+" ");
 		
-		pw.print(this.type.getName()+" ");
-		
-		for(Expr e: localList.values())
-		{
-			e.genKra(pw);
-			size--;
-			if(size > 0)
-				pw.print(",");
+		Iterator<Variable> iterator = localList.keySet().iterator();
+		while (iterator.hasNext()) {
+			Variable v = iterator.next();
+			Expr e = localList.get(v);
+			
+			if (e != null)
+				e.genKra(pw);
+			else 
+				pw.print(v.getName());
+			
+			if (iterator.hasNext())
+				pw.print(", ");
 		}
+		
 		pw.println(";");
 	}
 
