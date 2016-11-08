@@ -32,29 +32,6 @@ public class Program {
 	}
 
 	public void genC(PW pw) {
-		pw.println("#include <malloc.h>");
-		pw.println("#include <stdlib.h>");
-		pw.println("#include <stdio.h>");
-		pw.println();
-		pw.println("typedef int boolean;");
-		pw.println("#define TRUE 1");
-		pw.println("#define FALSE 0");
-		pw.println();
-		pw.println("typedef\n  void (*Func)();");
-		pw.println();
-		
-		for (KraClass kraClass : classList)
-			kraClass.genC(pw);
-		
-		pw.printIdent("int main() {");
-		pw.add();
-		pw.printIdent("_class_program *program;");
-		pw.println();
-		pw.printlnIdent("program = new_Program()");
-		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program)");
-		pw.printlnIdent("return 0;");
-		pw.sub();
-		pw.printIdent("}");
 	}
 	
 	public ArrayList<KraClass> getClassList() {

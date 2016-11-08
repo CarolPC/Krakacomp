@@ -30,15 +30,7 @@ public class KraClass extends Type {
 	}
 
 	public String getCname() {
-		return "_" + getName();
-	}
-	
-	public String getCTypeName() {
-		return "_class" + getCname();
-	}
-	
-	public String getCStructName() {
-		return "_St" + getCname();
+		return getName();
 	}
 
 	private KraClass superclass;
@@ -214,29 +206,6 @@ public class KraClass extends Type {
 		}
 		
 		return superEquals;
-	}
-
-	public void genC(PW pw) {
-		pw.println("typedef");
-		pw.add();
-		pw.printlnIdent("struct " + getCStructName() + " {");
-		pw.add();
-		pw.printlnIdent("Func *vt;");
-		
-		Iterator<InstanceVariable> iterator = instanceVariableList.elements();
-		while (iterator.hasNext())
-			((InstanceVariable) iterator.next()).genC(pw, getCname());
-			
-		pw.printlnIdent("}");
-		pw.set(0);
-		
-		// TODO _class_A *new_A(void);
-		
-		// TODO Declaração dos métodos
-		
-		// TODO Popular vt
-		
-		// TODO Construtores
 	}
 
 }

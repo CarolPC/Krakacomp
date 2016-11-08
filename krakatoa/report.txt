@@ -1,11 +1,99 @@
 Relat�rio do Compilador
 
-0 de um total de 116 erros que deveriam ser sinalizados n�o o foram (0%)
-0 erros foram sinalizados na linha errada (0%)
-0 erros foram sinalizados em 69 arquivos sem erro (0%)
+0 de um total de 139 erros que deveriam ser sinalizados n�o o foram (0%)
+16 erros foram sinalizados na linha errada (11%)
+10 erros foram sinalizados em 79 arquivos sem erro (12%)
 Todos os erros que deveriam ter sido sinalizados o foram
-Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
-O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+######################################################
+Erros que foram sinalizados na linha errada:
+
+ER-SEM69.KRA
+    correto:    11, '.' or '=' expected after identifier OR statement expected (comp.Compiler.factor())
+    sinalizado: 7, Method 'run' was not found in class 'Program'
+
+ER-SEM66.KRA
+    correto:    9, Static method 'p' was not found in class 'Program' (comp.Compiler.factor())
+    sinalizado: 8, Method 'run' was not found in class 'Program'
+
+ER-SEM73.KRA
+    correto:    10, Redefinition of static method 'm' (comp.Compiler.methodDec())
+    sinalizado: 7, Method 'run' was not found in class 'Program'
+
+ER-SEM83.KRA
+    correto:    7, Class 'Program' is inheriting from final class 'Terra' 
+    sinalizado: 3, Source code without a class 'Program'
+
+ER-SEM85.KRA
+    correto:    6, 'final' method in a 'final' class (comp.Compiler.methodDec())
+    sinalizado: 5, Source code without a class 'Program'
+
+ER-SEM65.KRA
+    correto:    9, Static method 'p' was not found in class 'Program' (comp.Compiler.factor())
+    sinalizado: 8, Method 'run' was not found in class 'Program'
+
+ER-SEM67.KRA
+    correto:    12, '.' or '=' expected after an identifier OR statement expected (comp.Compiler.factor())
+    sinalizado: 11, Method 'run' was not found in class 'Program'
+
+ER-SEM76.KRA
+    correto:    16, Method 'm' was not found in class 'A' or its superclasses (comp.Compiler.factor())
+    sinalizado: 6, 'public', 'private', or '}' expected
+
+ER-SEM63.KRA
+    correto:    12, '.' or '=' expected after an identifier OR statement expected (comp.Compiler.factor())
+    sinalizado: 8, Method 'run' was not found in class 'Program'
+
+ER-SEM72.KRA
+    correto:    11, Call to 'this' in a static method (comp.Compiler.factor())
+    sinalizado: 10, Method 'run' was not found in class 'Program'
+
+ER-SEM75.KRA
+    correto:    14, Static method 'm' was not found in class 'A' (comp.Compiler.factor())
+    sinalizado: 6, 'public', 'private', or '}' expected
+
+ER-SEM87.KRA
+    correto:    11, Call to 'this' in a static method (comp.Compiler.factor())
+    sinalizado: 10, Method 'run' was not found in class 'Program'
+
+ER-SEM84.KRA
+    correto:    12, Redeclaration of final method 'finalMethod' (comp.Compiler.methodDec())
+    sinalizado: 6, 'public', 'private', or '}' expected
+
+ER-SEM71.KRA
+    correto:    9, Attempt to access an instance variable using 'this' in a static method (comp.Compiler.factor())
+    sinalizado: 8, Method 'run' was not found in class 'Program'
+
+ER-SEM64.KRA
+    correto:    11, '.' or '=' expected after an identifier OR statement expected (comp.Compiler.factor())
+    sinalizado: 7, Method 'run' was not found in class 'Program'
+
+ER-SEM74.KRA
+    correto:    12, '.' or '=' expected after identifier OR statement expected (comp.Compiler.factor())
+    sinalizado: 6, 'public', 'private', or '}' expected
+
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK-GER19.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER17.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER20.KRA, 12, 'public', 'private', or '}' expected
+
+OK-SEM18.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER18.KRA, 11, 'public', 'private', or '}' expected
+
+OK-GER22.KRA, 14, 'public', 'private', or '}' expected
+
+OK-SEM17.KRA, 11, 'public', 'private', or '}' expected
+
+OK-SEM01.KRA, 4, 'public', 'private', or '}' expected
+
+OK-SEM19.KRA, 12, 'public', 'private', or '}' expected
+
+OK-SEM20.KRA, 6, 'public', 'private', or '}' expected
+
 ######################################################
 Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
 
@@ -68,6 +156,11 @@ The 'ce' message is:      "Class expected"
 
 ER-SIN16.KRA
 The compiler message was: "Identifier expected"
+The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN55.KRA
+The compiler message was: "Class static has not been declared"
 The 'ce' message is:      "Identifier expected"
 
 
@@ -291,6 +384,11 @@ The compiler message was: "variable "I" was not declared in this scope."
 The 'ce' message is:      "Variable 'I' was not declared"
 
 
+ER-SIN51.KRA
+The compiler message was: "Class static has not been declared"
+The 'ce' message is:      "Identifier expected"
+
+
 ER-SEM17.KRA
 The compiler message was: "Command 'read' expects a variable"
 The 'ce' message is:      "Command 'read' expects a variable"
@@ -309,6 +407,16 @@ The 'ce' message is:      "Expression expected"
 ER-SIN44.KRA
 The compiler message was: "Method 'run' was not found in class 'Program'"
 The 'ce' message is:      "'public', 'private', or '}' expected"
+
+
+ER-SEM82.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "Method 'run' cannot be static"
+
+
+ER-SIN53.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "'private' expected"
 
 
 ER-SEM86.KRA
@@ -374,6 +482,11 @@ The 'ce' message is:      "Operator '!' does not accepts 'int' values"
 ER-SEM07.KRA
 The compiler message was: "i is not a class instance"
 The 'ce' message is:      "Message send to a non-object receiver"
+
+
+ER-SIN54.KRA
+The compiler message was: "Class static has not been declared"
+The 'ce' message is:      "Identifier expected"
 
 
 ER-SEM61.KRA
@@ -444,6 +557,11 @@ The 'ce' message is:      "Expression expected OR invalid sequence of symbols"
 ER-SIN36.KRA
 The compiler message was: "Class m has not been declared"
 The 'ce' message is:      "Identifier expected"
+
+
+ER-SIN52.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "'public' or 'private' expected"
 
 
 ER-SIN14.KRA
@@ -521,6 +639,11 @@ The compiler message was: "Method 'm' is being redeclared"
 The 'ce' message is:      "Method 'm' is being redefined"
 
 
+ER-SIN56.KRA
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'ce' message is:      "Identifier expected"
+
+
 ER-SIN19.KRA
 The compiler message was: "; expected in read statement"
 The 'ce' message is:      "Missing ';'"
@@ -591,4 +714,3 @@ The compiler message was: "'public', 'private', or '}' expected"
 The 'ce' message is:      "'private',  'public', or '}' expected"
 
 
-Para os casos de teste que voc� utilizou, o compilador est� correto

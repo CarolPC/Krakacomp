@@ -37,12 +37,4 @@ public class InstanceVariable extends Variable {
 		pw.printlnIdent("private " + getType().getName() + " " + getName() + ";");
 	}
 
-	public void genC(PW pw, String classPrefix) {
-		pw.printlnIdent(getType().getCname() + " " + classPrefix + getCName() + ";");
-	}
-
-	private String getCName() {
-		return "_" + getName();
-	}
-
 }

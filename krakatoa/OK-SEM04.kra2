@@ -1,7 +1,7 @@
 class Program {
    public void run() {
-      int a, b;
-      boolean f, e;
+      int b, a;
+      boolean e, f;
       a = 1;
       b = 1;
       e = true;
