@@ -59,8 +59,11 @@ public class MethodDec {
 		return this.name;
 	}
 	
-	public ParamList getParamList()
-	{
+	public String getCName() {
+		return "_" + this.name;
+	}
+	
+	public ParamList getParamList() {
 		return this.paramList;
 	}
 	
@@ -80,6 +83,15 @@ public class MethodDec {
 		pw.println("");
 	}
 	
+	public void genC(PW pw, String cname) {
+		pw.printIdent(returnType.getCname() + " " + cname + getCName() + "( ");
+		paramList.genC(pw, cname);
+		pw.println(" ) {");
+		stmtList.genC(pw);
+		pw.printlnIdent("}");
+		pw.println();
+	}
+	
 	@Override
     public boolean equals(Object obj) {
 		
@@ -96,12 +108,4 @@ public class MethodDec {
         
         return true;
     }
-	
-	/*public boolean equals(MethodDec methodDec) {
-		if (this.name.equals(methodDec.name)
-				|| this.paramList.equals(methodDec.paramList))
-			return false;
-		return true;
-	}*/
-	
 }

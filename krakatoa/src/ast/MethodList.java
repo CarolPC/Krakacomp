@@ -54,4 +54,9 @@ public class MethodList {
 		for (Iterator<MethodDec> iterator = elements(); iterator.hasNext();)
 			iterator.next().genKra(pw);
 	}
+
+	public void genC(PW pw, String cname) {
+		for (Iterator<MethodDec> iterator = elements(); iterator.hasNext();)
+			iterator.next().genC(pw, cname);
+	}
 }

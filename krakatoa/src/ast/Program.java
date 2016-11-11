@@ -55,6 +55,7 @@ public class Program {
 		pw.printlnIdent("return 0;");
 		pw.sub();
 		pw.printIdent("}");
+		pw.println();
 	}
 	
 	public ArrayList<KraClass> getClassList() {

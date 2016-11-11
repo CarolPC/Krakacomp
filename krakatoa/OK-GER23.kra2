@@ -23,7 +23,6 @@ class Program {
          ++j;
       } while (j < n);
       assert sum == 100, "Nested 'do-while' statement with two indexes"
-      ;
    }
 }
 

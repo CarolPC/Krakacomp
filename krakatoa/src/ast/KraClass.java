@@ -40,6 +40,14 @@ public class KraClass extends Type {
 	public String getCStructName() {
 		return "_St" + getCname();
 	}
+	
+	public String getCNew() {
+		return "new" + getCname();
+	}
+	
+	public String getVtClass() {
+		return "VTClass" + getCname();
+	}
 
 	private KraClass superclass;
 	private InstanceVariableList instanceVariableList;
@@ -217,26 +225,61 @@ public class KraClass extends Type {
 	}
 
 	public void genC(PW pw) {
+		genCClassDefinition(pw);
+		
+		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void)");
+		pw.println();
+		
+		publicMethodList.genC(pw, getCname());
+		privateMethodList.genC(pw, getCname());
+		
+		genCMethodsVector(pw);
+		
+		genCConstructor(pw);
+	}
+
+	private void genCClassDefinition(PW pw) {
 		pw.println("typedef");
 		pw.add();
 		pw.printlnIdent("struct " + getCStructName() + " {");
 		pw.add();
 		pw.printlnIdent("Func *vt;");
 		
-		Iterator<InstanceVariable> iterator = instanceVariableList.elements();
-		while (iterator.hasNext())
-			((InstanceVariable) iterator.next()).genC(pw, getCname());
+		Iterator<InstanceVariable> iteratorVarList = instanceVariableList.elements();
+		while (iteratorVarList.hasNext())
+			((InstanceVariable) iteratorVarList.next()).genC(pw, getCname());
 			
-		pw.printlnIdent("}");
+		pw.printlnIdent("} " + getCTypeName());
 		pw.set(0);
-		
-		// TODO _class_A *new_A(void);
-		
-		// TODO Declaração dos métodos
-		
-		// TODO Popular vt
-		
-		// TODO Construtores
+		pw.println();
+	}
+	
+	private void genCMethodsVector(PW pw) {
+		pw.printlnIdent("Func " + getVtClass() + "[] = {");
+		pw.add();
+		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
+		while (iteratorPublicMethods.hasNext()) {
+			String cMethod = ((MethodDec) iteratorPublicMethods.next()).getCName();
+			pw.printlnIdent("( void (*)() ) " + cMethod);
+		}
+		pw.printlnIdent("};");
+		pw.set(0);
+		pw.println();
+	}
+
+	private void genCConstructor(PW pw) {
+		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "()");
+		pw.printlnIdent("{");
+		pw.add();
+		pw.printlnIdent(getCTypeName() + " *t");
+		pw.println();
+		pw.printlnIdent("if ( (t = malloc(sizeof(" + getCTypeName() + "))) != NULL )");
+		pw.add();
+		pw.printlnIdent("t->vt = " + getCTypeName() + ";");
+		pw.sub();
+		pw.printlnIdent("return t;");
+		pw.printlnIdent("}");
+		pw.println();
 	}
 
 }

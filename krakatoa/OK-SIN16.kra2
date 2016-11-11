@@ -6,7 +6,7 @@ class Program {
       } while (false);
       do {
       } while (b);
-      int i, j, n;
+      int n, i, j;
       i = 0;
       j = 0;
       n = 10;
