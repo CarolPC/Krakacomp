@@ -17,24 +17,23 @@ typedef
 
 _class_A *new_A(void)
 
-void _A_put( _class_Aint x, int y, int ok ) {
-}
-
-int _A_get( _class_A ) {
-}
-
-void _A_set( _class_Aint i ) {
-}
-
+void _A_put( _class_A *thisint x, int y, int ok ) {
+   }
+int _A_get( _class_A *this ) {
+   return ;
+   }
+void _A_set( _class_A *thisint i ) {
+    = i;
+   }
 Func VTClass_A[] = {
-   ( void (*)() ) _put
-   ( void (*)() ) _get
-   ( void (*)() ) _set
+   ( void (*)() ) _A_put,
+   ( void (*)() ) _A_get,
+   ( void (*)() ) _A_set
    };
 
 _class_A *new_A()
 {
-   _class_A *t
+   _class_A *t;
 
    if ( (t = malloc(sizeof(_class_A))) != NULL )
       t->vt = _class_A;
@@ -42,22 +41,21 @@ _class_A *new_A()
    }
 
 typedef
-      struct _St_B {
-         Func *vt;
-         } _class_B
+   struct _St_B {
+      Func *vt;
+      } _class_B
 
 _class_B *new_B(void)
 
-void _B_put( _class_Bint a, int b, int c ) {
-}
-
+void _B_put( _class_B *thisint a, int b, int c ) {
+   }
 Func VTClass_B[] = {
-   ( void (*)() ) _put
+   ( void (*)() ) _B_put
    };
 
 _class_B *new_B()
 {
-   _class_B *t
+   _class_B *t;
 
    if ( (t = malloc(sizeof(_class_B))) != NULL )
       t->vt = _class_B;
@@ -65,22 +63,24 @@ _class_B *new_B()
    }
 
 typedef
-      struct _St_Program {
-         Func *vt;
-         } _class_Program
+   struct _St_Program {
+      Func *vt;
+      } _class_Program
 
 _class_Program *new_Program(void)
 
-void _Program_run( _class_Program ) {
-}
-
+void _Program_run( _class_Program *this ) {
+   _B _b;
+   b = new_B();
+   ;
+   }
 Func VTClass_Program[] = {
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

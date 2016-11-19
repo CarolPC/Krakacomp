@@ -37,7 +37,6 @@ public class StatementList extends Statement {
 	private ArrayList<Statement> stmtList;
 
 	public void genKra(PW pw) {
-
 		pw.println(" {");
 		pw.add();
 
@@ -50,7 +49,13 @@ public class StatementList extends Statement {
 
 	@Override
 	public void genC(PW pw) {
+		pw.println(" {");
+		pw.add();
 
+		for (Statement s : stmtList)
+			s.genC(pw);
+
+		pw.printIdent("}");
 	}
 
 }

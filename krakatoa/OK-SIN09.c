@@ -18,26 +18,28 @@ typedef
 
 _class_A *new_A(void)
 
-int _A_m( _class_A ) {
-}
-
-void _A_init( _class_A ) {
-}
-
-int _A_m1( _class_A ) {
-}
-
-void _A_m2( _class_Aint pk ) {
-}
-
+int _A_m( _class_A *this ) {
+   ;
+   return ( + );
+   }
+void _A_init( _class_A *this ) {
+    =    1;
+    =    0;
+   }
+int _A_m1( _class_A *this ) {
+   return ( +    1);
+   }
+void _A_m2( _class_A *thisint pk ) {
+    = pk;
+   }
 Func VTClass_A[] = {
-   ( void (*)() ) _m
-   ( void (*)() ) _init
+   ( void (*)() ) _A_m,
+   ( void (*)() ) _A_init
    };
 
 _class_A *new_A()
 {
-   _class_A *t
+   _class_A *t;
 
    if ( (t = malloc(sizeof(_class_A))) != NULL )
       t->vt = _class_A;
@@ -45,22 +47,24 @@ _class_A *new_A()
    }
 
 typedef
-      struct _St_Program {
-         Func *vt;
-         } _class_Program
+   struct _St_Program {
+      Func *vt;
+      } _class_Program
 
 _class_Program *new_Program(void)
 
-void _Program_run( _class_Program ) {
-}
-
+void _Program_run( _class_Program *this ) {
+   _A _a;
+   a = new_A();
+   printf();
+   }
 Func VTClass_Program[] = {
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

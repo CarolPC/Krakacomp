@@ -41,7 +41,7 @@ public class InstanceVariable extends Variable {
 		pw.printlnIdent(getType().getCname() + " " + classPrefix + getCName() + ";");
 	}
 
-	private String getCName() {
+	public String getCName() {
 		return "_" + getName();
 	}
 

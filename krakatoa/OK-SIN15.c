@@ -16,16 +16,16 @@ typedef
 
 _class_Test *new_Test(void)
 
-char * _Test_fakeClone( _class_Testchar * s ) {
-}
-
+char * _Test_fakeClone( _class_Test *thischar * s ) {
+   return s;
+   }
 Func VTClass_Test[] = {
-   ( void (*)() ) _fakeClone
+   ( void (*)() ) _Test_fakeClone
    };
 
 _class_Test *new_Test()
 {
-   _class_Test *t
+   _class_Test *t;
 
    if ( (t = malloc(sizeof(_class_Test))) != NULL )
       t->vt = _class_Test;
@@ -33,22 +33,32 @@ _class_Test *new_Test()
    }
 
 typedef
-      struct _St_Program {
-         Func *vt;
-         } _class_Program
+   struct _St_Program {
+      Func *vt;
+      } _class_Program
 
 _class_Program *new_Program(void)
 
-void _Program_run( _class_Program ) {
-}
-
+void _Program_run( _class_Program *this ) {
+   char * _s;
+   _Test _t;
+   s = Ola !!!;
+   printf();
+   t = new_Test();
+   printf();
+   printf();
+   printf();
+   printf();
+   printf();
+   printf();
+   }
 Func VTClass_Program[] = {
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

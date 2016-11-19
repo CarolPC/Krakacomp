@@ -16,16 +16,19 @@ typedef
 
 _class_Program *new_Program(void)
 
-void _Program_run( _class_Program ) {
-}
+void _Program_run( _class_Program *this ) {
+   printf();
+   while (0)
+      ;
 
+      }
 Func VTClass_Program[] = {
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

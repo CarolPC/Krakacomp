@@ -14,6 +14,7 @@ Nome: Henrique Manoel de Lima Sebastião
 package ast;
 
 import java.util.Iterator;
+import java.util.Stack;
 
 /*
  * Krakatoa Class
@@ -224,7 +225,7 @@ public class KraClass extends Type {
 		return superEquals;
 	}
 
-	public void genC(PW pw) {
+	public void genC(PW pw) {		
 		genCClassDefinition(pw);
 		
 		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void)");
@@ -239,6 +240,8 @@ public class KraClass extends Type {
 	}
 
 	private void genCClassDefinition(PW pw) {
+		pw.set(0);
+		
 		pw.println("typedef");
 		pw.add();
 		pw.printlnIdent("struct " + getCStructName() + " {");
@@ -255,23 +258,63 @@ public class KraClass extends Type {
 	}
 	
 	private void genCMethodsVector(PW pw) {
+		pw.set(0);
+		
 		pw.printlnIdent("Func " + getVtClass() + "[] = {");
 		pw.add();
+		
+		//stackAndPrintVTSuper(pw);
+		
 		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
 		while (iteratorPublicMethods.hasNext()) {
 			String cMethod = ((MethodDec) iteratorPublicMethods.next()).getCName();
-			pw.printlnIdent("( void (*)() ) " + cMethod);
+			pw.printIdent("( void (*)() ) " + getCname() + cMethod);
+			
+			if (iteratorPublicMethods.hasNext())
+				pw.println(",");
+			else
+				pw.println();
 		}
 		pw.printlnIdent("};");
 		pw.set(0);
 		pw.println();
 	}
+	
+	private void stackAndPrintVTSuper(PW pw) {
+		Stack<KraClass> stack = new Stack<>();
+		KraClass auxClass = superclass;
+		
+		while (auxClass != null) {
+			stack.push(auxClass);
+			
+			auxClass = superclass;
+		}
+		
+		while (!stack.isEmpty()) {
+			auxClass = stack.pop();
+			
+			auxClass.genCSuperMethodsVector(pw);
+		}
+	}
+
+	private void genCSuperMethodsVector(PW pw) {
+		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
+		while (iteratorPublicMethods.hasNext()) {
+			String cMethod = ((MethodDec) iteratorPublicMethods.next()).getCName();
+			pw.printIdent("( void (*)() ) " + cMethod);
+			
+			if (iteratorPublicMethods.hasNext())
+				pw.println(",");
+		}
+	}
 
 	private void genCConstructor(PW pw) {
+		pw.set(0);
+		
 		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "()");
 		pw.printlnIdent("{");
 		pw.add();
-		pw.printlnIdent(getCTypeName() + " *t");
+		pw.printlnIdent(getCTypeName() + " *t;");
 		pw.println();
 		pw.printlnIdent("if ( (t = malloc(sizeof(" + getCTypeName() + "))) != NULL )");
 		pw.add();

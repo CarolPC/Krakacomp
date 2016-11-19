@@ -40,13 +40,29 @@ public class LocalDecStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
-
+		pw.printIdent(type.getCname() + " ");
+		
+		Iterator<Variable> iterator = localList.keySet().iterator();
+		while (iterator.hasNext()) {
+			Variable v = iterator.next();
+			Expr e = localList.get(v);
+			
+			if (e != null)
+				e.genC(pw, false);
+			else 
+				pw.print(v.getCName());
+			
+			if (iterator.hasNext())
+				pw.print(", ");
+		}
+		
+		pw.println(";");
 	}
 
 	@Override
 	public void genKra(PW pw) {
 
-		pw.printIdent(type.getName()+" ");
+		pw.printIdent(type.getName() + " ");
 		
 		Iterator<Variable> iterator = localList.keySet().iterator();
 		while (iterator.hasNext()) {

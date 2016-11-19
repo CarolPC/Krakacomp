@@ -17,20 +17,23 @@ typedef
 
 _class_A *new_A(void)
 
-void _A_set( _class_Aint pn ) {
-}
-
-int _A_put( _class_Aint n, char * set ) {
-}
-
+void _A_set( _class_A *thisint pn ) {
+   int _n;
+    = pn;
+   }
+int _A_put( _class_A *thisint n, char * set ) {
+   int _put;
+    = n;
+   return n;
+   }
 Func VTClass_A[] = {
-   ( void (*)() ) _set
-   ( void (*)() ) _put
+   ( void (*)() ) _A_set,
+   ( void (*)() ) _A_put
    };
 
 _class_A *new_A()
 {
-   _class_A *t
+   _class_A *t;
 
    if ( (t = malloc(sizeof(_class_A))) != NULL )
       t->vt = _class_A;
@@ -38,22 +41,24 @@ _class_A *new_A()
    }
 
 typedef
-      struct _St_Program {
-         Func *vt;
-         } _class_Program
+   struct _St_Program {
+      Func *vt;
+      } _class_Program
 
 _class_Program *new_Program(void)
 
-void _Program_run( _class_Program ) {
-}
-
+void _Program_run( _class_Program *this ) {
+   _A _a;
+   a = new_A();
+   ;
+   }
 Func VTClass_Program[] = {
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

@@ -27,7 +27,9 @@ public class WriteStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
-
+		pw.printIdent("printf(");
+		// TODO Printar a flag do tipo e a variável
+		pw.println(");");
 	}
 
 	@Override

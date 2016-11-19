@@ -29,7 +29,7 @@ public class NewExpr extends Expr{
 	
 	public void genC( PW pw, boolean putParenthesis )
 	{
-		//Segunda fase
+		pw.print(classType.getCNew() + "()");
 	}
 
 	@Override

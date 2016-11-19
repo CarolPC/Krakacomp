@@ -54,7 +54,7 @@ public class ParamList {
 	}
 
 	public void genC(PW pw, String cname) {
-		pw.print("_class" + cname + "");
+		pw.print("_class" + cname + " *this");
 		
 		Variable param = null;
 		int i = 0;

@@ -17,20 +17,20 @@ typedef
 
 _class_A *new_A(void)
 
-void _A_set( _class_Aint pn ) {
-}
-
-int _A_get( _class_A ) {
-}
-
+void _A_set( _class_A *thisint pn ) {
+    = pn;
+   }
+int _A_get( _class_A *this ) {
+   return ;
+   }
 Func VTClass_A[] = {
-   ( void (*)() ) _set
-   ( void (*)() ) _get
+   ( void (*)() ) _A_set,
+   ( void (*)() ) _A_get
    };
 
 _class_A *new_A()
 {
-   _class_A *t
+   _class_A *t;
 
    if ( (t = malloc(sizeof(_class_A))) != NULL )
       t->vt = _class_A;
@@ -38,22 +38,23 @@ _class_A *new_A()
    }
 
 typedef
-      struct _St_B {
-         Func *vt;
-         } _class_B
+   struct _St_B {
+      Func *vt;
+      } _class_B
 
 _class_B *new_B(void)
 
-void _B_set( _class_Bint pn ) {
-}
-
+void _B_set( _class_B *thisint pn ) {
+   printf();
+   ;
+   }
 Func VTClass_B[] = {
-   ( void (*)() ) _set
+   ( void (*)() ) _B_set
    };
 
 _class_B *new_B()
 {
-   _class_B *t
+   _class_B *t;
 
    if ( (t = malloc(sizeof(_class_B))) != NULL )
       t->vt = _class_B;
@@ -61,30 +62,38 @@ _class_B *new_B()
    }
 
 typedef
-      struct _St_Program {
-         Func *vt;
-         } _class_Program
+   struct _St_Program {
+      Func *vt;
+      } _class_Program
 
 _class_Program *new_Program(void)
 
-_B _Program_m( _class_Program_A a ) {
-}
-
-_A _Program_p( _class_Programint i ) {
-}
-
-void _Program_run( _class_Program ) {
-}
-
+_B _Program_m( _class_Program *this_A a ) {
+   ;
+   return new_B();
+   }
+_A _Program_p( _class_Program *thisint i ) {
+   }
+void _Program_run( _class_Program *this ) {
+   _A _a;
+   _B _b;
+   a = new_A();
+   b = new_B();
+   a = b;
+   ;
+   a = ;
+   b = ;
+   a = ;
+   }
 Func VTClass_Program[] = {
-   ( void (*)() ) _m
-   ( void (*)() ) _p
-   ( void (*)() ) _run
+   ( void (*)() ) _Program_m,
+   ( void (*)() ) _Program_p,
+   ( void (*)() ) _Program_run
    };
 
 _class_Program *new_Program()
 {
-   _class_Program *t
+   _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
       t->vt = _class_Program;

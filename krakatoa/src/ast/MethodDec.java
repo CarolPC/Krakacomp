@@ -84,11 +84,14 @@ public class MethodDec {
 	}
 	
 	public void genC(PW pw, String cname) {
+		pw.set(0);
+		
 		pw.printIdent(returnType.getCname() + " " + cname + getCName() + "( ");
 		paramList.genC(pw, cname);
-		pw.println(" ) {");
+		pw.print(" )");
+		
 		stmtList.genC(pw);
-		pw.printlnIdent("}");
+		
 		pw.println();
 	}
 	

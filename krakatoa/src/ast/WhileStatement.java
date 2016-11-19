@@ -33,7 +33,18 @@ public class WhileStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
-
+		pw.printIdent("while (");
+		expr.genC(pw, false);
+		if (statement instanceof StatementList)
+			pw.print(")");
+		else {
+			pw.add();
+			pw.println(")");
+		}
+		
+		statement.genKra(pw);
+		
+		pw.println();
 	}
 
 	@Override
