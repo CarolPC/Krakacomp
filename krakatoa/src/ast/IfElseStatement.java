@@ -41,5 +41,25 @@ public class IfElseStatement extends IfStatement {
 		
 		pw.println();
 	}
+	
+	@Override
+	public void genC(PW pw) {
+
+		super.genC(pw);
+		
+		if (elseStatement instanceof StatementList)
+			pw.printIdent("else");
+		else {
+			pw.printlnIdent("else");
+			pw.add();
+		}
+		
+		elseStatement.genC(pw);
+		
+		if (!(elseStatement instanceof StatementList))
+			pw.sub();
+		
+		pw.println();
+	}
 
 }

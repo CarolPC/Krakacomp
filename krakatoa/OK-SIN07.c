@@ -24,8 +24,8 @@ int _A_get( _class_A *this ) {
    return ;
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_put,
-   ( void (*)() ) _A_get
+   ( void (*)() ) _A_get,
+   ( void (*)() ) _A_put
    };
 
 _class_A *new_A()
@@ -59,10 +59,10 @@ _A _No_get( _class_No *this ) {
    return ;
    }
 Func VTClass_No[] = {
-   ( void (*)() ) _No_setNext,
+   ( void (*)() ) _No_get,
    ( void (*)() ) _No_getNext,
    ( void (*)() ) _No_set,
-   ( void (*)() ) _No_get
+   ( void (*)() ) _No_setNext
    };
 
 _class_No *new_No()
@@ -126,10 +126,11 @@ void _B_list( _class_B *this ) {
    }
    }
 Func VTClass_B[] = {
+   ( void (*)() ) _B_buildList,
    ( void (*)() ) _B_get,
    ( void (*)() ) _B_init,
-   ( void (*)() ) _B_buildList,
-   ( void (*)() ) _B_list
+   ( void (*)() ) _B_list,
+   ( void (*)() ) _A_put
    };
 
 _class_B *new_B()

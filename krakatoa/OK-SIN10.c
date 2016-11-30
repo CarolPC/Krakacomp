@@ -54,8 +54,10 @@ void _B_print( _class_B *this ) {
    printf();
    }
 Func VTClass_B[] = {
+   ( void (*)() ) _A_get,
    ( void (*)() ) _B_m,
-   ( void (*)() ) _B_print
+   ( void (*)() ) _B_print,
+   ( void (*)() ) _A_set
    };
 
 _class_B *new_B()

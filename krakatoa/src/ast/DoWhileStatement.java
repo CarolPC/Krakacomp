@@ -31,5 +31,18 @@ public class DoWhileStatement extends WhileStatement {
 
 		pw.println(");");
 	}
+	
+	@Override
+	public void genC(PW pw) {
+
+		pw.printIdent("do");
+
+		super.getStatement().genKra(pw);
+				
+		pw.print(" while (");
+		super.getExpr().genKra(pw);
+
+		pw.println(");");
+	}
 
 }

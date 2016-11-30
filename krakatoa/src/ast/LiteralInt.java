@@ -23,7 +23,13 @@ public class LiteralInt extends Expr {
         return value;
     }
     public void genC( PW pw, boolean putParenthesis ) {
-        pw.printIdent("" + value);
+    	if (putParenthesis)
+    		pw.print("(");
+    	
+    	pw.print(Integer.toString(value));
+    	
+    	if (putParenthesis)
+    		pw.print(")");
     }
     
     public Type getType() {

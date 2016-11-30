@@ -26,8 +26,8 @@ void _A_set( _class_A *thisint i ) {
     = i;
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_put,
    ( void (*)() ) _A_get,
+   ( void (*)() ) _A_put,
    ( void (*)() ) _A_set
    };
 
@@ -50,7 +50,9 @@ _class_B *new_B(void)
 void _B_put( _class_B *thisint a, int b, int c ) {
    }
 Func VTClass_B[] = {
-   ( void (*)() ) _B_put
+   ( void (*)() ) _A_get,
+   ( void (*)() ) _B_put,
+   ( void (*)() ) _A_set
    };
 
 _class_B *new_B()

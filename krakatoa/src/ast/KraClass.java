@@ -14,7 +14,10 @@ Nome: Henrique Manoel de Lima Sebastião
 package ast;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 import java.util.Stack;
+import java.util.TreeMap;
 
 /*
  * Krakatoa Class
@@ -264,47 +267,35 @@ public class KraClass extends Type {
 		pw.add();
 		
 		//stackAndPrintVTSuper(pw);
+		SortedMap<String, String> methodToClass = new TreeMap<>();
+		buildMethodToClassMap(methodToClass);
 		
-		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
-		while (iteratorPublicMethods.hasNext()) {
-			String cMethod = ((MethodDec) iteratorPublicMethods.next()).getCName();
-			pw.printIdent("( void (*)() ) " + getCname() + cMethod);
+		Iterator<Entry<String, String>> iterator = methodToClass.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<String, String> entry = iterator.next();
 			
-			if (iteratorPublicMethods.hasNext())
+			pw.printIdent("( void (*)() ) " + entry.getValue() + entry.getKey());
+			
+			if (iterator.hasNext())
 				pw.println(",");
 			else
 				pw.println();
 		}
+		
 		pw.printlnIdent("};");
 		pw.set(0);
 		pw.println();
 	}
 	
-	private void stackAndPrintVTSuper(PW pw) {
-		Stack<KraClass> stack = new Stack<>();
-		KraClass auxClass = superclass;
+	private void buildMethodToClassMap(SortedMap<String, String> methodToClass) {
+		if (superclass != null)
+			superclass.buildMethodToClassMap(methodToClass);
 		
-		while (auxClass != null) {
-			stack.push(auxClass);
-			
-			auxClass = superclass;
-		}
-		
-		while (!stack.isEmpty()) {
-			auxClass = stack.pop();
-			
-			auxClass.genCSuperMethodsVector(pw);
-		}
-	}
-
-	private void genCSuperMethodsVector(PW pw) {
 		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
 		while (iteratorPublicMethods.hasNext()) {
-			String cMethod = ((MethodDec) iteratorPublicMethods.next()).getCName();
-			pw.printIdent("( void (*)() ) " + cMethod);
+			MethodDec publicMethod = iteratorPublicMethods.next();
 			
-			if (iteratorPublicMethods.hasNext())
-				pw.println(",");
+			methodToClass.put(publicMethod.getCName(), getCname());
 		}
 	}
 

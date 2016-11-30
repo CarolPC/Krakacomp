@@ -41,9 +41,9 @@ void _A_q( _class_A *this ) {
    printf();
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_init_A,
    ( void (*)() ) _A_call_p,
    ( void (*)() ) _A_call_q,
+   ( void (*)() ) _A_init_A,
    ( void (*)() ) _A_r,
    ( void (*)() ) _A_s
    };
@@ -89,9 +89,10 @@ void _B_q( _class_B *this ) {
    printf();
    }
 Func VTClass_B[] = {
-   ( void (*)() ) _B_init_B,
    ( void (*)() ) _B_call_p,
    ( void (*)() ) _B_call_q,
+   ( void (*)() ) _A_init_A,
+   ( void (*)() ) _B_init_B,
    ( void (*)() ) _B_r,
    ( void (*)() ) _B_s
    };
@@ -137,9 +138,10 @@ void _C_q( _class_C *this ) {
    printf();
    }
 Func VTClass_C[] = {
-   ( void (*)() ) _C_init_C,
    ( void (*)() ) _C_call_p,
    ( void (*)() ) _C_call_q,
+   ( void (*)() ) _A_init_A,
+   ( void (*)() ) _C_init_C,
    ( void (*)() ) _C_r,
    ( void (*)() ) _C_s
    };

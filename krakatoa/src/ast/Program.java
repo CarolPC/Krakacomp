@@ -46,10 +46,9 @@ public class Program {
 		for (KraClass kraClass : classList)
 			kraClass.genC(pw);
 		
-		pw.printIdent("int main() {");
+		pw.printlnIdent("int main() {");
 		pw.add();
-		pw.printIdent("_class_program *program;");
-		pw.println();
+		pw.printlnIdent("_class_program *program;");
 		pw.printlnIdent("program = new_Program()");
 		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program)");
 		pw.printlnIdent("return 0;");

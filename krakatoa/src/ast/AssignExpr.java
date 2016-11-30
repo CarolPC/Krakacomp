@@ -24,6 +24,15 @@ public class AssignExpr extends Expr {
 
 	@Override
 	public void genC(PW pw, boolean putParenthesis) {
+		if (putParenthesis)
+			pw.print("(");
+		
+		left.genC(pw, false);
+		pw.print(" = ");
+		right.genC(pw, putParenthesis);
+		
+		if (putParenthesis)
+			pw.print(")");
 	}
 
 	@Override

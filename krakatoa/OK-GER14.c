@@ -53,6 +53,7 @@ void _B_init( _class_B *this ) {
     =    2;
    }
 Func VTClass_B[] = {
+   ( void (*)() ) _A_get_A,
    ( void (*)() ) _B_get_B,
    ( void (*)() ) _B_init
    };
@@ -82,6 +83,8 @@ void _C_init( _class_C *this ) {
     =    3;
    }
 Func VTClass_C[] = {
+   ( void (*)() ) _A_get_A,
+   ( void (*)() ) _B_get_B,
    ( void (*)() ) _C_get_C,
    ( void (*)() ) _C_init
    };
@@ -111,6 +114,9 @@ void _D_init( _class_D *this ) {
     =    4;
    }
 Func VTClass_D[] = {
+   ( void (*)() ) _A_get_A,
+   ( void (*)() ) _B_get_B,
+   ( void (*)() ) _C_get_C,
    ( void (*)() ) _D_get_D,
    ( void (*)() ) _D_init
    };

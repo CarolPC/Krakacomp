@@ -48,7 +48,8 @@ void _B_m1( _class_B *this ) {
    printf();
    }
 Func VTClass_B[] = {
-   ( void (*)() ) _B_m1
+   ( void (*)() ) _B_m1,
+   ( void (*)() ) _A_m2
    };
 
 _class_B *new_B()

@@ -24,8 +24,8 @@ int _A_get( _class_A *this ) {
    return ;
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_set,
-   ( void (*)() ) _A_get
+   ( void (*)() ) _A_get,
+   ( void (*)() ) _A_set
    };
 
 _class_A *new_A()
@@ -62,8 +62,8 @@ void _Program_set( _class_Program *this_A a ) {
     = a;
    }
 Func VTClass_Program[] = {
-   ( void (*)() ) _Program_print,
    ( void (*)() ) _Program_get,
+   ( void (*)() ) _Program_print,
    ( void (*)() ) _Program_run
    };
 

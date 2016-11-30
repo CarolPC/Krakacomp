@@ -33,8 +33,8 @@ void _A_m2( _class_A *thisint pk ) {
     = pk;
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_m,
-   ( void (*)() ) _A_init
+   ( void (*)() ) _A_init,
+   ( void (*)() ) _A_m
    };
 
 _class_A *new_A()

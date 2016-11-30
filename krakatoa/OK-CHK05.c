@@ -63,6 +63,7 @@ _class_C *new_C(void)
 void _C_p( _class_C *this ) {
    }
 Func VTClass_C[] = {
+   ( void (*)() ) _B_m,
    ( void (*)() ) _C_p
    };
 

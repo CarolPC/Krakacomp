@@ -44,6 +44,7 @@ void _B_m2( _class_B *thisint n ) {
    printf();
    }
 Func VTClass_B[] = {
+   ( void (*)() ) _A_m1,
    ( void (*)() ) _B_m2
    };
 
@@ -72,6 +73,8 @@ void _C_m4( _class_C *thisint n ) {
    printf();
    }
 Func VTClass_C[] = {
+   ( void (*)() ) _A_m1,
+   ( void (*)() ) _B_m2,
    ( void (*)() ) _C_m3,
    ( void (*)() ) _C_m4
    };

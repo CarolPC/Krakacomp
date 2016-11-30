@@ -25,8 +25,8 @@ int _A_getK( _class_A *this ) {
    return ;
    }
 Func VTClass_A[] = {
-   ( void (*)() ) _A_m1,
-   ( void (*)() ) _A_getK
+   ( void (*)() ) _A_getK,
+   ( void (*)() ) _A_m1
    };
 
 _class_A *new_A()
@@ -55,8 +55,9 @@ int _B_getK( _class_B *this ) {
    return ;
    }
 Func VTClass_B[] = {
-   ( void (*)() ) _B_m2,
-   ( void (*)() ) _B_getK
+   ( void (*)() ) _B_getK,
+   ( void (*)() ) _A_m1,
+   ( void (*)() ) _B_m2
    };
 
 _class_B *new_B()
@@ -84,6 +85,9 @@ void _C_m4( _class_C *thisint n ) {
    printf();
    }
 Func VTClass_C[] = {
+   ( void (*)() ) _B_getK,
+   ( void (*)() ) _A_m1,
+   ( void (*)() ) _B_m2,
    ( void (*)() ) _C_m3,
    ( void (*)() ) _C_m4
    };

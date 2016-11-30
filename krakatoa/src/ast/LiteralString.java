@@ -20,7 +20,13 @@ public class LiteralString extends Expr {
     }
     
     public void genC( PW pw, boolean putParenthesis ) {
-        pw.print(literalString);
+    	if (putParenthesis)
+    		pw.print("(");
+    	
+    	pw.print(literalString);
+    	
+    	if (putParenthesis)
+    		pw.print(")");
     }
     
     public Type getType() {

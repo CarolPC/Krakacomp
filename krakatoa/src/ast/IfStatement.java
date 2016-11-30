@@ -33,7 +33,21 @@ public class IfStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
+		pw.printIdent("if (");
+		expr.genC(pw, false);
+		if (statement instanceof StatementList)
+			pw.print(")");
+		else {
+			pw.add();
+			pw.println(")");
+		}
 
+		statement.genC(pw);
+		
+		if (!(statement instanceof StatementList))
+			pw.sub();
+	  
+		pw.println();
 	}
 
 	@Override

@@ -46,6 +46,8 @@ void _B_m3( _class_B *this ) {
 void _B_m4( _class_B *this ) {
    }
 Func VTClass_B[] = {
+   ( void (*)() ) _A_m1,
+   ( void (*)() ) _A_m2,
    ( void (*)() ) _B_m3,
    ( void (*)() ) _B_m4
    };
