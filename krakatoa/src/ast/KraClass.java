@@ -231,6 +231,7 @@ public class KraClass extends Type {
 	public void genC(PW pw) {		
 		genCClassDefinition(pw);
 		
+		//ponto e virgula?
 		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void)");
 		pw.println();
 		

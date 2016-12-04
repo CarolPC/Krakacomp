@@ -13,6 +13,8 @@ Nome: Henrique Manoel de Lima Sebastião
 
 package ast;
 
+import lexer.Symbol;
+
 public class MessageSendToMethod extends MessageSend {
 
 	private MessageSend sender;
@@ -27,7 +29,41 @@ public class MessageSendToMethod extends MessageSend {
 	
 	@Override
 	public void genC(PW pw, boolean putParenthesis) {
-
+		KraClass kraClass = (KraClass) this.sender.getType();
+		
+		if(this.method.getQualifier() == Symbol.PRIVATE)
+		{
+			pw.print(kraClass.getCname()+this.method.getCName());
+			pw.print("(this");
+		}
+		else
+		{
+			pw.print("( ("+this.method.getType().getCname()+"(*)("+kraClass.getCTypeName()+" *");
+			
+			if(this.params != null)
+			{
+				pw.print(", ");
+				this.method.getParamList().genCTypeList(pw);
+			}
+			pw.print(")) ");
+			
+			this.sender.genC(pw,false);
+			if(!(this.sender instanceof MessageSendToSuper))
+				pw.print("->");
+			
+			pw.print("vt["+kraClass.getPublicMethodList().searchMethodIndex(method)+"]");
+			
+			pw.print("("+kraClass.getCTypeName()+" *) this");
+		}
+		
+		
+		if(params != null)
+		{
+			pw.print(",");
+			params.genC(pw);
+		}
+		pw.print(")");
+		
 	}
 
 	@Override

@@ -83,6 +83,11 @@ public class MethodDec {
 		pw.println("");
 	}
 	
+	public Symbol getQualifier()
+	{
+		return this.qualifier;
+	}
+	
 	public void genC(PW pw, String cname) {
 		pw.set(0);
 		

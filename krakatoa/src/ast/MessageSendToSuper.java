@@ -26,7 +26,8 @@ public class MessageSendToSuper extends MessageSend {
     }
 
     public void genC( PW pw, boolean putParenthesis ) {
-        
+        //deve fazer nada
+    	//se chamar o metodo ele vai pegar o tipo daqui e escrever o cast corretamente
     }
 
 	@Override

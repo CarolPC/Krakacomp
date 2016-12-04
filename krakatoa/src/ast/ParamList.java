@@ -69,6 +69,17 @@ public class ParamList {
 		param = paramList.get(i);
 		pw.print(param.getType().getCname() + " " + param.getName());
 	}
+	
+	 public void genCTypeList(PW pw)
+	 {
+	    	int size = paramList.size();
+	    	for ( Parameter p : paramList ) {
+	    		pw.print(p.getType().getCname());
+	    		
+	    		if ( --size > 0 )
+	                pw.print(", ");
+	    	}
+	 }
 
 	@Override
 	public boolean equals(Object obj) {

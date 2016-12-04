@@ -47,6 +47,18 @@ public class MethodList {
 
 		return null;
 	}
+	
+	public int searchMethodIndex(MethodDec m)
+	{
+		int i = 0;
+		for(MethodDec mSearch: this.methodList) {
+			if (m.equals(mSearch))
+				return i;
+			i++;
+		}
+		
+		return -1;
+	}
 
 	private ArrayList<MethodDec> methodList;
 

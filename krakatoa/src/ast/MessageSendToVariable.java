@@ -30,7 +30,14 @@ public class MessageSendToVariable extends MessageSend {
     }
     
     public void genC( PW pw, boolean putParenthesis ) {
-        
+    	
+    	if(this.sender != null)
+    	{
+    		this.sender.genC(pw,false);
+    		pw.print("->");
+    	}
+    	
+    	pw.print(this.v.getCName());   
     }
 
 	@Override
