@@ -62,12 +62,13 @@ public class ParamList {
 		if (getSize() == 0)
 			return;
 
+		pw.print(",");
 		while (i < getSize() - 1) {
 			param = paramList.get(i++);
-			pw.print(param.getType().getCname() + " " + param.getName() + ", ");
+			pw.print(param.getType().getCname() + " " + param.getCName() + ", ");
 		}
 		param = paramList.get(i);
-		pw.print(param.getType().getCname() + " " + param.getName());
+		pw.print(param.getType().getCname() + " " + param.getCName());
 	}
 	
 	 public void genCTypeList(PW pw)

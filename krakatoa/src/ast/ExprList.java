@@ -40,6 +40,16 @@ public class ExprList {
         }
     }
     
+    public void genCPrintf( PW pw ) {
+
+        int size = exprList.size();
+        for ( Expr e : exprList ) {
+        	pw.print(e.getType().getPrintfName());
+            if ( --size > 0 )
+                pw.print(" ");
+        }
+    }
+    
 
     private ArrayList<Expr> exprList;
 

@@ -23,7 +23,7 @@ public class LiteralString extends Expr {
     	if (putParenthesis)
     		pw.print("(");
     	
-    	pw.print(literalString);
+    	pw.print("\""+literalString+"\"");
     	
     	if (putParenthesis)
     		pw.print(")");

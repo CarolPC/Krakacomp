@@ -22,5 +22,10 @@ public class TypeInt extends Type {
    public String getCname() {
       return "int";
    }
+   
+   public String getPrintfName()
+   {
+	   return "%d";
+   }
 
 }

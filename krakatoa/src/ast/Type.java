@@ -31,6 +31,7 @@ abstract public class Type {
 
     abstract public String getCname();
     
+    abstract public String getPrintfName();
 
     private String name;
     

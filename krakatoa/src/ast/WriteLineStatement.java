@@ -25,5 +25,16 @@ public class WriteLineStatement extends WriteStatement {
 		getExprList().genKra(pw);
 		pw.println(");");
 	}
+	
+	@Override
+	public void genC(PW pw)
+	{
+		pw.printIdent("printf(\"");
+		// TODO Printar a flag do tipo e a variável
+		this.getExprList().genCPrintf(pw);
+		pw.printIdent("\",");
+		this.getExprList().genC(pw);
+		pw.println("\\n);");
+	}
 
 }

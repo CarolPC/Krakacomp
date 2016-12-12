@@ -52,6 +52,11 @@ public class KraClass extends Type {
 	public String getVtClass() {
 		return "VTClass" + getCname();
 	}
+	
+	public String getPrintfName()
+	{
+		return "";
+	}
 
 	private KraClass superclass;
 	private InstanceVariableList instanceVariableList;
@@ -106,7 +111,37 @@ public class KraClass extends Type {
 
 		return this.searchPrivateMethod(m);
 	}
-
+	private int getInitMethodIndex()
+	{
+		int len = 0;
+		
+		KraClass c = this.superclass;
+		
+		while(c != null)
+		{
+			len += c.getPublicMethodList().getSize();
+			c = c.getSuperclass();
+		}
+		
+		return len;
+		
+	}
+	public int searchPublicMethodIndex(MethodDec m)
+	{
+		int idx = -1;
+		int len = this.getInitMethodIndex();
+		
+		if(this.superclass != null)
+		{
+			
+			idx = this.superclass.searchPublicMethodIndex(m);
+			
+			if(idx != -1)
+				return idx;
+		}
+		
+		return len + this.publicMethodList.searchMethodIndex(m);
+	}
 	public InstanceVariableList getInstanceVariableList() {
 		return instanceVariableList;
 	}
@@ -231,8 +266,7 @@ public class KraClass extends Type {
 	public void genC(PW pw) {		
 		genCClassDefinition(pw);
 		
-		//ponto e virgula?
-		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void)");
+		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void);");
 		pw.println();
 		
 		publicMethodList.genC(pw, getCname());
@@ -256,7 +290,7 @@ public class KraClass extends Type {
 		while (iteratorVarList.hasNext())
 			((InstanceVariable) iteratorVarList.next()).genC(pw, getCname());
 			
-		pw.printlnIdent("} " + getCTypeName());
+		pw.printlnIdent("} " + getCTypeName()+";");
 		pw.set(0);
 		pw.println();
 	}
@@ -283,7 +317,7 @@ public class KraClass extends Type {
 				pw.println();
 		}
 		
-		pw.printlnIdent("};");
+		pw.println("};");
 		pw.set(0);
 		pw.println();
 	}
@@ -310,10 +344,10 @@ public class KraClass extends Type {
 		pw.println();
 		pw.printlnIdent("if ( (t = malloc(sizeof(" + getCTypeName() + "))) != NULL )");
 		pw.add();
-		pw.printlnIdent("t->vt = " + getCTypeName() + ";");
+		pw.printlnIdent("t->vt = " + getVtClass() + ";");
 		pw.sub();
 		pw.printlnIdent("return t;");
-		pw.printlnIdent("}");
+		pw.println("}");
 		pw.println();
 	}
 

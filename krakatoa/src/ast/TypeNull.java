@@ -22,5 +22,10 @@ public class TypeNull extends Type {
 	public String getCname() {
 		return null;
 	}
+	
+	public String getPrintfName()
+	{
+		   return "";
+	}
 
 }

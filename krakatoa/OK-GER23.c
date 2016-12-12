@@ -12,53 +12,57 @@ typedef
 typedef
    struct _St_Program {
       Func *vt;
-      } _class_Program
+      } _class_Program;
 
-_class_Program *new_Program(void)
+_class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   printf();
-   printf();
-   int _i, _j, _n;
-   i =    0;
-   j =    0;
-   n =    10;
-   int _b;
-   b = 0;
-   while (0) {
+   printf("%s   ",""\n);
+   printf("%s   ","Ok-ger23"\n);
+   int _n, _i, _j;
+   _i = (0);
+   _j = (0);
+   _n = (10);
+   boolean _b;
+   _b = false;
+   do {
       n = n + 1;
-   }
-   if ( !( n ==    11 ) ) {
+   } while (false);
+   if ( !( _n == (11) ) ) {
       puts("'do-while' statement with 'false' as expression'");
    }
-   n =    10;
-   int    0;
-   while (j < n) {
+   ;
+   _n = (10);
+   int 0;
+   do {
       do {
          ++i;
          sum = sum + 1;
       } while (i < n);
       ++j;
-   }
-   if ( !( sum ==    100 ) ) {
+   } while (j < n);
+   if ( !( _sum == (100) ) ) {
       puts("Nested 'do-while' statement with two indexes");
    }
-   }
+   ;
+}
+
 Func VTClass_Program[] = {
    ( void (*)() ) _Program_run
-   };
+};
 
 _class_Program *new_Program()
 {
    _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
-      t->vt = _class_Program;
+      t->vt = VTClass_Program;
    return t;
-   }
+}
 
-   int main() {      _class_program *program;
-      program = new_Program()
-      ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
-      return 0;
-   }
+int main() {
+   _class_program *program;
+   program = new_Program()
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   return 0;
+}

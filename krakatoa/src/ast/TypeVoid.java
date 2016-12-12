@@ -22,5 +22,10 @@ public class TypeVoid extends Type {
    public String getCname() {
       return "void";
    }
+   
+   public String getPrintfName()
+   {
+	   return "";
+   }
 
 }

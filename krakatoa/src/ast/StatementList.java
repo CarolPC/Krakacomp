@@ -55,7 +55,8 @@ public class StatementList extends Statement {
 		for (Statement s : stmtList)
 			s.genC(pw);
 
-		pw.printIdent("}");
+		pw.sub();
+		pw.printlnIdent("}");
 	}
 
 }

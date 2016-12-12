@@ -22,4 +22,8 @@ public class TypeUndefined extends Type {
       return "int";
    }
    
+   public String getPrintfName()
+   {
+	   return "";
+   }
 }

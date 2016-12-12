@@ -45,17 +45,16 @@ public class Program {
 		
 		for (KraClass kraClass : classList)
 			kraClass.genC(pw);
+			
 		
-		pw.printlnIdent("int main() {");
-		pw.add();
+		
+		pw.println("int main() {");
 		pw.printlnIdent("_class_program *program;");
 		pw.printlnIdent("program = new_Program()");
 		//tava no pdf que nem sempre a run vai ser indice 0
 		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program)");
 		pw.printlnIdent("return 0;");
-		pw.sub();
-		pw.printIdent("}");
-		pw.println();
+		pw.println("}");
 	}
 	
 	public ArrayList<KraClass> getClassList() {

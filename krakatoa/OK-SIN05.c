@@ -12,9 +12,9 @@ typedef
 typedef
    struct _St_A {
       Func *vt;
-      } _class_A
+      } _class_A;
 
-_class_A *new_A(void)
+_class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
    int _a0;
@@ -167,48 +167,51 @@ void _A_m( _class_A *this ) {
    int _a147;
    int _a148;
    int _a149;
-   printf();
-   }
+   printf("%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d   ",_a0, _a1, _a2, _a3, _a4, _a5, _a6, _a7, _a8, _a9, _a10, _a11, _a12, _a13, _a14, _a15, _a16, _a17, _a18, _a19, _a20, _a21, _a22, _a23, _a24, _a25, _a26, _a27, _a28, _a29, _a30, _a31, _a32, _a33, _a34, _a35, _a36, _a37, _a38, _a39, _a40, _a41, _a42, _a43, _a44, _a45, _a46, _a47, _a48, _a49, _a50, _a51, _a52, _a53, _a54, _a55, _a56, _a57, _a58, _a59, _a60, _a61, _a62, _a63, _a64, _a65, _a66, _a67, _a68, _a69, _a70, _a71, _a72, _a73, _a74, _a75, _a76, _a77, _a78, _a79, _a80, _a81, _a82, _a83, _a84, _a85, _a86, _a87, _a88, _a89, _a90, _a91, _a92, _a93, _a94, _a95, _a96, _a97, _a98, _a99, _a100, _a101, _a102, _a103, _a104, _a105, _a106, _a107, _a108, _a109, _a110, _a111, _a112, _a113, _a114, _a115, _a116, _a117, _a118, _a119, _a120, _a121, _a122, _a123, _a124, _a125, _a126, _a127, _a128, _a129, _a130, _a131, _a132, _a133, _a134, _a135, _a136, _a137, _a138, _a139, _a140, _a141, _a142, _a143, _a144, _a145, _a146, _a147, _a148, _a149);
+}
+
 Func VTClass_A[] = {
    ( void (*)() ) _A_m
-   };
+};
 
 _class_A *new_A()
 {
    _class_A *t;
 
    if ( (t = malloc(sizeof(_class_A))) != NULL )
-      t->vt = _class_A;
+      t->vt = VTClass_A;
    return t;
-   }
+}
 
 typedef
    struct _St_Program {
       Func *vt;
-      } _class_Program
+      } _class_Program;
 
-_class_Program *new_Program(void)
+_class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    _A _a;
-   a = new_A();
-   ;
-   }
+   _a = new_A();
+   ( (void(*)(_class_A *)) _a->vt[0](_class_A *) this);
+}
+
 Func VTClass_Program[] = {
    ( void (*)() ) _Program_run
-   };
+};
 
 _class_Program *new_Program()
 {
    _class_Program *t;
 
    if ( (t = malloc(sizeof(_class_Program))) != NULL )
-      t->vt = _class_Program;
+      t->vt = VTClass_Program;
    return t;
-   }
+}
 
-   int main() {      _class_program *program;
-      program = new_Program()
-      ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
-      return 0;
-   }
+int main() {
+   _class_program *program;
+   program = new_Program()
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   return 0;
+}
