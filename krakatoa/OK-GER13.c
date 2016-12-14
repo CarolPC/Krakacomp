@@ -82,7 +82,7 @@ void _C_m1( _class_C *this ) {
 }
 
 void _C_teste( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[2](_class_B *) this);
+   ( (void(*)(_class_B *)) vt[2]();
 }
 
 Func VTClass_C[] = {
@@ -138,14 +138,14 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _D _d;
+   _class_D* _d;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger09"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","0"\n);
    _d = new_D();
-   ( (void(*)(_class_D *, int)) _d->vt[1](_class_D *) this,0);
-   ( (void(*)(_class_D *)) _d->vt[2](_class_D *) this);
+   ( (void(*)(_class_D *, int)) _d->vt[1](_d,0);
+   ( (void(*)(_class_D *)) _d->vt[2](_d);
 }
 
 Func VTClass_Program[] = {

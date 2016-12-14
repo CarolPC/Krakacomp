@@ -52,7 +52,7 @@ int _B_get_B( _class_B *this ) {
 }
 
 void _B_init( _class_B *this ) {
-   ( (void(*)(_class_A *)) vt[1](_class_A *) this);
+   ( (void(*)(_class_A *)) vt[1]();
    this->_k = (2);
 }
 
@@ -84,7 +84,7 @@ int _C_get_C( _class_C *this ) {
 }
 
 void _C_init( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[1](_class_B *) this);
+   ( (void(*)(_class_B *)) vt[1]();
    this->_k = (3);
 }
 
@@ -117,7 +117,7 @@ int _D_get_D( _class_D *this ) {
 }
 
 void _D_init( _class_D *this ) {
-   ( (void(*)(_class_C *)) vt[1](_class_C *) this);
+   ( (void(*)(_class_C *)) vt[1]();
    this->_k = (4);
 }
 
@@ -146,23 +146,23 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
-   _B _b;
-   _C _c;
-   _D _d;
+   _class_A* _a;
+   _class_B* _b;
+   _class_C* _c;
+   _class_D* _d;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger14"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","4 3 2 1"\n);
    _d = new_D();
-   ( (void(*)(_class_D *)) _d->vt[1](_class_D *) this);
-   printf("%d   ",( (int(*)(_class_D *)) _d->vt[1](_class_D *) this));
+   ( (void(*)(_class_D *)) _d->vt[1](_d);
+   printf("%d   ",( (int(*)(_class_D *)) _d->vt[1](_d));
    _c = _d;
-   printf("%d   ",( (int(*)(_class_C *)) _c->vt[1](_class_C *) this));
+   printf("%d   ",( (int(*)(_class_C *)) _c->vt[1](_c));
    _b = _c;
-   printf("%d   ",( (int(*)(_class_B *)) _b->vt[2](_class_B *) this));
+   printf("%d   ",( (int(*)(_class_B *)) _b->vt[2](_b));
    _a = _b;
-   printf("%d   ",( (int(*)(_class_A *)) _a->vt[0](_class_A *) this));
+   printf("%d   ",( (int(*)(_class_A *)) _a->vt[0](_a));
 }
 
 Func VTClass_Program[] = {

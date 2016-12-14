@@ -48,7 +48,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_print( _class_Program *this ) {
-   printf("%d   ",( (int(*)(_class_A *)) this->_a->vt[1](_class_A *) this));
+   printf("%d   ",( (int(*)(_class_A *)) this->_a->vt[1](this->_a));
 }
 
 _A _Program_get( _class_Program *this ) {

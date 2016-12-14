@@ -41,7 +41,7 @@ typedef
 _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
-   ( (void(*)(_class_A *, int)) vt[0](_class_A *) this,1);
+   ( (void(*)(_class_A *, int)) vt[0](,1);
    printf("%d %d   ",2, _n);
 }
 
@@ -67,12 +67,12 @@ typedef
 _class_C *new_C(void);
 
 void _C_m3( _class_C *this,int _n ) {
-   ( (void(*)(_class_B *, int)) vt[1](_class_B *) this,2);
+   ( (void(*)(_class_B *, int)) vt[1](,2);
    printf("%d %d   ",3, _n);
 }
 
 void _C_m4( _class_C *this,int _n ) {
-   ( (void(*)(_class_C *, int)) this->vt[0](_class_C *) this,3);
+   ( (void(*)(_class_C *, int)) this->vt[0](this,3);
    printf("%d %d   ",4, _n);
 }
 
@@ -100,13 +100,13 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _C _c;
+   _class_C* _c;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger09"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","1 1 2 2 3 3 4 4"\n);
    _c = new_C();
-   ( (void(*)(_class_C *, int)) _c->vt[0](_class_C *) this,4);
+   ( (void(*)(_class_C *, int)) _c->vt[0](_c,4);
 }
 
 Func VTClass_Program[] = {

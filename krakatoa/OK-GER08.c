@@ -51,15 +51,15 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
+   _class_A* _a;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger08"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","1 1 2 2 3 3"\n);
    _a = new_A();
-   ( (void(*)(_class_A *, int)) _a->vt[0](_class_A *) this,1);
-   ( (void(*)(_class_A *, int)) _a->vt[1](_class_A *) this,2);
-   ( (void(*)(_class_A *, int)) _a->vt[2](_class_A *) this,3);
+   ( (void(*)(_class_A *, int)) _a->vt[0](_a,1);
+   ( (void(*)(_class_A *, int)) _a->vt[1](_a,2);
+   ( (void(*)(_class_A *, int)) _a->vt[2](_a,3);
 }
 
 Func VTClass_Program[] = {

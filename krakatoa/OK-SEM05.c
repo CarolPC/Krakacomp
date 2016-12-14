@@ -48,7 +48,7 @@ _class_B *new_B(void);
 
 void _B_set( _class_B *this,int _pn ) {
    printf("%d   ",_pn);
-   ( (void(*)(_class_A *, int)) vt[0](_class_A *) this,_pn);
+   ( (void(*)(_class_A *, int)) vt[0](,_pn);
 }
 
 Func VTClass_B[] = {
@@ -73,7 +73,7 @@ typedef
 _class_Program *new_Program(void);
 
 _B _Program_m( _class_Program *this,_A _a ) {
-   ( (void(*)(_class_A *, int)) _a->vt[0](_class_A *) this,0);
+   ( (void(*)(_class_A *, int)) _a->vt[0](_a,0);
    return new_B();
 }
 
@@ -88,15 +88,15 @@ _A _Program_p( _class_Program *this,int _i ) {
 }
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
-   _B _b;
+   _class_A* _a;
+   _class_B* _b;
    _a = new_A();
    _b = new_B();
    _a = _b;
-   ( (void(*)(_class_A *, int)) _a->vt[0](_class_A *) this,0);
-   _a = ( (_B(*)(_class_Program *, _A)) this->vt[0](_class_Program *) this,_a);
-   _b = ( (_B(*)(_class_Program *, _A)) this->vt[0](_class_Program *) this,_b);
-   _a = ( (_A(*)(_class_Program *, int)) this->vt[1](_class_Program *) this,0);
+   ( (void(*)(_class_A *, int)) _a->vt[0](_a,0);
+   _a = ( (_B(*)(_class_Program *, _A)) this->vt[0](this,_a);
+   _b = ( (_B(*)(_class_Program *, _A)) this->vt[0](this,_b);
+   _a = ( (_A(*)(_class_Program *, int)) this->vt[1](this,0);
 }
 
 Func VTClass_Program[] = {

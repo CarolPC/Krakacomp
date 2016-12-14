@@ -51,13 +51,14 @@ public class MessageSendToMethod extends MessageSend {
 			if(!(this.sender instanceof MessageSendToSuper))
 				pw.print("->");
 			
-			pw.print("vt["+kraClass.searchPublicMethodIndex(method)+"]");
+			pw.print("vt["+kraClass.searchPublicMethodIndex(method)+"](");
 			
-			pw.print("("+kraClass.getCTypeName()+" *) this");
+			this.sender.genC(pw,false);
+			
 		}
 		
 		
-		if(params != null)
+		if(this.params != null)
 		{
 			pw.print(",");
 			params.genC(pw);

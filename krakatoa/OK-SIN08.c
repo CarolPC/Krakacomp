@@ -41,9 +41,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
+   _class_A* _a;
    _a = new_A();
-   printf("%d   ",( (int(*)(_class_A *, int, int, boolean)) _a->vt[0](_class_A *) this,3, 4, true));
+   printf("%d   ",( (int(*)(_class_A *, int, int, boolean)) _a->vt[0](_a,3, 4, true));
 }
 
 Func VTClass_Program[] = {

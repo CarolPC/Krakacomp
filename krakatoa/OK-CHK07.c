@@ -97,8 +97,8 @@ _Person _Group_getSecond( _class_Group *this ) {
 }
 
 void _Group_print( _class_Group *this ) {
-   printf("%s %s   ","First: ", ( (char *(*)(_class_Person *)) this->_first->vt[5](_class_Person *) this));
-   printf("%s %s   ","Second: ", ( (char *(*)(_class_Person *)) this->_second->vt[5](_class_Person *) this));
+   printf("%s %s   ","First: ", ( (char *(*)(_class_Person *)) this->_first->vt[5](this->_first));
+   printf("%s %s   ","Second: ", ( (char *(*)(_class_Person *)) this->_second->vt[5](this->_second));
 }
 
 Func VTClass_Group[] = {
@@ -161,26 +161,26 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _University _s;
-   _Person _joao;
-   _Person _maria;
-   _Group _g;
+   _class_University* _s;
+   _class_Person* _joao;
+   _class_Person* _maria;
+   _class_Group* _g;
    _s = new_University();
-   ( (void(*)(_class_University *, char *, char *, int)) _s->vt[0](_class_University *) this,"UFSCar", "Sao Carlos", 7000);
-   ( (void(*)(_class_University *)) _s->vt[1](_class_University *) this);
+   ( (void(*)(_class_University *, char *, char *, int)) _s->vt[0](_s,"UFSCar", "Sao Carlos", 7000);
+   ( (void(*)(_class_University *)) _s->vt[1](_s);
    _joao = new_Person();
-   ( (void(*)(_class_Person *, char *, int)) _joao->vt[4](_class_Person *) this,"Joao", 21);
-   ( (void(*)(_class_Person *, char *)) _joao->vt[1](_class_Person *) this,"EnC");
-   ( (void(*)(_class_Person *, int)) _joao->vt[3](_class_Person *) this,6729);
+   ( (void(*)(_class_Person *, char *, int)) _joao->vt[4](_joao,"Joao", 21);
+   ( (void(*)(_class_Person *, char *)) _joao->vt[1](_joao,"EnC");
+   ( (void(*)(_class_Person *, int)) _joao->vt[3](_joao,6729);
    _maria = new_Person();
-   ( (void(*)(_class_Person *, char *, int)) _maria->vt[4](_class_Person *) this,"Maria", 20);
-   ( (void(*)(_class_Person *, char *)) _maria->vt[1](_class_Person *) this,"Fisioterapia");
-   ( (void(*)(_class_Person *, int)) _maria->vt[3](_class_Person *) this,8607);
-   ( (void(*)(_class_Person *)) _joao->vt[7](_class_Person *) this);
-   ( (void(*)(_class_Person *)) _maria->vt[7](_class_Person *) this);
+   ( (void(*)(_class_Person *, char *, int)) _maria->vt[4](_maria,"Maria", 20);
+   ( (void(*)(_class_Person *, char *)) _maria->vt[1](_maria,"Fisioterapia");
+   ( (void(*)(_class_Person *, int)) _maria->vt[3](_maria,8607);
+   ( (void(*)(_class_Person *)) _joao->vt[7](_joao);
+   ( (void(*)(_class_Person *)) _maria->vt[7](_maria);
    _g = new_Group();
-   ( (void(*)(_class_Group *, _Person, _Person)) _g->vt[0](_class_Group *) this,_joao, _maria);
-   ( (void(*)(_class_Group *)) _g->vt[3](_class_Group *) this);
+   ( (void(*)(_class_Group *, _Person, _Person)) _g->vt[0](_g,_joao, _maria);
+   ( (void(*)(_class_Group *)) _g->vt[3](_g);
 }
 
 Func VTClass_Program[] = {

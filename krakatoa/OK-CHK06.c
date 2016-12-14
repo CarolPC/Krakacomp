@@ -20,9 +20,9 @@ void _A_run( _class_A *this ) {
 }
 
 void _A_m( _class_A *this ) {
-   _A _a;
+   _class_A* _a;
    _a =    NULL;
-   ( (void(*)(_class_A *)) _a->vt[1](_class_A *) this);
+   ( (void(*)(_class_A *)) _a->vt[1](_a);
 }
 
 Func VTClass_A[] = {
@@ -76,7 +76,7 @@ typedef
 _class_C *new_C(void);
 
 void _C_m( _class_C *this ) {
-   ( (void(*)(_class_B *)) this->_b->vt[1](_class_B *) this);
+   ( (void(*)(_class_B *)) this->_b->vt[1](this->_b);
 }
 
 _B _C_get( _class_C *this ) {
@@ -105,9 +105,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _C _c;
+   _class_C* _c;
    _c =    NULL;
-   ( (void(*)(_class_C *)) _c->vt[0](_class_C *) this);
+   ( (void(*)(_class_C *)) _c->vt[0](_c);
 }
 
 Func VTClass_Program[] = {

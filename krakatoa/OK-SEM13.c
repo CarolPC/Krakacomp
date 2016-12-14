@@ -45,9 +45,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
+   _class_A* _a;
    _a = new_A();
-   ( (void(*)(_class_A *)) _a->vt[1](_class_A *) this);
+   ( (void(*)(_class_A *)) _a->vt[1](_a);
 }
 
 Func VTClass_Program[] = {

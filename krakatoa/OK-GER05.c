@@ -47,13 +47,13 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
+   _class_A* _a;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger05"\n);
    printf("%s   ","The output should be what you give as input."\n);
    printf("%s   ","Type in six numbers"\n);
    _a = new_A();
-   ( (void(*)(_class_A *)) _a->vt[0](_class_A *) this);
+   ( (void(*)(_class_A *)) _a->vt[0](_a);
 }
 
 Func VTClass_Program[] = {

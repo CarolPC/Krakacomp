@@ -17,11 +17,11 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this,int _n, _A _x ) {
-   _A _other;
+   _class_A* _other;
    _other = this;
    _n = (_n - (1));
    if (_n > (0)) {
-      ( (void(*)(_class_A *, int, _A)) _other->vt[0](_class_A *) this,_n, this);
+      ( (void(*)(_class_A *, int, _A)) _other->vt[0](_other,_n, this);
    }
 
 }
@@ -47,9 +47,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
+   _class_A* _a;
    _a = new_A();
-   ( (void(*)(_class_A *, int, _A)) _a->vt[0](_class_A *) this,5, _a);
+   ( (void(*)(_class_A *, int, _A)) _a->vt[0](_a,5, _a);
 }
 
 Func VTClass_Program[] = {

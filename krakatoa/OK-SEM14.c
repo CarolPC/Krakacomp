@@ -55,8 +55,8 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a, _a2;
-   _B _b;
+   _class_A* _a, _a2;
+   _class_B* _b;
    _a =    NULL;
    _b =    NULL;
    _a2 =    NULL;

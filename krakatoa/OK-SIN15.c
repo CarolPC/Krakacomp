@@ -42,11 +42,11 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    char * _s;
-   _Test _t;
+   _class_Test* _t;
    _s = ("Ola !!!");
    printf("%s   ",_s);
    _t = new_Test();
-   printf("%s   ",( (char *(*)(_class_Test *, char *)) _t->vt[0](_class_Test *) this,"Dolly Parton"));
+   printf("%s   ",( (char *(*)(_class_Test *, char *)) _t->vt[0](_t,"Dolly Parton"));
    printf("%s   ","barra   \\");
    printf("%s   ","barra n  \n");
    printf("%s   ","barra a  \a");

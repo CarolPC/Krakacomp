@@ -185,12 +185,12 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _B _b;
-   _C _c;
+   _class_B* _b;
+   _class_C* _c;
    _b = new_B();
-   ( (void(*)(_class_B *)) _b->vt[0](_class_B *) this);
+   ( (void(*)(_class_B *)) _b->vt[0](_b);
    _c = new_C();
-   ( (void(*)(_class_C *)) _c->vt[0](_class_C *) this);
+   ( (void(*)(_class_C *)) _c->vt[0](_c);
 }
 
 Func VTClass_Program[] = {

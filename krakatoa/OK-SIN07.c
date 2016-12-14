@@ -91,7 +91,7 @@ _class_B *new_B(void);
 
 int _B_get( _class_B *this ) {
    printf("%d   ",this->_k);
-   return ( (int(*)(_class_A *)) vt[1](_class_A *) this);
+   return ( (int(*)(_class_A *)) vt[1]();
 }
 
 void _B_init( _class_B *this,int _pk ) {
@@ -100,16 +100,16 @@ void _B_init( _class_B *this,int _pk ) {
 
 void _B_buildList( _class_B *this ) {
    int _i;
-   _No _w;
-   _No _newNo;
-   _A _a;
-   _i = ( (int(*)(_class_B *)) this->vt[1](_class_B *) this);
+   _class_No* _w;
+   _class_No* _newNo;
+   _class_A* _a;
+   _i = ( (int(*)(_class_B *)) this->vt[1](this);
    this->_first = new_No();
    _w = this->_first;
-   ( (void(*)(_class_No *, _No)) _w->vt[0](_class_No *) this,   NULL);
+   ( (void(*)(_class_No *, _No)) _w->vt[0](_w,   NULL);
    _a = new_A();
-   ( (void(*)(_class_A *, int)) _a->vt[0](_class_A *) this,_i);
-   ( (void(*)(_class_No *, _A)) _w->vt[2](_class_No *) this,_a);
+   ( (void(*)(_class_A *, int)) _a->vt[0](_a,_i);
+   ( (void(*)(_class_No *, _A)) _w->vt[2](_w,_a);
    while (true) {
       i = i - 1;
       if (i <= 0) {
@@ -125,8 +125,8 @@ void _B_buildList( _class_B *this ) {
 }
 
 void _B_list( _class_B *this ) {
-   _No _w;
-   _A _a;
+   _class_No* _w;
+   _class_A* _a;
    _w = this->_first;
    while (_w !=    NULL) {
       a = w.get();
@@ -160,11 +160,11 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _B _b;
+   _class_B* _b;
    _b = new_B();
-   ( (void(*)(_class_B *, int)) _b->vt[0](_class_B *) this,10);
-   ( (void(*)(_class_B *)) _b->vt[4](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[5](_class_B *) this);
+   ( (void(*)(_class_B *, int)) _b->vt[0](_b,10);
+   ( (void(*)(_class_B *)) _b->vt[4](_b);
+   ( (void(*)(_class_B *)) _b->vt[5](_b);
 }
 
 Func VTClass_Program[] = {

@@ -23,7 +23,9 @@ public class Variable {
 
     public String getName() { return name; }
     
-    public String getCName() { return "_" + name; }
+    public String getCName() {   		
+    	return "_" + name;
+    }
 
     public Type getType() {
         return type;

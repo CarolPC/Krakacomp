@@ -40,7 +40,10 @@ public class LocalDecStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
-		pw.printIdent(type.getCname() + " ");
+		if(this.type instanceof KraClass)
+			pw.printIdent(((KraClass)this.type).getCTypeName() + "* ");
+		else
+			pw.printIdent(type.getCname() + " ");
 		
 		Iterator<Variable> iterator = localList.keySet().iterator();
 		while (iterator.hasNext()) {

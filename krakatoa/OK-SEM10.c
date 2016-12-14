@@ -89,18 +89,18 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
-   _B _b;
-   _C _c;
+   _class_A* _a;
+   _class_B* _b;
+   _class_C* _c;
    _a = new_A();
    _b = new_B();
    _c = new_C();
-   ( (void(*)(_class_A *, int)) _a->vt[0](_class_A *) this,0);
-   ( (void(*)(_class_B *, int)) _b->vt[0](_class_B *) this,0);
-   ( (void(*)(_class_C *, int)) _c->vt[0](_class_C *) this,0);
-   ( (void(*)(_class_B *)) _b->vt[1](_class_B *) this);
-   ( (void(*)(_class_C *)) _c->vt[1](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[0](_class_C *) this);
+   ( (void(*)(_class_A *, int)) _a->vt[0](_a,0);
+   ( (void(*)(_class_B *, int)) _b->vt[0](_b,0);
+   ( (void(*)(_class_C *, int)) _c->vt[0](_c,0);
+   ( (void(*)(_class_B *)) _b->vt[1](_b);
+   ( (void(*)(_class_C *)) _c->vt[1](_c);
+   ( (void(*)(_class_C *)) _c->vt[0](_c);
    _a = _b;
    _a = _c;
    _b = _c;

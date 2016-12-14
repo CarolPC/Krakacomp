@@ -184,34 +184,34 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
-   _B _b;
-   _C _c;
+   _class_A* _a;
+   _class_B* _b;
+   _class_C* _c;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger15"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","1 2 1 2 3 4 3 4 5 6 5 6"\n);
    _a = new_A();
-   ( (void(*)(_class_A *)) _a->vt[0](_class_A *) this);
-   ( (void(*)(_class_A *)) _a->vt[1](_class_A *) this);
-   ( (void(*)(_class_A *)) _a->vt[2](_class_A *) this);
-   ( (void(*)(_class_A *)) _a->vt[3](_class_A *) this);
-   ( (void(*)(_class_A *)) _a->vt[4](_class_A *) this);
+   ( (void(*)(_class_A *)) _a->vt[0](_a);
+   ( (void(*)(_class_A *)) _a->vt[1](_a);
+   ( (void(*)(_class_A *)) _a->vt[2](_a);
+   ( (void(*)(_class_A *)) _a->vt[3](_a);
+   ( (void(*)(_class_A *)) _a->vt[4](_a);
    _b = new_B();
-   ( (void(*)(_class_B *)) _b->vt[5](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[0](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[1](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[2](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[3](_class_B *) this);
-   ( (void(*)(_class_B *)) _b->vt[4](_class_B *) this);
+   ( (void(*)(_class_B *)) _b->vt[5](_b);
+   ( (void(*)(_class_B *)) _b->vt[0](_b);
+   ( (void(*)(_class_B *)) _b->vt[1](_b);
+   ( (void(*)(_class_B *)) _b->vt[2](_b);
+   ( (void(*)(_class_B *)) _b->vt[3](_b);
+   ( (void(*)(_class_B *)) _b->vt[4](_b);
    _c = new_C();
-   ( (void(*)(_class_C *)) _c->vt[5](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[0](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[5](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[1](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[2](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[3](_class_C *) this);
-   ( (void(*)(_class_C *)) _c->vt[4](_class_C *) this);
+   ( (void(*)(_class_C *)) _c->vt[5](_c);
+   ( (void(*)(_class_C *)) _c->vt[0](_c);
+   ( (void(*)(_class_C *)) _c->vt[5](_c);
+   ( (void(*)(_class_C *)) _c->vt[1](_c);
+   ( (void(*)(_class_C *)) _c->vt[2](_c);
+   ( (void(*)(_class_C *)) _c->vt[3](_c);
+   ( (void(*)(_class_C *)) _c->vt[4](_c);
 }
 
 Func VTClass_Program[] = {

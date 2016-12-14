@@ -56,7 +56,7 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    this->_p = new_Point();
-   ( (void(*)(_class_Point *, int, int)) this->_p->vt[0](_class_Point *) this,0, 0);
+   ( (void(*)(_class_Point *, int, int)) this->_p->vt[0](this->_p,0, 0);
 }
 
 _Point _Program_getPoint( _class_Program *this ) {

@@ -22,7 +22,7 @@ void _A_m1( _class_A *this ) {
 
 void _A_m2( _class_A *this,int _n ) {
    printf("%d   ",_n);
-   ( (void(*)(_class_A *)) this->vt[0](_class_A *) this);
+   ( (void(*)(_class_A *)) this->vt[0](this);
 }
 
 Func VTClass_A[] = {
@@ -72,17 +72,17 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _A _a;
-   _B _b;
+   _class_A* _a;
+   _class_B* _b;
    printf("%s   ",""\n);
    printf("%s   ","Ok-ger11"\n);
    printf("%s   ","The output should be :"\n);
    printf("%s   ","4 1 2 3 4"\n);
    printf("%d   ",4);
    _a = new_A();
-   ( (void(*)(_class_A *, int)) _a->vt[1](_class_A *) this,1);
+   ( (void(*)(_class_A *, int)) _a->vt[1](_a,1);
    _a = new_B();
-   ( (void(*)(_class_A *, int)) _a->vt[1](_class_A *) this,3);
+   ( (void(*)(_class_A *, int)) _a->vt[1](_a,3);
 }
 
 Func VTClass_Program[] = {
