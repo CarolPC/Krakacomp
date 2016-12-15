@@ -27,9 +27,25 @@ public class AssignExpr extends Expr {
 		if (putParenthesis)
 			pw.print("(");
 		
-		left.genC(pw, false);
-		pw.print(" = ");
-		right.genC(pw, putParenthesis);
+		if(this.left.getType() instanceof TypeString)
+		{
+			pw.print("strcpy(");
+			left.genC(pw,false);
+			pw.print(",");
+			right.genC(pw,false);
+			pw.print(");");
+		}
+		else
+		{
+			left.genC(pw, false);
+			pw.print(" = ");
+			if(left.getType() != right.getType())
+			{
+				KraClass c = (KraClass)left.getType();
+				pw.print("("+c.getCTypeName()+" *) ");
+			}
+			right.genC(pw, putParenthesis);
+		}
 		
 		if (putParenthesis)
 			pw.print(")");

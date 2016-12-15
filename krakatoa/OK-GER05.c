@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -23,7 +24,42 @@ void _A_m( _class_A *this ) {
    int _d;
    int _e;
    int _f;
-   printf("%d %d %d %d %d %d   ",_a, _b, _c, _d, _e, _f);
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_a);
+   }
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_b);
+   }
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_c);
+   }
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_d);
+   }
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_e);
+   }
+   {
+      char __s[512];
+      gets(__s);
+      sscanf(__s,"%d",&_f);
+   }
+   printf("%d", _a);
+   printf("%d", _b);
+   printf("%d", _c);
+   printf("%d", _d);
+   printf("%d", _e);
+   printf("%d", _f);
 }
 
 Func VTClass_A[] = {
@@ -48,12 +84,12 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    _class_A* _a;
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger05"\n);
-   printf("%s   ","The output should be what you give as input."\n);
-   printf("%s   ","Type in six numbers"\n);
+   puts("");
+   puts("Ok-ger05");
+   puts("The output should be what you give as input.");
+   puts("Type in six numbers");
    _a = new_A();
-   ( (void(*)(_class_A *)) _a->vt[0](_a);
+   ( (void(*)(_class_A *)) _a->vt[0])(_a);
 }
 
 Func VTClass_Program[] = {
@@ -70,8 +106,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

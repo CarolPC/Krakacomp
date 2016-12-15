@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -23,8 +24,8 @@ void _Program_run( _class_Program *this ) {
    _b = (1);
    _e = true;
    _f = false;
-   if ((((((((_a == _b   ) && (_a == (1)   )) && ((1) == _b   )) && (_a != _b   )) && (_e == _f   )) && (true == _f   )) && (_e != _f   )) && (true != _f   ))
-      printf("%s      ","impossivel");
+   if ((((((((_a == _b) && (_a == (1))) && ((1) == _b)) && (_a != _b)) && (_e == _f)) && (true == _f)) && (_e != _f)) && (true != _f))
+      puts("impossivel");
 
 }
 
@@ -42,8 +43,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -19,16 +20,16 @@ typedef
 _class_Point *new_Point(void);
 
 void _Point_set( _class_Point *this,int _x, int _y ) {
-   this->_x = _x;
-   this->_y = _y;
+   this->_Point_x = _x;
+   this->_Point_y = _y;
 }
 
 int _Point_getX( _class_Point *this ) {
-   return this->_x;
+   return this->_Point_x;
 }
 
 int _Point_getY( _class_Point *this ) {
-   return this->_y;
+   return this->_Point_y;
 }
 
 Func VTClass_Point[] = {
@@ -49,18 +50,18 @@ _class_Point *new_Point()
 typedef
    struct _St_Program {
       Func *vt;
-      _Point _Program_p;
+      _class_Point* _Program_p;
       } _class_Program;
 
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   this->_p = new_Point();
-   ( (void(*)(_class_Point *, int, int)) this->_p->vt[0](this->_p,0, 0);
+   this->_Program_p = new_Point();
+   ( (void(*)(_class_Point *, int, int)) this->_Program_p->vt[0])(this->_Program_p,0, 0);
 }
 
-_Point _Program_getPoint( _class_Program *this ) {
-   return this->_p;
+_class_Point* _Program_getPoint( _class_Program *this ) {
+   return this->_Program_p;
 }
 
 Func VTClass_Program[] = {
@@ -78,8 +79,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

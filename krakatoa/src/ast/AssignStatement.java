@@ -26,9 +26,28 @@ public class AssignStatement extends Statement {
 	@Override
 	public void genC(PW pw) {
 		pw.printIdent("");
-		left.genC(pw, false);
-		pw.print(" = ");
-		right.genC(pw, true);
+		
+		if(this.left.getType() instanceof TypeString)
+		{
+			pw.print("strcpy(");
+			left.genC(pw,false);
+			pw.print(",");
+			right.genC(pw,false);
+			pw.print(")");
+		}
+		else
+		{
+			left.genC(pw, false);
+			pw.print(" = ");
+			
+			if(left.getType() != right.getType())
+			{
+				KraClass c = (KraClass)left.getType();
+				pw.print("("+c.getCTypeName()+" *) ");
+			}
+			
+			right.genC(pw, true);
+		}
 		pw.println(";");
 	}	
 

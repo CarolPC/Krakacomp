@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -18,11 +19,11 @@ typedef
 _class_A *new_A(void);
 
 void _A_put( _class_A *this,int _pn ) {
-   this->_n = _pn;
+   this->_A_n = _pn;
 }
 
 int _A_get( _class_A *this ) {
-   return this->_n;
+   return this->_A_n;
 }
 
 Func VTClass_A[] = {
@@ -42,26 +43,26 @@ _class_A *new_A()
 typedef
    struct _St_No {
       Func *vt;
-      _No _No_next;
-      _A _No_a;
+      _class_No* _No_next;
+      _class_A* _No_a;
       } _class_No;
 
 _class_No *new_No(void);
 
-void _No_setNext( _class_No *this,_No _p_next ) {
-   this->_next = _p_next;
+void _No_setNext( _class_No *this,_class_No* _p_next ) {
+   this->_No_next = _p_next;
 }
 
-_No _No_getNext( _class_No *this ) {
-   return this->_next;
+_class_No* _No_getNext( _class_No *this ) {
+   return this->_No_next;
 }
 
-void _No_set( _class_No *this,_A _pa ) {
-   this->_a = _pa;
+void _No_set( _class_No *this,_class_A* _pa ) {
+   this->_No_a = _pa;
 }
 
-_A _No_get( _class_No *this ) {
-   return this->_a;
+_class_A* _No_get( _class_No *this ) {
+   return this->_No_a;
 }
 
 Func VTClass_No[] = {
@@ -84,18 +85,18 @@ typedef
    struct _St_B {
       Func *vt;
       int _B_k;
-      _No _B_first;
+      _class_No* _B_first;
       } _class_B;
 
 _class_B *new_B(void);
 
 int _B_get( _class_B *this ) {
-   printf("%d   ",this->_k);
-   return ( (int(*)(_class_A *)) vt[1]();
+   printf("%d", this->_B_k);
+   return ( (int(*)(_class_A *)) vt[1])();
 }
 
 void _B_init( _class_B *this,int _pk ) {
-   this->_k = _pk;
+   this->_B_k = _pk;
 }
 
 void _B_buildList( _class_B *this ) {
@@ -103,36 +104,39 @@ void _B_buildList( _class_B *this ) {
    _class_No* _w;
    _class_No* _newNo;
    _class_A* _a;
-   _i = ( (int(*)(_class_B *)) this->vt[1](this);
-   this->_first = new_No();
-   _w = this->_first;
-   ( (void(*)(_class_No *, _No)) _w->vt[0](_w,   NULL);
+   _i = ( (int(*)(_class_B *)) this->vt[1])(this);
+   this->_B_first = new_No();
+   _w = this->_B_first;
+   ( (void(*)(_class_No *, _class_No*)) _w->vt[0])(_w,   NULL);
    _a = new_A();
-   ( (void(*)(_class_A *, int)) _a->vt[0](_a,_i);
-   ( (void(*)(_class_No *, _A)) _w->vt[2](_w,_a);
+   ( (void(*)(_class_A *, int)) _a->vt[0])(_a,_i);
+   ( (void(*)(_class_No *, _class_A*)) _w->vt[2])(_w,_a);
    while (true) {
-      i = i - 1;
-      if (i <= 0) {
+      _i = (_i - (1));
+      if (_i <= (0)) {
          break;
       }
-      newNo = new No();
-      newNo.setNext(this.first);
-      a = new A();
-      a.put(i);
-      newNo.set(a);
-      this.first = newNo;
+
+      _newNo = new_No();
+      ( (void(*)(_class_No *, _class_No*)) _newNo->vt[0])(_newNo,this->_B_first);
+      _a = new_A();
+      ( (void(*)(_class_A *, int)) _a->vt[0])(_a,_i);
+      ( (void(*)(_class_No *, _class_A*)) _newNo->vt[2])(_newNo,_a);
+      this->_B_first = _newNo;
    }
+
 }
 
 void _B_list( _class_B *this ) {
    _class_No* _w;
    _class_A* _a;
-   _w = this->_first;
+   _w = this->_B_first;
    while (_w !=    NULL) {
-      a = w.get();
-      write (a.get());
-      w = w.getNext();
+      _a = ( (_A(*)(_class_No *)) _w->vt[3])(_w);
+      printf("%d", ( (int(*)(_class_A *)) _a->vt[1])(_a));
+      _w = ( (_No(*)(_class_No *)) _w->vt[1])(_w);
    }
+
 }
 
 Func VTClass_B[] = {
@@ -162,9 +166,9 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    _class_B* _b;
    _b = new_B();
-   ( (void(*)(_class_B *, int)) _b->vt[0](_b,10);
-   ( (void(*)(_class_B *)) _b->vt[4](_b);
-   ( (void(*)(_class_B *)) _b->vt[5](_b);
+   ( (void(*)(_class_B *, int)) _b->vt[0])(_b,10);
+   ( (void(*)(_class_B *)) _b->vt[4])(_b);
+   ( (void(*)(_class_B *)) _b->vt[5])(_b);
 }
 
 Func VTClass_Program[] = {
@@ -181,8 +185,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

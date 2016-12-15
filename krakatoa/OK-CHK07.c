@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -21,37 +22,39 @@ typedef
 _class_Person *new_Person(void);
 
 char * _Person_getCourse( _class_Person *this ) {
-   return this->_course;
+   return this->_Person_course;
 }
 
 void _Person_setCourse( _class_Person *this,char * _course ) {
-   this->_course = _course;
+   strcpy(this->_Person_course,_course);
 }
 
 int _Person_getNumber( _class_Person *this ) {
-   return this->_number;
+   return this->_Person_number;
 }
 
 void _Person_setNumber( _class_Person *this,int _number ) {
-   this->_number = _number;
+   this->_Person_number = _number;
 }
 
 void _Person_init( _class_Person *this,char * _name, int _age ) {
-   this->_name = _name;
-   this->_age = _age;
+   strcpy(this->_Person_name,_name);
+   this->_Person_age = _age;
 }
 
 char * _Person_getName( _class_Person *this ) {
-   return this->_name;
+   return this->_Person_name;
 }
 
 int _Person_getAge( _class_Person *this ) {
-   return this->_age;
+   return this->_Person_age;
 }
 
 void _Person_print( _class_Person *this ) {
-   printf("%s %s   ","Name = ", this->_name);
-   printf("%s %d   ","Age = ", this->_age);
+   puts("Name = ");
+   puts(this->_Person_name);
+   puts("Age = ");
+   printf("%d", this->_Person_age);
 }
 
 Func VTClass_Person[] = {
@@ -77,28 +80,30 @@ _class_Person *new_Person()
 typedef
    struct _St_Group {
       Func *vt;
-      _Person _Group_first;
-      _Person _Group_second;
+      _class_Person* _Group_first;
+      _class_Person* _Group_second;
       } _class_Group;
 
 _class_Group *new_Group(void);
 
-void _Group_set( _class_Group *this,_Person _first, _Person _second ) {
-   this->_first = _first;
-   this->_second = _second;
+void _Group_set( _class_Group *this,_class_Person* _first, _class_Person* _second ) {
+   this->_Group_first = _first;
+   this->_Group_second = _second;
 }
 
-_Person _Group_getFirst( _class_Group *this ) {
-   return this->_first;
+_class_Person* _Group_getFirst( _class_Group *this ) {
+   return this->_Group_first;
 }
 
-_Person _Group_getSecond( _class_Group *this ) {
-   return this->_second;
+_class_Person* _Group_getSecond( _class_Group *this ) {
+   return this->_Group_second;
 }
 
 void _Group_print( _class_Group *this ) {
-   printf("%s %s   ","First: ", ( (char *(*)(_class_Person *)) this->_first->vt[5](this->_first));
-   printf("%s %s   ","Second: ", ( (char *(*)(_class_Person *)) this->_second->vt[5](this->_second));
+   puts("First: ");
+   puts(( (char *(*)(_class_Person *)) this->_Group_first->vt[5])(this->_Group_first));
+   puts("Second: ");
+   puts(( (char *(*)(_class_Person *)) this->_Group_second->vt[5])(this->_Group_second));
 }
 
 Func VTClass_Group[] = {
@@ -128,15 +133,15 @@ typedef
 _class_University *new_University(void);
 
 void _University_init( _class_University *this,char * _name, char * _city, int _numberOfStudents ) {
-   this->_name = _name;
-   this->_city = _city;
-   this->_numberOfStudents = _numberOfStudents;
+   strcpy(this->_University_name,_name);
+   strcpy(this->_University_city,_city);
+   this->_University_numberOfStudents = _numberOfStudents;
 }
 
 void _University_print( _class_University *this ) {
-   printf("%s   ",this->_name);
-   printf("%s   ",this->_city);
-   printf("%d   ",this->_numberOfStudents);
+   puts(this->_University_name);
+   puts(this->_University_city);
+   printf("%d", this->_University_numberOfStudents);
 }
 
 Func VTClass_University[] = {
@@ -166,21 +171,21 @@ void _Program_run( _class_Program *this ) {
    _class_Person* _maria;
    _class_Group* _g;
    _s = new_University();
-   ( (void(*)(_class_University *, char *, char *, int)) _s->vt[0](_s,"UFSCar", "Sao Carlos", 7000);
-   ( (void(*)(_class_University *)) _s->vt[1](_s);
+   ( (void(*)(_class_University *, char *, char *, int)) _s->vt[0])(_s,"UFSCar", "Sao Carlos", 7000);
+   ( (void(*)(_class_University *)) _s->vt[1])(_s);
    _joao = new_Person();
-   ( (void(*)(_class_Person *, char *, int)) _joao->vt[4](_joao,"Joao", 21);
-   ( (void(*)(_class_Person *, char *)) _joao->vt[1](_joao,"EnC");
-   ( (void(*)(_class_Person *, int)) _joao->vt[3](_joao,6729);
+   ( (void(*)(_class_Person *, char *, int)) _joao->vt[4])(_joao,"Joao", 21);
+   ( (void(*)(_class_Person *, char *)) _joao->vt[1])(_joao,"EnC");
+   ( (void(*)(_class_Person *, int)) _joao->vt[3])(_joao,6729);
    _maria = new_Person();
-   ( (void(*)(_class_Person *, char *, int)) _maria->vt[4](_maria,"Maria", 20);
-   ( (void(*)(_class_Person *, char *)) _maria->vt[1](_maria,"Fisioterapia");
-   ( (void(*)(_class_Person *, int)) _maria->vt[3](_maria,8607);
-   ( (void(*)(_class_Person *)) _joao->vt[7](_joao);
-   ( (void(*)(_class_Person *)) _maria->vt[7](_maria);
+   ( (void(*)(_class_Person *, char *, int)) _maria->vt[4])(_maria,"Maria", 20);
+   ( (void(*)(_class_Person *, char *)) _maria->vt[1])(_maria,"Fisioterapia");
+   ( (void(*)(_class_Person *, int)) _maria->vt[3])(_maria,8607);
+   ( (void(*)(_class_Person *)) _joao->vt[7])(_joao);
+   ( (void(*)(_class_Person *)) _maria->vt[7])(_maria);
    _g = new_Group();
-   ( (void(*)(_class_Group *, _Person, _Person)) _g->vt[0](_g,_joao, _maria);
-   ( (void(*)(_class_Group *)) _g->vt[3](_g);
+   ( (void(*)(_class_Group *, _class_Person*, _class_Person*)) _g->vt[0])(_g,_joao, _maria);
+   ( (void(*)(_class_Group *)) _g->vt[3])(_g);
 }
 
 Func VTClass_Program[] = {
@@ -197,8 +202,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

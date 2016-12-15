@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -18,12 +19,13 @@ typedef
 _class_A *new_A(void);
 
 void _A_m1( _class_A *this,int _n ) {
-   this->_k = (1);
-   printf("%d %d   ",this->_k, _n);
+   this->_A_k = (1);
+   printf("%d", this->_A_k);
+   printf("%d", _n);
 }
 
 int _A_getK( _class_A *this ) {
-   return this->_k;
+   return this->_A_k;
 }
 
 Func VTClass_A[] = {
@@ -49,13 +51,14 @@ typedef
 _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
-   this->_k = (2);
-   ( (void(*)(_class_A *, int)) vt[0](,1);
-   printf("%d %d   ",this->_k, _n);
+   this->_B_k = (2);
+   ( (void(*)(_class_A *, int)) vt[0])(,1);
+   printf("%d", this->_B_k);
+   printf("%d", _n);
 }
 
 int _B_getK( _class_B *this ) {
-   return this->_k;
+   return this->_B_k;
 }
 
 Func VTClass_B[] = {
@@ -81,13 +84,15 @@ typedef
 _class_C *new_C(void);
 
 void _C_m3( _class_C *this,int _n ) {
-   ( (void(*)(_class_B *, int)) vt[2](,2);
-   printf("%d %d   ",3, _n);
+   ( (void(*)(_class_B *, int)) vt[2])(,2);
+   printf("%d", 3);
+   printf("%d", _n);
 }
 
 void _C_m4( _class_C *this,int _n ) {
-   ( (void(*)(_class_C *, int)) this->vt[1](this,3);
-   printf("%d %d   ",4, _n);
+   ( (void(*)(_class_C *, int)) this->vt[1])(this,3);
+   printf("%d", 4);
+   printf("%d", _n);
 }
 
 Func VTClass_C[] = {
@@ -116,12 +121,12 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    _class_C* _c;
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger10"\n);
-   printf("%s   ","The output should be :"\n);
-   printf("%s   ","1 1 2 2 3 3 4 4"\n);
+   puts("");
+   puts("Ok-ger10");
+   puts("The output should be :");
+   puts("1 1 2 2 3 3 4 4");
    _c = new_C();
-   ( (void(*)(_class_C *, int)) _c->vt[1](_c,4);
+   ( (void(*)(_class_C *, int)) _c->vt[1])(_c,4);
 }
 
 Func VTClass_Program[] = {
@@ -138,8 +143,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

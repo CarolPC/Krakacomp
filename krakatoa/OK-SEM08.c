@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -18,18 +19,18 @@ typedef
 _class_A *new_A(void);
 
 void _A_put( _class_A *this,int _x, int _y, boolean _ok ) {
-   if ((_x > _y   ) && _ok) {
-      this->_i = (0);
+   if ((_x > _y) && _ok) {
+      this->_A_i = (0);
    }
 
 }
 
 int _A_get( _class_A *this ) {
-   return this->_i;
+   return this->_A_i;
 }
 
 void _A_set( _class_A *this,int _i ) {
-   this->_i = _i;
+   this->_A_i = _i;
 }
 
 Func VTClass_A[] = {
@@ -55,8 +56,8 @@ typedef
 _class_B *new_B(void);
 
 void _B_put( _class_B *this,int _a, int _b, boolean _c ) {
-   if (((_a + _b   ) < (1)   ) && !_c) {
-      printf("%d      ",0);
+   if (((_a + _b) < (1)) && !_c) {
+      printf("%d", 0);
    }
 
 }
@@ -86,7 +87,7 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    _class_B* _b;
    _b = new_B();
-   ( (void(*)(_class_B *, int, int, boolean)) _b->vt[0](_b,1, 2, true);
+   ( (void(*)(_class_B *, int, int, boolean)) _b->vt[0])(_b,1, 2, true);
 }
 
 Func VTClass_Program[] = {
@@ -103,8 +104,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

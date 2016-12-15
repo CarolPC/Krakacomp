@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -116,34 +117,34 @@ void _Program_run( _class_Program *this ) {
    _b2 = new_B();
    _c1 = new_C();
    _c2 = new_C();
-   ( (void(*)(_class_A *)) _a1->vt[0](_a1);
-   ( (void(*)(_class_A *)) _a1->vt[1](_a1);
-   ( (void(*)(_class_A *)) _a2->vt[1](_a2);
-   ( (void(*)(_class_B *)) _b1->vt[2](_b1);
-   ( (void(*)(_class_B *)) _b1->vt[2](_b1);
-   ( (void(*)(_class_B *)) _b2->vt[2](_b2);
-   ( (void(*)(_class_B *)) _b1->vt[3](_b1);
-   ( (void(*)(_class_B *)) _b2->vt[3](_b2);
-   ( (void(*)(_class_B *)) _b1->vt[3](_b1);
-   ( (void(*)(_class_B *)) _b2->vt[3](_b2);
-   ( (void(*)(_class_C *)) _c1->vt[0](_c1);
-   ( (void(*)(_class_C *)) _c2->vt[0](_c2);
-   ( (void(*)(_class_C *)) _c1->vt[0](_c1);
-   ( (void(*)(_class_C *)) _c2->vt[0](_c2);
-   ( (void(*)(_class_C *)) _c1->vt[0](_c1);
-   ( (void(*)(_class_C *)) _c1->vt[1](_c1);
-   ( (void(*)(_class_C *)) _c1->vt[1](_c1);
-   ( (void(*)(_class_C *)) _c1->vt[1](_c1);
-   ( (void(*)(_class_C *)) _c2->vt[1](_c2);
-   ( (void(*)(_class_C *)) _c2->vt[1](_c2);
-   ( (void(*)(_class_C *)) _c2->vt[1](_c2);
-   ( (void(*)(_class_C *)) _c1->vt[2](_c1);
-   ( (void(*)(_class_C *)) _c1->vt[2](_c1);
-   ( (void(*)(_class_C *)) _c1->vt[2](_c1);
-   ( (void(*)(_class_C *)) _c2->vt[2](_c2);
-   ( (void(*)(_class_C *)) _c2->vt[2](_c2);
-   ( (void(*)(_class_C *)) _c2->vt[2](_c2);
-   ( (void(*)(_class_C *)) _c2->vt[2](_c2);
+   ( (void(*)(_class_A *)) _a1->vt[0])(_a1);
+   ( (void(*)(_class_A *)) _a1->vt[1])(_a1);
+   ( (void(*)(_class_A *)) _a2->vt[1])(_a2);
+   ( (void(*)(_class_B *)) _b1->vt[2])(_b1);
+   ( (void(*)(_class_B *)) _b1->vt[2])(_b1);
+   ( (void(*)(_class_B *)) _b2->vt[2])(_b2);
+   ( (void(*)(_class_B *)) _b1->vt[3])(_b1);
+   ( (void(*)(_class_B *)) _b2->vt[3])(_b2);
+   ( (void(*)(_class_B *)) _b1->vt[3])(_b1);
+   ( (void(*)(_class_B *)) _b2->vt[3])(_b2);
+   ( (void(*)(_class_C *)) _c1->vt[0])(_c1);
+   ( (void(*)(_class_C *)) _c2->vt[0])(_c2);
+   ( (void(*)(_class_C *)) _c1->vt[0])(_c1);
+   ( (void(*)(_class_C *)) _c2->vt[0])(_c2);
+   ( (void(*)(_class_C *)) _c1->vt[0])(_c1);
+   ( (void(*)(_class_C *)) _c1->vt[1])(_c1);
+   ( (void(*)(_class_C *)) _c1->vt[1])(_c1);
+   ( (void(*)(_class_C *)) _c1->vt[1])(_c1);
+   ( (void(*)(_class_C *)) _c2->vt[1])(_c2);
+   ( (void(*)(_class_C *)) _c2->vt[1])(_c2);
+   ( (void(*)(_class_C *)) _c2->vt[1])(_c2);
+   ( (void(*)(_class_C *)) _c1->vt[2])(_c1);
+   ( (void(*)(_class_C *)) _c1->vt[2])(_c1);
+   ( (void(*)(_class_C *)) _c1->vt[2])(_c1);
+   ( (void(*)(_class_C *)) _c2->vt[2])(_c2);
+   ( (void(*)(_class_C *)) _c2->vt[2])(_c2);
+   ( (void(*)(_class_C *)) _c2->vt[2])(_c2);
+   ( (void(*)(_class_C *)) _c2->vt[2])(_c2);
 }
 
 Func VTClass_Program[] = {
@@ -160,8 +161,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

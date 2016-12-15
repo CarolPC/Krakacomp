@@ -29,12 +29,22 @@ public class WriteLineStatement extends WriteStatement {
 	@Override
 	public void genC(PW pw)
 	{
-		pw.printIdent("printf(\"");
-		// TODO Printar a flag do tipo e a variável
-		this.getExprList().genCPrintf(pw);
-		pw.printIdent("\",");
-		this.getExprList().genC(pw);
-		pw.println("\\n);");
+		for(Expr e: super.getExprList().getList())
+		{
+			if(e.getType() instanceof TypeString)
+			{
+				pw.printIdent("puts(");
+				e.genC(pw,false);
+				pw.println(");");
+			}
+			else
+			{
+				pw.printIdent("printf(\""+e.getType().getPrintfName()+"\\n\", ");
+				e.genC(pw,false);
+				pw.println(");");
+				
+			}
+		}
 	}
 
 }

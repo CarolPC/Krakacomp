@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -19,8 +20,8 @@ typedef
 _class_A *new_A(void);
 
 void _A_init_A( _class_A *this ) {
-   this->_i = (1);
-   this->_j = (2);
+   this->_A_i = (1);
+   this->_A_j = (2);
 }
 
 void _A_call_p( _class_A *this ) {
@@ -32,19 +33,19 @@ void _A_call_q( _class_A *this ) {
 }
 
 void _A_r( _class_A *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_A_i);
 }
 
 void _A_s( _class_A *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_A_j);
 }
 
 void _A_p( _class_A *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_A_i);
 }
 
 void _A_q( _class_A *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_A_j);
 }
 
 Func VTClass_A[] = {
@@ -74,8 +75,8 @@ typedef
 _class_B *new_B(void);
 
 void _B_init_B( _class_B *this ) {
-   this->_i = (3);
-   this->_j = (4);
+   this->_B_i = (3);
+   this->_B_j = (4);
 }
 
 void _B_call_p( _class_B *this ) {
@@ -87,19 +88,19 @@ void _B_call_q( _class_B *this ) {
 }
 
 void _B_r( _class_B *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_B_i);
 }
 
 void _B_s( _class_B *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_B_j);
 }
 
 void _B_p( _class_B *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_B_i);
 }
 
 void _B_q( _class_B *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_B_j);
 }
 
 Func VTClass_B[] = {
@@ -130,8 +131,8 @@ typedef
 _class_C *new_C(void);
 
 void _C_init_C( _class_C *this ) {
-   this->_i = (5);
-   this->_j = (6);
+   this->_C_i = (5);
+   this->_C_j = (6);
 }
 
 void _C_call_p( _class_C *this ) {
@@ -143,19 +144,19 @@ void _C_call_q( _class_C *this ) {
 }
 
 void _C_r( _class_C *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_C_i);
 }
 
 void _C_s( _class_C *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_C_j);
 }
 
 void _C_p( _class_C *this ) {
-   printf("%d   ",this->_i);
+   printf("%d", this->_C_i);
 }
 
 void _C_q( _class_C *this ) {
-   printf("%d   ",this->_j);
+   printf("%d", this->_C_j);
 }
 
 Func VTClass_C[] = {
@@ -187,31 +188,31 @@ void _Program_run( _class_Program *this ) {
    _class_A* _a;
    _class_B* _b;
    _class_C* _c;
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger15"\n);
-   printf("%s   ","The output should be :"\n);
-   printf("%s   ","1 2 1 2 3 4 3 4 5 6 5 6"\n);
+   puts("");
+   puts("Ok-ger15");
+   puts("The output should be :");
+   puts("1 2 1 2 3 4 3 4 5 6 5 6");
    _a = new_A();
-   ( (void(*)(_class_A *)) _a->vt[0](_a);
-   ( (void(*)(_class_A *)) _a->vt[1](_a);
-   ( (void(*)(_class_A *)) _a->vt[2](_a);
-   ( (void(*)(_class_A *)) _a->vt[3](_a);
-   ( (void(*)(_class_A *)) _a->vt[4](_a);
+   ( (void(*)(_class_A *)) _a->vt[0])(_a);
+   ( (void(*)(_class_A *)) _a->vt[1])(_a);
+   ( (void(*)(_class_A *)) _a->vt[2])(_a);
+   ( (void(*)(_class_A *)) _a->vt[3])(_a);
+   ( (void(*)(_class_A *)) _a->vt[4])(_a);
    _b = new_B();
-   ( (void(*)(_class_B *)) _b->vt[5](_b);
-   ( (void(*)(_class_B *)) _b->vt[0](_b);
-   ( (void(*)(_class_B *)) _b->vt[1](_b);
-   ( (void(*)(_class_B *)) _b->vt[2](_b);
-   ( (void(*)(_class_B *)) _b->vt[3](_b);
-   ( (void(*)(_class_B *)) _b->vt[4](_b);
+   ( (void(*)(_class_B *)) _b->vt[5])(_b);
+   ( (void(*)(_class_B *)) _b->vt[0])(_b);
+   ( (void(*)(_class_B *)) _b->vt[1])(_b);
+   ( (void(*)(_class_B *)) _b->vt[2])(_b);
+   ( (void(*)(_class_B *)) _b->vt[3])(_b);
+   ( (void(*)(_class_B *)) _b->vt[4])(_b);
    _c = new_C();
-   ( (void(*)(_class_C *)) _c->vt[5](_c);
-   ( (void(*)(_class_C *)) _c->vt[0](_c);
-   ( (void(*)(_class_C *)) _c->vt[5](_c);
-   ( (void(*)(_class_C *)) _c->vt[1](_c);
-   ( (void(*)(_class_C *)) _c->vt[2](_c);
-   ( (void(*)(_class_C *)) _c->vt[3](_c);
-   ( (void(*)(_class_C *)) _c->vt[4](_c);
+   ( (void(*)(_class_C *)) _c->vt[5])(_c);
+   ( (void(*)(_class_C *)) _c->vt[0])(_c);
+   ( (void(*)(_class_C *)) _c->vt[5])(_c);
+   ( (void(*)(_class_C *)) _c->vt[1])(_c);
+   ( (void(*)(_class_C *)) _c->vt[2])(_c);
+   ( (void(*)(_class_C *)) _c->vt[3])(_c);
+   ( (void(*)(_class_C *)) _c->vt[4])(_c);
 }
 
 Func VTClass_Program[] = {
@@ -228,8 +229,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

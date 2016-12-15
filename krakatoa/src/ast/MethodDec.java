@@ -90,8 +90,10 @@ public class MethodDec {
 	
 	public void genC(PW pw, String cname) {
 		pw.set(0);
-		
-		pw.printIdent(returnType.getCname() + " " + cname + getCName() + "( ");
+		if(returnType instanceof KraClass)
+			pw.printIdent(((KraClass)returnType).getCTypeName() + "* " + cname + getCName() + "( ");
+		else
+			pw.printIdent(returnType.getCname() + " " + cname + getCName() + "( ");
 		paramList.genC(pw, cname);
 		pw.print(" )");
 		

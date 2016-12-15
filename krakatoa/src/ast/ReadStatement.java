@@ -27,7 +27,31 @@ public class ReadStatement extends Statement {
 
 	@Override
 	public void genC(PW pw) {
-
+		for(Expr e: this.exprList.getList())
+		{
+			pw.printlnIdent("{");
+			pw.add();
+			pw.printlnIdent("char __s[512];");
+			pw.printlnIdent("gets(__s);");
+						
+			
+			if(e.getType() instanceof TypeString)
+			{
+				e.genC(pw,false);
+				pw.println("= malloc(strlen(__s)+1);");
+				pw.printIdent("strcpy(");
+				e.genC(pw,false);
+				pw.println(", __s);");
+			}
+			else
+			{
+				pw.printIdent("sscanf(__s,\""+e.getType().getPrintfName()+"\",&");
+				e.genC(pw,false);
+				pw.println(");");
+			}
+			pw.sub();
+			pw.printlnIdent("}");
+		}
 	}
 
 	@Override

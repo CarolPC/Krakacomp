@@ -37,10 +37,10 @@ public class DoWhileStatement extends WhileStatement {
 
 		pw.printIdent("do");
 
-		super.getStatement().genKra(pw);
+		super.getStatement().genC(pw);
 				
 		pw.print(" while (");
-		super.getExpr().genKra(pw);
+		super.getExpr().genC(pw,false);
 
 		pw.println(");");
 	}

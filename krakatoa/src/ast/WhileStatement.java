@@ -42,7 +42,7 @@ public class WhileStatement extends Statement {
 			pw.println(")");
 		}
 		
-		statement.genKra(pw);
+		statement.genC(pw);
 		
 		pw.println();
 	}

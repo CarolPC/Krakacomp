@@ -47,9 +47,11 @@ public class ParamList {
 
 		while (i < getSize() - 1) {
 			param = paramList.get(i++);
+			
 			pw.print(param.getType().getName() + " " + param.getName() + ", ");
 		}
 		param = paramList.get(i);
+		
 		pw.print(param.getType().getName() + " " + param.getName());
 	}
 
@@ -65,17 +67,29 @@ public class ParamList {
 		pw.print(",");
 		while (i < getSize() - 1) {
 			param = paramList.get(i++);
-			pw.print(param.getType().getCname() + " " + param.getCName() + ", ");
+			if(param.getType() instanceof KraClass)
+				pw.print(((KraClass)param.getType()).getCTypeName() + "* " + param.getCName() + ", ");
+			else
+				pw.print(param.getType().getCname() + " " + param.getCName() + ", ");
 		}
 		param = paramList.get(i);
-		pw.print(param.getType().getCname() + " " + param.getCName());
+
+		if(param.getType() instanceof KraClass)
+			pw.print(((KraClass)param.getType()).getCTypeName() + "* " + param.getCName());
+		else
+			pw.print(param.getType().getCname() + " " + param.getCName());
 	}
 	
 	 public void genCTypeList(PW pw)
 	 {
 	    	int size = paramList.size();
 	    	for ( Parameter p : paramList ) {
-	    		pw.print(p.getType().getCname());
+	    		
+	    		if(p.getType() instanceof KraClass)
+	    			pw.print(((KraClass)p.getType()).getCTypeName()+"*");
+	    		
+	    		else
+	    			pw.print(p.getType().getCname());
 	    		
 	    		if ( --size > 0 )
 	                pw.print(", ");

@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -18,11 +19,11 @@ typedef
 _class_A *new_A(void);
 
 int _A_get_A( _class_A *this ) {
-   return this->_k;
+   return this->_A_k;
 }
 
 void _A_init( _class_A *this ) {
-   this->_k = (1);
+   this->_A_k = (1);
 }
 
 Func VTClass_A[] = {
@@ -48,12 +49,12 @@ typedef
 _class_B *new_B(void);
 
 int _B_get_B( _class_B *this ) {
-   return this->_k;
+   return this->_B_k;
 }
 
 void _B_init( _class_B *this ) {
-   ( (void(*)(_class_A *)) vt[1]();
-   this->_k = (2);
+   ( (void(*)(_class_A *)) vt[1])();
+   this->_B_k = (2);
 }
 
 Func VTClass_B[] = {
@@ -80,12 +81,12 @@ typedef
 _class_C *new_C(void);
 
 int _C_get_C( _class_C *this ) {
-   return this->_k;
+   return this->_C_k;
 }
 
 void _C_init( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[1]();
-   this->_k = (3);
+   ( (void(*)(_class_B *)) vt[1])();
+   this->_C_k = (3);
 }
 
 Func VTClass_C[] = {
@@ -113,12 +114,12 @@ typedef
 _class_D *new_D(void);
 
 int _D_get_D( _class_D *this ) {
-   return this->_k;
+   return this->_D_k;
 }
 
 void _D_init( _class_D *this ) {
-   ( (void(*)(_class_C *)) vt[1]();
-   this->_k = (4);
+   ( (void(*)(_class_C *)) vt[1])();
+   this->_D_k = (4);
 }
 
 Func VTClass_D[] = {
@@ -150,19 +151,19 @@ void _Program_run( _class_Program *this ) {
    _class_B* _b;
    _class_C* _c;
    _class_D* _d;
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger14"\n);
-   printf("%s   ","The output should be :"\n);
-   printf("%s   ","4 3 2 1"\n);
+   puts("");
+   puts("Ok-ger14");
+   puts("The output should be :");
+   puts("4 3 2 1");
    _d = new_D();
-   ( (void(*)(_class_D *)) _d->vt[1](_d);
-   printf("%d   ",( (int(*)(_class_D *)) _d->vt[1](_d));
-   _c = _d;
-   printf("%d   ",( (int(*)(_class_C *)) _c->vt[1](_c));
-   _b = _c;
-   printf("%d   ",( (int(*)(_class_B *)) _b->vt[2](_b));
-   _a = _b;
-   printf("%d   ",( (int(*)(_class_A *)) _a->vt[0](_a));
+   ( (void(*)(_class_D *)) _d->vt[1])(_d);
+   printf("%d", ( (int(*)(_class_D *)) _d->vt[1])(_d));
+   _c = (_class_C *) _d;
+   printf("%d", ( (int(*)(_class_C *)) _c->vt[1])(_c));
+   _b = (_class_B *) _c;
+   printf("%d", ( (int(*)(_class_B *)) _b->vt[2])(_b));
+   _a = (_class_A *) _b;
+   printf("%d", ( (int(*)(_class_A *)) _a->vt[0])(_a));
 }
 
 Func VTClass_Program[] = {
@@ -179,8 +180,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

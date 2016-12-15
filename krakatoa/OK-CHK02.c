@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -20,44 +21,44 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
-   this->_n = (0);
-   this->_b = false;
-   this->_s = ("");
+   this->_A_n = (0);
+   this->_A_b = false;
+   strcpy(this->_A_s,"");
 }
 
 boolean _A_m_returns_boolean( _class_A *this ) {
-   return this->_b;
+   return this->_A_b;
 }
 
 void _A_m_integer( _class_A *this,int _n ) {
-   this->_n = _n;
+   this->_A_n = _n;
 }
 
 void _A_m_integer_boolean_String( _class_A *this,int _n, boolean _b, char * _s ) {
-   this->_n = _n;
-   this->_b = _b;
-   this->_s = _s;
-   printf("%s   ",this->_s);
+   this->_A_n = _n;
+   this->_A_b = _b;
+   strcpy(this->_A_s,_s);
+   puts(this->_A_s);
 }
 
 boolean _A_m_integer_returns_boolean( _class_A *this,int _n ) {
-   if (this->_n > _n) {
+   if (this->_A_n > _n) {
       return false;
    }
 
    else
-      return this->_b;
+      return this->_A_b;
 
 }
 
 boolean _A_m_integer_boolean_String_return( _class_A *this,int _n, boolean _b, char * _s ) {
-   this->_s = _s;
+   strcpy(this->_A_s,_s);
    if (_b) {
-      return ((_n + _n      ) > (0));
+      return ((_n + _n) > (0));
    }
 
    else
-      return (this->_b && _b);
+      return (this->_A_b && _b);
 
 }
 
@@ -116,47 +117,49 @@ typedef
 _class_C *new_C(void);
 
 void _C_method( _class_C *this ) {
-   this->_name = ("");
-   this->_letter = false;
-   this->_n = (0);
-   this->_time = (0);
+   strcpy(this->_C_name,"");
+   this->_C_letter = false;
+   this->_C_n = (0);
+   this->_C_time = (0);
 }
 
 boolean _C_method_returns_boolean( _class_C *this ) {
-   return this->_letter;
+   return this->_C_letter;
 }
 
 void _C_method_integer( _class_C *this,int _n ) {
-   printf("%s %d %d   ",this->_name, _n, this->_time);
-   if (this->_letter) {
-      printf("%s      ","true");
+   puts(this->_C_name);
+   printf("%d", _n);
+   printf("%d", this->_C_time);
+   if (this->_C_letter) {
+      puts("true");
    }
 
    else
-      printf("%s      ","false");
+      puts("false");
 
 }
 
 void _C_method_integer_boolean_String( _class_C *this,int _n, boolean _b, char * _name ) {
-   this->_name = _name;
-   printf("%d   ",_n);
+   strcpy(this->_C_name,_name);
+   printf("%d", _n);
    if (_b) {
-      printf("%d      ",0);
+      printf("%d", 0);
    }
 
    else
-      printf("%d      ",1);
+      printf("%d", 1);
 
 }
 
 boolean _C_method_integer_returns_boolean( _class_C *this,int _n ) {
-   return (this->_n > _n);
+   return (this->_C_n > _n);
 }
 
 boolean _C_method_integer_boolean_String_r( _class_C *this,int _n, boolean _b, char * _name ) {
-   printf("%s   ",_name);
-   this->_name = _name;
-   return ((this->_n > _n   ) && !(_b && this->_letter   ) && (this->_time > (0)   ));
+   puts(_name);
+   strcpy(this->_C_name,_name);
+   return ((this->_C_n > _n) && !(_b && this->_C_letter) && (this->_C_time > (0)));
 }
 
 Func VTClass_C[] = {
@@ -188,9 +191,9 @@ void _Program_run( _class_Program *this ) {
    _class_B* _b;
    _class_C* _c;
    _b = new_B();
-   ( (void(*)(_class_B *)) _b->vt[0](_b);
+   ( (void(*)(_class_B *)) _b->vt[0])(_b);
    _c = new_C();
-   ( (void(*)(_class_C *)) _c->vt[0](_c);
+   ( (void(*)(_class_C *)) _c->vt[0])(_c);
 }
 
 Func VTClass_Program[] = {
@@ -207,8 +210,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

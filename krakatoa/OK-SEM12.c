@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -42,7 +43,7 @@ _class_B *new_B(void);
 void _B_p( _class_B *this ) {
    _class_B* _A;
    _A = new_B();
-   ( (void(*)(_class_B *)) _A->vt[0](_A);
+   ( (void(*)(_class_B *)) _A->vt[0])(_A);
 }
 
 Func VTClass_B[] = {
@@ -71,8 +72,8 @@ void _Program_run( _class_Program *this ) {
    _class_B* _b;
    _a = new_A();
    _b = new_B();
-   ( (void(*)(_class_A *)) _a->vt[0](_a);
-   ( (void(*)(_class_B *)) _b->vt[1](_b);
+   ( (void(*)(_class_A *)) _a->vt[0])(_a);
+   ( (void(*)(_class_B *)) _b->vt[1])(_b);
 }
 
 Func VTClass_Program[] = {
@@ -89,8 +90,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

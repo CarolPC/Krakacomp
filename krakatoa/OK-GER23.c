@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -17,8 +18,8 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger23"\n);
+   puts("");
+   puts("Ok-ger23");
    int _n, _i, _j;
    _i = (0);
    _j = (0);
@@ -26,8 +27,9 @@ void _Program_run( _class_Program *this ) {
    boolean _b;
    _b = false;
    do {
-      n = n + 1;
-   } while (false);
+      _n = (_n + (1));
+   }
+ while (false);
    if ( !( _n == (11) ) ) {
       puts("'do-while' statement with 'false' as expression'");
    }
@@ -36,11 +38,13 @@ void _Program_run( _class_Program *this ) {
    int 0;
    do {
       do {
-         ++i;
-         sum = sum + 1;
-      } while (i < n);
-      ++j;
-   } while (j < n);
+         ++_i;
+         _sum = (_sum + (1));
+      }
+ while (_i < _n);
+      ++_j;
+   }
+ while (_j < _n);
    if ( !( _sum == (100) ) ) {
       puts("Nested 'do-while' statement with two indexes");
    }
@@ -61,8 +65,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

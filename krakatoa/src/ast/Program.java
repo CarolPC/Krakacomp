@@ -35,10 +35,11 @@ public class Program {
 		pw.println("#include <malloc.h>");
 		pw.println("#include <stdlib.h>");
 		pw.println("#include <stdio.h>");
+		pw.println("#include <string.h>");
 		pw.println();
 		pw.println("typedef int boolean;");
-		pw.println("#define TRUE 1");
-		pw.println("#define FALSE 0");
+		pw.println("#define true 1");
+		pw.println("#define false 0");
 		pw.println();
 		pw.println("typedef\n  void (*Func)();");
 		pw.println();
@@ -49,10 +50,10 @@ public class Program {
 		
 		
 		pw.println("int main() {");
-		pw.printlnIdent("_class_program *program;");
-		pw.printlnIdent("program = new_Program()");
+		pw.printlnIdent("_class_Program *program;");
+		pw.printlnIdent("program = new_Program();");
 		//tava no pdf que nem sempre a run vai ser indice 0
-		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program)");
+		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program);");
 		pw.printlnIdent("return 0;");
 		pw.println("}");
 	}

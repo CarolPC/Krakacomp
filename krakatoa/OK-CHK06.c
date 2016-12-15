@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -21,8 +22,8 @@ void _A_run( _class_A *this ) {
 
 void _A_m( _class_A *this ) {
    _class_A* _a;
-   _a =    NULL;
-   ( (void(*)(_class_A *)) _a->vt[1](_a);
+   _a = (_class_A *)    NULL;
+   ( (void(*)(_class_A *)) _a->vt[1])(_a);
 }
 
 Func VTClass_A[] = {
@@ -70,17 +71,17 @@ _class_B *new_B()
 typedef
    struct _St_C {
       Func *vt;
-      _B _C_b;
+      _class_B* _C_b;
       } _class_C;
 
 _class_C *new_C(void);
 
 void _C_m( _class_C *this ) {
-   ( (void(*)(_class_B *)) this->_b->vt[1](this->_b);
+   ( (void(*)(_class_B *)) this->_C_b->vt[1])(this->_C_b);
 }
 
-_B _C_get( _class_C *this ) {
-   return this->_b;
+_class_B* _C_get( _class_C *this ) {
+   return this->_C_b;
 }
 
 Func VTClass_C[] = {
@@ -106,8 +107,8 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    _class_C* _c;
-   _c =    NULL;
-   ( (void(*)(_class_C *)) _c->vt[0](_c);
+   _c = (_class_C *)    NULL;
+   ( (void(*)(_class_C *)) _c->vt[0])(_c);
 }
 
 Func VTClass_Program[] = {
@@ -124,8 +125,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

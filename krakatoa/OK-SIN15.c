@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -43,15 +44,21 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    char * _s;
    _class_Test* _t;
-   _s = ("Ola !!!");
-   printf("%s   ",_s);
+   strcpy(_s,"Ola !!!");
+   puts(_s);
+   {
+      char __s[512];
+      gets(__s);
+_s= malloc(strlen(__s)+1);
+      strcpy(_s, __s);
+   }
    _t = new_Test();
-   printf("%s   ",( (char *(*)(_class_Test *, char *)) _t->vt[0](_t,"Dolly Parton"));
-   printf("%s   ","barra   \\");
-   printf("%s   ","barra n  \n");
-   printf("%s   ","barra a  \a");
-   printf("%s   ","barra barra \\\\");
-   printf("%s   ","barra no final  \ ");
+   puts(( (char *(*)(_class_Test *, char *)) _t->vt[0])(_t,"Dolly Parton"));
+   puts("barra   \\");
+   puts("barra n  \n");
+   puts("barra a  \a");
+   puts("barra barra \\\\");
+   puts("barra no final  \ ");
 }
 
 Func VTClass_Program[] = {
@@ -68,8 +75,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

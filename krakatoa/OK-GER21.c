@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -18,11 +19,11 @@ typedef
 _class_A *new_A(void);
 
 void _A_set( _class_A *this,int _n ) {
-   this->_n = _n;
+   this->_A_n = _n;
 }
 
 int _A_get( _class_A *this ) {
-   return this->_n;
+   return this->_A_n;
 }
 
 Func VTClass_A[] = {
@@ -42,29 +43,29 @@ _class_A *new_A()
 typedef
    struct _St_Program {
       Func *vt;
-      _A _Program_a;
+      _class_A* _Program_a;
       } _class_Program;
 
 _class_Program *new_Program(void);
 
 void _Program_print( _class_Program *this ) {
-   printf("%d   ",( (int(*)(_class_A *)) this->_a->vt[1](this->_a));
+   printf("%d", ( (int(*)(_class_A *)) this->_Program_a->vt[1])(this->_Program_a));
 }
 
-_A _Program_get( _class_Program *this ) {
-   return this->_a;
+_class_A* _Program_get( _class_Program *this ) {
+   return this->_Program_a;
 }
 
 void _Program_run( _class_Program *this ) {
-   printf("%s   ",""\n);
-   printf("%s   ","Ok-ger21"\n);
-   printf("%s   ","The output should be :"\n);
-   printf("%s   ","0"\n);
-   printf("%s   ","0");
+   puts("");
+   puts("Ok-ger21");
+   puts("The output should be :");
+   puts("0");
+   puts("0");
 }
 
-void _Program_set( _class_Program *this,_A _a ) {
-   this->_a = _a;
+void _Program_set( _class_Program *this,_class_A* _a ) {
+   this->_Program_a = _a;
 }
 
 Func VTClass_Program[] = {
@@ -83,8 +84,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }

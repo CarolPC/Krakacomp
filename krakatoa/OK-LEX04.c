@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef int boolean;
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef
   void (*Func)();
@@ -17,7 +18,12 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   printf("%d %d %d %d %d %d   ",0, 1, 32766, 32767, -(32767), -(0));
+   printf("%d", 0);
+   printf("%d", 1);
+   printf("%d", 32766);
+   printf("%d", 32767);
+   printf("%d", -(32767));
+   printf("%d", -(0));
 }
 
 Func VTClass_Program[] = {
@@ -34,8 +40,8 @@ _class_Program *new_Program()
 }
 
 int main() {
-   _class_program *program;
-   program = new_Program()
-   ( ( void (*)(_class_Program *) ) program->vt[0] )(program)
+   _class_Program *program;
+   program = new_Program();
+   ( ( void (*)(_class_Program *) ) program->vt[0] )(program);
    return 0;
 }
