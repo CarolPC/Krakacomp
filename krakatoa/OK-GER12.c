@@ -48,7 +48,7 @@ _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
    printf("%d", _n);
-   ( (void(*)(_class_A *, int)) vt[1])(,_n + (1));
+   ( (void(*)(_class_A *, int)) (_class_A *) this->vt[1])((_class_A *) this,_n + (1));
 }
 
 Func VTClass_B[] = {
@@ -73,7 +73,7 @@ typedef
 _class_C *new_C(void);
 
 void _C_m1( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[0])();
+   ( (void(*)(_class_B *)) (_class_B *) this->vt[0])((_class_B *) this);
    printf("%d", 2);
 }
 
@@ -106,9 +106,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
-   _class_B* _b;
-   _class_C* _c;
+   _class_A *_a;
+   _class_B *_b;
+   _class_C *_c;
    puts("");
    puts("Ok-ger12");
    puts("The output should be :");

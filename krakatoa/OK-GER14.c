@@ -53,7 +53,7 @@ int _B_get_B( _class_B *this ) {
 }
 
 void _B_init( _class_B *this ) {
-   ( (void(*)(_class_A *)) vt[1])();
+   ( (void(*)(_class_A *)) (_class_A *) this->vt[1])((_class_A *) this);
    this->_B_k = (2);
 }
 
@@ -85,7 +85,7 @@ int _C_get_C( _class_C *this ) {
 }
 
 void _C_init( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[1])();
+   ( (void(*)(_class_B *)) (_class_B *) this->vt[1])((_class_B *) this);
    this->_C_k = (3);
 }
 
@@ -118,7 +118,7 @@ int _D_get_D( _class_D *this ) {
 }
 
 void _D_init( _class_D *this ) {
-   ( (void(*)(_class_C *)) vt[1])();
+   ( (void(*)(_class_C *)) (_class_C *) this->vt[1])((_class_C *) this);
    this->_D_k = (4);
 }
 
@@ -147,10 +147,10 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
-   _class_B* _b;
-   _class_C* _c;
-   _class_D* _d;
+   _class_A *_a;
+   _class_B *_b;
+   _class_C *_c;
+   _class_D *_d;
    puts("");
    puts("Ok-ger14");
    puts("The output should be :");

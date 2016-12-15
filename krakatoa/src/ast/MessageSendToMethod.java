@@ -38,7 +38,10 @@ public class MessageSendToMethod extends MessageSend {
 		}
 		else
 		{
-			pw.print("( ("+this.method.getType().getCname()+"(*)("+kraClass.getCTypeName()+" *");
+			if (this.method.getType() instanceof KraClass)
+				pw.print("( ("+((KraClass) this.method.getType()).getCTypeName()+"*(*)("+kraClass.getCTypeName()+" *");
+			else
+				pw.print("( ("+this.method.getType().getCname()+"(*)("+kraClass.getCTypeName()+" *");
 			
 			if(this.params != null)
 			{
@@ -47,7 +50,7 @@ public class MessageSendToMethod extends MessageSend {
 			}
 			pw.print(")) ");
 			
-			this.sender.genC(pw,false);
+			this.sender.genC(pw,true);
 			if(!(this.sender instanceof MessageSendToSuper))
 				pw.print("->");
 			

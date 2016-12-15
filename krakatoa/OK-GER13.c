@@ -83,7 +83,7 @@ void _C_m1( _class_C *this ) {
 }
 
 void _C_teste( _class_C *this ) {
-   ( (void(*)(_class_B *)) vt[2])();
+   ( (void(*)(_class_B *)) (_class_B *) this->vt[2])((_class_B *) this);
 }
 
 Func VTClass_C[] = {
@@ -139,7 +139,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_D* _d;
+   _class_D *_d;
    puts("");
    puts("Ok-ger09");
    puts("The output should be :");

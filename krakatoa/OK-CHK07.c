@@ -166,10 +166,10 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_University* _s;
-   _class_Person* _joao;
-   _class_Person* _maria;
-   _class_Group* _g;
+   _class_University *_s;
+   _class_Person *_joao;
+   _class_Person *_maria;
+   _class_Group *_g;
    _s = new_University();
    ( (void(*)(_class_University *, char *, char *, int)) _s->vt[0])(_s,"UFSCar", "Sao Carlos", 7000);
    ( (void(*)(_class_University *)) _s->vt[1])(_s);

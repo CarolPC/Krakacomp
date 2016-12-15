@@ -60,8 +60,8 @@ void _B_m( _class_B *this ) {
       gets(__s);
       sscanf(__s,"%d",&this->_B_k);
    }
-   ( (void(*)(_class_A *, int)) vt[1])(,0);
-   printf("%d", ( (int(*)(_class_A *)) vt[0])());
+   ( (void(*)(_class_A *, int)) (_class_A *) this->vt[1])((_class_A *) this,0);
+   printf("%d", ( (int(*)(_class_A *)) (_class_A *) this->vt[0])((_class_A *) this));
    printf("%d", ( (int(*)(_class_B *)) this->vt[0])(this));
    printf("%d", this->_B_k);
    printf("%d", _i);
@@ -95,7 +95,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_B* _b;
+   _class_B *_b;
    _b = new_B();
    ( (void(*)(_class_B *, int)) _b->vt[1])(_b,1);
    ( (void(*)(_class_B *)) _b->vt[2])(_b);

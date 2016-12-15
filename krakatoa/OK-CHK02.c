@@ -188,8 +188,8 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_B* _b;
-   _class_C* _c;
+   _class_B *_b;
+   _class_C *_c;
    _b = new_B();
    ( (void(*)(_class_B *)) _b->vt[0])(_b);
    _c = new_C();

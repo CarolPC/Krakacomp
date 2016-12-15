@@ -185,9 +185,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
-   _class_B* _b;
-   _class_C* _c;
+   _class_A *_a;
+   _class_B *_b;
+   _class_C *_c;
    puts("");
    puts("Ok-ger15");
    puts("The output should be :");

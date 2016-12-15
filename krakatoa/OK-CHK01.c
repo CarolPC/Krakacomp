@@ -105,12 +105,12 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a1;
-   _class_A* _a2;
-   _class_B* _b1;
-   _class_B* _b2;
-   _class_C* _c1;
-   _class_C* _c2;
+   _class_A *_a1;
+   _class_A *_a2;
+   _class_B *_b1;
+   _class_B *_b2;
+   _class_C *_c1;
+   _class_C *_c2;
    _a1 = new_A();
    _a2 = new_A();
    _b1 = new_B();

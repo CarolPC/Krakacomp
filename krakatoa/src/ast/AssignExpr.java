@@ -38,11 +38,10 @@ public class AssignExpr extends Expr {
 		else
 		{
 			left.genC(pw, false);
-			pw.print(" = ");
 			if(left.getType() != right.getType())
 			{
 				KraClass c = (KraClass)left.getType();
-				pw.print("("+c.getCTypeName()+" *) ");
+				pw.print("("+c.getCTypeName()+"*) (*) ");
 			}
 			right.genC(pw, putParenthesis);
 		}

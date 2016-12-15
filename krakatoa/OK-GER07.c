@@ -42,7 +42,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
+   _class_A *_a;
    puts("");
    puts("Ok-ger07");
    puts("The output should be :");

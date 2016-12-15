@@ -18,7 +18,7 @@ typedef
 _class_A *new_A(void);
 
 int _A_m( _class_A *this,int _n ) {
-   _class_A* _a;
+   _class_A *_a;
    _a = new_A();
    if (_n > (1)) {
       return (_n * ( (int(*)(_class_A *, int)) _a->vt[0])(_a,_n - (1)));
@@ -50,7 +50,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
+   _class_A *_a;
    _a = new_A();
    printf("%d", ( (int(*)(_class_A *, int)) _a->vt[0])(_a,5));
 }

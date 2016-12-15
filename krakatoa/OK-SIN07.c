@@ -43,7 +43,7 @@ _class_A *new_A()
 typedef
    struct _St_No {
       Func *vt;
-      _class_No* _No_next;
+      struct _St_No* _No_next;
       _class_A* _No_a;
       } _class_No;
 
@@ -92,7 +92,7 @@ _class_B *new_B(void);
 
 int _B_get( _class_B *this ) {
    printf("%d", this->_B_k);
-   return ( (int(*)(_class_A *)) vt[1])();
+   return ( (int(*)(_class_A *)) (_class_A *) this->vt[1])((_class_A *) this);
 }
 
 void _B_init( _class_B *this,int _pk ) {
@@ -101,9 +101,9 @@ void _B_init( _class_B *this,int _pk ) {
 
 void _B_buildList( _class_B *this ) {
    int _i;
-   _class_No* _w;
-   _class_No* _newNo;
-   _class_A* _a;
+   _class_No *_w;
+   _class_No *_newNo;
+   _class_A *_a;
    _i = ( (int(*)(_class_B *)) this->vt[1])(this);
    this->_B_first = new_No();
    _w = this->_B_first;
@@ -128,13 +128,13 @@ void _B_buildList( _class_B *this ) {
 }
 
 void _B_list( _class_B *this ) {
-   _class_No* _w;
-   _class_A* _a;
+   _class_No *_w;
+   _class_A *_a;
    _w = this->_B_first;
    while (_w !=    NULL) {
-      _a = ( (_A(*)(_class_No *)) _w->vt[3])(_w);
+      _a = ( (_class_A*(*)(_class_No *)) _w->vt[3])(_w);
       printf("%d", ( (int(*)(_class_A *)) _a->vt[1])(_a));
-      _w = ( (_No(*)(_class_No *)) _w->vt[1])(_w);
+      _w = ( (_class_No*(*)(_class_No *)) _w->vt[1])(_w);
    }
 
 }
@@ -164,7 +164,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_B* _b;
+   _class_B *_b;
    _b = new_B();
    ( (void(*)(_class_B *, int)) _b->vt[0])(_b,10);
    ( (void(*)(_class_B *)) _b->vt[4])(_b);

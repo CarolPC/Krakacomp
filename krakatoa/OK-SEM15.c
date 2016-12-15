@@ -47,7 +47,7 @@ typedef
 _class_B *new_B(void);
 
 void _B_m( _class_B *this ) {
-   ( (void(*)(_class_A *, _class_A*)) vt[1])(,this);
+   ( (void(*)(_class_A *, _class_A*)) (_class_A *) this->vt[1])((_class_A *) this,this);
 }
 
 Func VTClass_B[] = {
@@ -73,7 +73,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_B* _b;
+   _class_B *_b;
    _b = new_B();
    ( (void(*)(_class_B *)) _b->vt[2])(_b);
 }

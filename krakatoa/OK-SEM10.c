@@ -90,9 +90,9 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
-   _class_B* _b;
-   _class_C* _c;
+   _class_A *_a;
+   _class_B *_b;
+   _class_C *_c;
    _a = new_A();
    _b = new_B();
    _c = new_C();

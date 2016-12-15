@@ -43,7 +43,7 @@ typedef
 _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
-   ( (void(*)(_class_A *, int)) vt[0])(,1);
+   ( (void(*)(_class_A *, int)) (_class_A *) this->vt[0])((_class_A *) this,1);
    printf("%d", 2);
    printf("%d", _n);
 }
@@ -70,7 +70,7 @@ typedef
 _class_C *new_C(void);
 
 void _C_m3( _class_C *this,int _n ) {
-   ( (void(*)(_class_B *, int)) vt[1])(,2);
+   ( (void(*)(_class_B *, int)) (_class_B *) this->vt[1])((_class_B *) this,2);
    printf("%d", 3);
    printf("%d", _n);
 }
@@ -105,7 +105,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_C* _c;
+   _class_C *_c;
    puts("");
    puts("Ok-ger09");
    puts("The output should be :");

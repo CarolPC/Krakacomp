@@ -43,7 +43,7 @@ _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
    char * _s;
-   _class_Test* _t;
+   _class_Test *_t;
    strcpy(_s,"Ola !!!");
    puts(_s);
    {

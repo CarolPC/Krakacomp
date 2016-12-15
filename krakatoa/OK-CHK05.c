@@ -88,7 +88,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_C* _c;
+   _class_C *_c;
    _c = new_C();
    ( (void(*)(_class_C *)) _c->vt[0])(_c);
 }

@@ -45,9 +45,14 @@ public class InstanceVariable extends Variable {
 	}
 
 	public void genC(PW pw, String classPrefix) {
-		if(super.getType() instanceof KraClass)
-			pw.printlnIdent(((KraClass)getType()).getCTypeName() + "* " + classPrefix + getCName() + ";");
-		else
+		if(super.getType() instanceof KraClass) {
+			KraClass kraClass = (KraClass) getType();
+			
+			if (kraClass.getCname().equals(classPrefix))
+				pw.printlnIdent("struct " + kraClass.getCStructName() + "* " + classPrefix + getCName() + ";");
+			else
+				pw.printlnIdent(kraClass.getCTypeName() + "* " + classPrefix + getCName() + ";");
+		} else
 			pw.printlnIdent(getType().getCname() + " " + classPrefix + getCName() + ";");
 		this.classPrefix = classPrefix;
 	}

@@ -21,7 +21,7 @@ void _A_run( _class_A *this ) {
 }
 
 void _A_m( _class_A *this ) {
-   _class_A* _a;
+   _class_A *_a;
    _a = (_class_A *)    NULL;
    ( (void(*)(_class_A *)) _a->vt[1])(_a);
 }
@@ -106,7 +106,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_C* _c;
+   _class_C *_c;
    _c = (_class_C *)    NULL;
    ( (void(*)(_class_C *)) _c->vt[0])(_c);
 }

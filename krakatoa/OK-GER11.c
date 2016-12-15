@@ -73,8 +73,8 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   _class_A* _a;
-   _class_B* _b;
+   _class_A *_a;
+   _class_B *_b;
    puts("");
    puts("Ok-ger11");
    puts("The output should be :");
