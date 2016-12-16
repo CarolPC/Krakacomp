@@ -157,13 +157,13 @@ void _Program_run( _class_Program *this ) {
    puts("4 3 2 1");
    _d = new_D();
    ( (void(*)(_class_D *)) _d->vt[1])(_d);
-   printf("%d", ( (int(*)(_class_D *)) _d->vt[1])(_d));
+   printf("%d ", ( (int(*)(_class_D *)) _d->vt[1])(_d));
    _c = (_class_C *) _d;
-   printf("%d", ( (int(*)(_class_C *)) _c->vt[1])(_c));
+   printf("%d ", ( (int(*)(_class_C *)) _c->vt[1])(_c));
    _b = (_class_B *) _c;
-   printf("%d", ( (int(*)(_class_B *)) _b->vt[2])(_b));
+   printf("%d ", ( (int(*)(_class_B *)) _b->vt[2])(_b));
    _a = (_class_A *) _b;
-   printf("%d", ( (int(*)(_class_A *)) _a->vt[0])(_a));
+   printf("%d ", ( (int(*)(_class_A *)) _a->vt[0])(_a));
 }
 
 Func VTClass_Program[] = {

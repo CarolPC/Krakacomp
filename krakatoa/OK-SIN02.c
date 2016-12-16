@@ -50,7 +50,7 @@ void _A_m( _class_A *this ) {
             sscanf(__s,"%d",&_j);
          }
          while (_i > (0)) {
-            printf("%d", _i);
+            printf("%d ", _i);
             _i = (_i - (1));
          }
 
@@ -58,7 +58,7 @@ void _A_m( _class_A *this ) {
 
       else {
          _b = true;
-         printf("%d", _i);
+         printf("%d ", _i);
       }
 
       if ((((((_i == (1)) || (_i < (1))) || (_i <= (5))) || (_i > (1))) || (_i >= (1))) || (_i != (3))) {

@@ -18,7 +18,7 @@ typedef
 _class_A *new_A(void);
 
 void _A_print( _class_A *this ) {
-   printf("%d", 0);
+   printf("%d ", 0);
 }
 
 void _A_accept( _class_A *this,_class_A* _x ) {

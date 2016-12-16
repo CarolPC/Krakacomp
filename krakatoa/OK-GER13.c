@@ -27,7 +27,7 @@ void _A_set( _class_A *this,int _n ) {
 }
 
 void _A_m1( _class_A *this ) {
-   printf("%d", this->_A_n);
+   printf("%d ", this->_A_n);
 }
 
 Func VTClass_A[] = {
@@ -79,7 +79,7 @@ typedef
 _class_C *new_C(void);
 
 void _C_m1( _class_C *this ) {
-   printf("%d", 8);
+   printf("%d ", 8);
 }
 
 void _C_teste( _class_C *this ) {
@@ -111,7 +111,7 @@ typedef
 _class_D *new_D(void);
 
 void _D_m1( _class_D *this ) {
-   printf("%d", 9);
+   printf("%d ", 9);
 }
 
 Func VTClass_D[] = {

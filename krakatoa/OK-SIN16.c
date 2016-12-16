@@ -33,7 +33,7 @@ void _Program_run( _class_Program *this ) {
    do {
       do {
          ++_i;
-         printf("%d", _i);
+         printf("%d ", _i);
       }
  while (_i < _n);
       ++_j;

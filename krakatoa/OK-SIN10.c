@@ -61,14 +61,14 @@ void _B_m( _class_B *this ) {
       sscanf(__s,"%d",&this->_B_k);
    }
    ( (void(*)(_class_A *, int)) (_class_A *) this->vt[1])((_class_A *) this,0);
-   printf("%d", ( (int(*)(_class_A *)) (_class_A *) this->vt[0])((_class_A *) this));
-   printf("%d", ( (int(*)(_class_B *)) this->vt[0])(this));
-   printf("%d", this->_B_k);
-   printf("%d", _i);
+   printf("%d ", ( (int(*)(_class_A *)) (_class_A *) this->vt[0])((_class_A *) this));
+   printf("%d ", ( (int(*)(_class_B *)) this->vt[0])(this));
+   printf("%d ", this->_B_k);
+   printf("%d ", _i);
 }
 
 void _B_print( _class_B *this ) {
-   printf("%d", this->_B_k);
+   printf("%d ", this->_B_k);
 }
 
 Func VTClass_B[] = {

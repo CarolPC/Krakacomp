@@ -33,19 +33,19 @@ void _A_call_q( _class_A *this ) {
 }
 
 void _A_r( _class_A *this ) {
-   printf("%d", this->_A_i);
+   printf("%d ", this->_A_i);
 }
 
 void _A_s( _class_A *this ) {
-   printf("%d", this->_A_j);
+   printf("%d ", this->_A_j);
 }
 
 void _A_p( _class_A *this ) {
-   printf("%d", this->_A_i);
+   printf("%d ", this->_A_i);
 }
 
 void _A_q( _class_A *this ) {
-   printf("%d", this->_A_j);
+   printf("%d ", this->_A_j);
 }
 
 Func VTClass_A[] = {
@@ -88,19 +88,19 @@ void _B_call_q( _class_B *this ) {
 }
 
 void _B_r( _class_B *this ) {
-   printf("%d", this->_B_i);
+   printf("%d ", this->_B_i);
 }
 
 void _B_s( _class_B *this ) {
-   printf("%d", this->_B_j);
+   printf("%d ", this->_B_j);
 }
 
 void _B_p( _class_B *this ) {
-   printf("%d", this->_B_i);
+   printf("%d ", this->_B_i);
 }
 
 void _B_q( _class_B *this ) {
-   printf("%d", this->_B_j);
+   printf("%d ", this->_B_j);
 }
 
 Func VTClass_B[] = {
@@ -144,19 +144,19 @@ void _C_call_q( _class_C *this ) {
 }
 
 void _C_r( _class_C *this ) {
-   printf("%d", this->_C_i);
+   printf("%d ", this->_C_i);
 }
 
 void _C_s( _class_C *this ) {
-   printf("%d", this->_C_j);
+   printf("%d ", this->_C_j);
 }
 
 void _C_p( _class_C *this ) {
-   printf("%d", this->_C_i);
+   printf("%d ", this->_C_i);
 }
 
 void _C_q( _class_C *this ) {
-   printf("%d", this->_C_j);
+   printf("%d ", this->_C_j);
 }
 
 Func VTClass_C[] = {

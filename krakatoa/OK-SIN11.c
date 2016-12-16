@@ -23,7 +23,7 @@ void _Program_run( _class_Program *this ) {
    ;
    ;
    ;
-   printf("%d", 1);
+   printf("%d ", 1);
    ;
    ;
    if (true)

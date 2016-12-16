@@ -129,8 +129,8 @@ boolean _C_method_returns_boolean( _class_C *this ) {
 
 void _C_method_integer( _class_C *this,int _n ) {
    puts(this->_C_name);
-   printf("%d", _n);
-   printf("%d", this->_C_time);
+   printf("%d ", _n);
+   printf("%d ", this->_C_time);
    if (this->_C_letter) {
       puts("true");
    }
@@ -142,13 +142,13 @@ void _C_method_integer( _class_C *this,int _n ) {
 
 void _C_method_integer_boolean_String( _class_C *this,int _n, boolean _b, char * _name ) {
    strcpy(this->_C_name,_name);
-   printf("%d", _n);
+   printf("%d ", _n);
    if (_b) {
-      printf("%d", 0);
+      printf("%d ", 0);
    }
 
    else
-      printf("%d", 1);
+      printf("%d ", 1);
 
 }
 

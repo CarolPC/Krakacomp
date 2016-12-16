@@ -21,20 +21,20 @@ void _A_m( _class_A *this ) {
    int _i;
    int _j;
    int _k;
-   printf("%d", 7);
+   printf("%d ", 7);
    _i = (1);
    _j = (_i + (1));
    _k = (_j + (1));
-   printf("%d", _i);
-   printf("%d", _j);
-   printf("%d", _k);
+   printf("%d ", _i);
+   printf("%d ", _j);
+   printf("%d ", _k);
    _i = ((((((3) + (1)) * (3)) / (2)) / (2)) + (1));
-   printf("%d", _i);
+   printf("%d ", _i);
    _i = ((((100) - (95)) * (2)) - (5));
-   printf("%d", _i);
+   printf("%d ", _i);
    _i = (((100) - ((45) * (2))) - (4));
-   printf("%d", _i);
-   printf("%d", 7);
+   printf("%d ", _i);
+   printf("%d ", 7);
 }
 
 Func VTClass_A[] = {

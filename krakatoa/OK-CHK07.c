@@ -54,7 +54,7 @@ void _Person_print( _class_Person *this ) {
    puts("Name = ");
    puts(this->_Person_name);
    puts("Age = ");
-   printf("%d", this->_Person_age);
+   printf("%d ", this->_Person_age);
 }
 
 Func VTClass_Person[] = {
@@ -141,7 +141,7 @@ void _University_init( _class_University *this,char * _name, char * _city, int _
 void _University_print( _class_University *this ) {
    puts(this->_University_name);
    puts(this->_University_city);
-   printf("%d", this->_University_numberOfStudents);
+   printf("%d ", this->_University_numberOfStudents);
 }
 
 Func VTClass_University[] = {

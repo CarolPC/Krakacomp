@@ -18,8 +18,8 @@ typedef
 _class_A *new_A(void);
 
 void _A_m1( _class_A *this,int _n ) {
-   printf("%d", 1);
-   printf("%d", _n);
+   printf("%d ", 1);
+   printf("%d ", _n);
 }
 
 Func VTClass_A[] = {
@@ -44,8 +44,8 @@ _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
    ( (void(*)(_class_A *, int)) (_class_A *) this->vt[0])((_class_A *) this,1);
-   printf("%d", 2);
-   printf("%d", _n);
+   printf("%d ", 2);
+   printf("%d ", _n);
 }
 
 Func VTClass_B[] = {
@@ -71,14 +71,14 @@ _class_C *new_C(void);
 
 void _C_m3( _class_C *this,int _n ) {
    ( (void(*)(_class_B *, int)) (_class_B *) this->vt[1])((_class_B *) this,2);
-   printf("%d", 3);
-   printf("%d", _n);
+   printf("%d ", 3);
+   printf("%d ", _n);
 }
 
 void _C_m4( _class_C *this,int _n ) {
    ( (void(*)(_class_C *, int)) this->vt[0])(this,3);
-   printf("%d", 4);
-   printf("%d", _n);
+   printf("%d ", 4);
+   printf("%d ", _n);
 }
 
 Func VTClass_C[] = {

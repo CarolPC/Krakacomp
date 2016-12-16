@@ -62,15 +62,15 @@ void _Program_run( _class_Program *this ) {
    _b = (_class_B *)    NULL;
    _a2 = (_class_A *)    NULL;
    if (_a == _b) {
-      printf("%d", 0);
+      printf("%d ", 0);
    }
 
    if (_b == _a) {
-      printf("%d", 1);
+      printf("%d ", 1);
    }
 
    if (_a == _a2) {
-      printf("%d", 2);
+      printf("%d ", 2);
    }
 
 }

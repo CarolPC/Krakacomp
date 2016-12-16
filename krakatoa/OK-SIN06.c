@@ -52,7 +52,7 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    _class_A *_a;
    _a = new_A();
-   printf("%d", ( (int(*)(_class_A *, int)) _a->vt[0])(_a,5));
+   printf("%d ", ( (int(*)(_class_A *, int)) _a->vt[0])(_a,5));
 }
 
 Func VTClass_Program[] = {

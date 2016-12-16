@@ -18,49 +18,49 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
-   printf("%d", 6);
+   printf("%d ", 6);
    if (true && true) {
-      printf("%d", 1);
+      printf("%d ", 1);
    }
 
    if (false && true) {
-      printf("%d", 1000);
+      printf("%d ", 1000);
    }
 
    if (true && false) {
-      printf("%d", 1000);
+      printf("%d ", 1000);
    }
 
    if (false && false) {
-      printf("%d", 1000);
+      printf("%d ", 1000);
    }
 
    if (true || true) {
-      printf("%d", 2);
+      printf("%d ", 2);
    }
 
    if (true || false) {
-      printf("%d", 3);
+      printf("%d ", 3);
    }
 
    if (false || true) {
-      printf("%d", 4);
+      printf("%d ", 4);
    }
 
    if (false || false) {
-      printf("%d", 1000);
+      printf("%d ", 1000);
    }
 
    if (!false) {
-      printf("%d", 5);
+      printf("%d ", 5);
    }
 
    if (!true) {
-      printf("%d", 1000);
+      printf("%d ", 1000);
    }
 
    if (true || (true && false)) {
-      printf("%d", 6);
+      printf("%d ", 6);
    }
 
 }

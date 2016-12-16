@@ -38,7 +38,7 @@ public class WriteStatement extends Statement {
 			}
 			else
 			{
-				pw.printIdent("printf(\""+e.getType().getPrintfName()+"\", ");
+				pw.printIdent("printf(\""+e.getType().getPrintfName()+" \", ");
 				e.genC(pw,false);
 				pw.println(");");
 				

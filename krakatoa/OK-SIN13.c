@@ -18,7 +18,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   printf("%d", ((1) + (2)) + (-(3)));
+   printf("%d ", ((1) + (2)) + (-(3)));
 }
 
 Func VTClass_Program[] = {

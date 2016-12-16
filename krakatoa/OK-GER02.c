@@ -18,13 +18,13 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
-   printf("%d", 6);
-   printf("%d", 1);
-   printf("%d", (1) + (1));
-   printf("%d", (4) - (1));
-   printf("%d", ((6) - (3)) + (1));
-   printf("%d", (10) / (2));
-   printf("%d", (2) * (3));
+   printf("%d ", 6);
+   printf("%d ", 1);
+   printf("%d ", (1) + (1));
+   printf("%d ", (4) - (1));
+   printf("%d ", ((6) - (3)) + (1));
+   printf("%d ", (10) / (2));
+   printf("%d ", (2) * (3));
 }
 
 Func VTClass_A[] = {

@@ -91,7 +91,7 @@ typedef
 _class_B *new_B(void);
 
 int _B_get( _class_B *this ) {
-   printf("%d", this->_B_k);
+   printf("%d ", this->_B_k);
    return ( (int(*)(_class_A *)) (_class_A *) this->vt[1])((_class_A *) this);
 }
 
@@ -133,7 +133,7 @@ void _B_list( _class_B *this ) {
    _w = this->_B_first;
    while (_w !=    NULL) {
       _a = ( (_class_A*(*)(_class_No *)) _w->vt[3])(_w);
-      printf("%d", ( (int(*)(_class_A *)) _a->vt[1])(_a));
+      printf("%d ", ( (int(*)(_class_A *)) _a->vt[1])(_a));
       _w = ( (_class_No*(*)(_class_No *)) _w->vt[1])(_w);
    }
 

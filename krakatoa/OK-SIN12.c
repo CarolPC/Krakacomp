@@ -20,7 +20,7 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    int _a;
    _a = (1);
-   printf("%d", -_a);
+   printf("%d ", -_a);
 }
 
 Func VTClass_Program[] = {

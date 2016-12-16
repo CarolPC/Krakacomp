@@ -18,12 +18,12 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   printf("%d", 0);
-   printf("%d", 1);
-   printf("%d", 32766);
-   printf("%d", 32767);
-   printf("%d", -(32767));
-   printf("%d", -(0));
+   printf("%d ", 0);
+   printf("%d ", 1);
+   printf("%d ", 32766);
+   printf("%d ", 32767);
+   printf("%d ", -(32767));
+   printf("%d ", -(0));
 }
 
 Func VTClass_Program[] = {

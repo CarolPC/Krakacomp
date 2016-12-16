@@ -20,7 +20,7 @@ _class_A *new_A(void);
 void _A_m( _class_A *this ) {
    int _i;
    _i = (1);
-   printf("%d", _i);
+   printf("%d ", _i);
 }
 
 Func VTClass_A[] = {

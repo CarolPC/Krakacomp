@@ -18,7 +18,7 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
-   printf("%d", 0);
+   printf("%d ", 0);
 }
 
 Func VTClass_A[] = {

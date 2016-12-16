@@ -21,11 +21,11 @@ _class_A *new_A(void);
 void _A_m( _class_A *this ) {
    int _k;
    _k = this->_A_n;
-   printf("%d", _k);
+   printf("%d ", _k);
 }
 
 void _A_p( _class_A *this ) {
-   printf("%d", this->_A_n);
+   printf("%d ", this->_A_n);
 }
 
 void _A_s( _class_A *this ) {

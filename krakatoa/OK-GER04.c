@@ -20,16 +20,16 @@ _class_A *new_A(void);
 void _A_m( _class_A *this ) {
    int _i;
    boolean _b;
-   printf("%d", 6);
+   printf("%d ", 6);
    _i = (1);
    while (_i <= (5)) {
-      printf("%d", _i);
+      printf("%d ", _i);
       _i = (_i + (1));
    }
 
    _b = false;
    while (_b != true) {
-      printf("%d", 6);
+      printf("%d ", 6);
       _b = !_b;
    }
 

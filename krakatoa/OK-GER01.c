@@ -18,61 +18,61 @@ typedef
 _class_A *new_A(void);
 
 void _A_m( _class_A *this ) {
-   printf("%d", 7);
+   printf("%d ", 7);
    if ((1) > (0)) {
-      printf("%d", 0);
+      printf("%d ", 0);
    }
 
    if ((1) >= (0)) {
-      printf("%d", 1);
+      printf("%d ", 1);
    }
 
    if ((1) != (0)) {
-      printf("%d", 2);
+      printf("%d ", 2);
    }
 
    if ((0) < (1)) {
-      printf("%d", 3);
+      printf("%d ", 3);
    }
 
    if ((0) <= (1)) {
-      printf("%d", 4);
+      printf("%d ", 4);
    }
 
    if ((0) == (0)) {
-      printf("%d", 5);
+      printf("%d ", 5);
    }
 
    if ((0) >= (0)) {
-      printf("%d", 6);
+      printf("%d ", 6);
    }
 
    if ((0) <= (0)) {
-      printf("%d", 7);
+      printf("%d ", 7);
    }
 
    if ((1) == (0)) {
-      printf("%d", 18);
+      printf("%d ", 18);
    }
 
    if ((0) > (1)) {
-      printf("%d", 10);
+      printf("%d ", 10);
    }
 
    if ((0) >= (1)) {
-      printf("%d", 11);
+      printf("%d ", 11);
    }
 
    if ((0) != (0)) {
-      printf("%d", 12);
+      printf("%d ", 12);
    }
 
    if ((1) < (0)) {
-      printf("%d", 13);
+      printf("%d ", 13);
    }
 
    if ((1) <= (0)) {
-      printf("%d", 14);
+      printf("%d ", 14);
    }
 
 }

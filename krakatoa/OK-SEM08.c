@@ -57,7 +57,7 @@ _class_B *new_B(void);
 
 void _B_put( _class_B *this,int _a, int _b, boolean _c ) {
    if (((_a + _b) < (1)) && !_c) {
-      printf("%d", 0);
+      printf("%d ", 0);
    }
 
 }

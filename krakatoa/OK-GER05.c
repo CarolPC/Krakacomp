@@ -54,12 +54,12 @@ void _A_m( _class_A *this ) {
       gets(__s);
       sscanf(__s,"%d",&_f);
    }
-   printf("%d", _a);
-   printf("%d", _b);
-   printf("%d", _c);
-   printf("%d", _d);
-   printf("%d", _e);
-   printf("%d", _f);
+   printf("%d ", _a);
+   printf("%d ", _b);
+   printf("%d ", _c);
+   printf("%d ", _d);
+   printf("%d ", _e);
+   printf("%d ", _f);
 }
 
 Func VTClass_A[] = {

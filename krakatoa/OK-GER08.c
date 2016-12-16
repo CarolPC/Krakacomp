@@ -18,18 +18,18 @@ typedef
 _class_A *new_A(void);
 
 void _A_m1( _class_A *this,int _n ) {
-   printf("%d", 1);
-   printf("%d", _n);
+   printf("%d ", 1);
+   printf("%d ", _n);
 }
 
 void _A_m2( _class_A *this,int _n ) {
-   printf("%d", 2);
-   printf("%d", _n);
+   printf("%d ", 2);
+   printf("%d ", _n);
 }
 
 void _A_m3( _class_A *this,int _n ) {
-   printf("%d", 3);
-   printf("%d", _n);
+   printf("%d ", 3);
+   printf("%d ", _n);
 }
 
 Func VTClass_A[] = {

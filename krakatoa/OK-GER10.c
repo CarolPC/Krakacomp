@@ -20,8 +20,8 @@ _class_A *new_A(void);
 
 void _A_m1( _class_A *this,int _n ) {
    this->_A_k = (1);
-   printf("%d", this->_A_k);
-   printf("%d", _n);
+   printf("%d ", this->_A_k);
+   printf("%d ", _n);
 }
 
 int _A_getK( _class_A *this ) {
@@ -53,8 +53,8 @@ _class_B *new_B(void);
 void _B_m2( _class_B *this,int _n ) {
    this->_B_k = (2);
    ( (void(*)(_class_A *, int)) (_class_A *) this->vt[0])((_class_A *) this,1);
-   printf("%d", this->_B_k);
-   printf("%d", _n);
+   printf("%d ", this->_B_k);
+   printf("%d ", _n);
 }
 
 int _B_getK( _class_B *this ) {
@@ -85,14 +85,14 @@ _class_C *new_C(void);
 
 void _C_m3( _class_C *this,int _n ) {
    ( (void(*)(_class_B *, int)) (_class_B *) this->vt[2])((_class_B *) this,2);
-   printf("%d", 3);
-   printf("%d", _n);
+   printf("%d ", 3);
+   printf("%d ", _n);
 }
 
 void _C_m4( _class_C *this,int _n ) {
    ( (void(*)(_class_C *, int)) this->vt[1])(this,3);
-   printf("%d", 4);
-   printf("%d", _n);
+   printf("%d ", 4);
+   printf("%d ", _n);
 }
 
 Func VTClass_C[] = {
