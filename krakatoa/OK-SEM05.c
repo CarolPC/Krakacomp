@@ -49,7 +49,7 @@ _class_B *new_B(void);
 
 void _B_set( _class_B *this,int _pn ) {
    printf("%d ", _pn);
-   ( (void(*)(_class_A *, int)) (_class_A *) this->vt[0])((_class_A *) this,_pn);
+   _A_set((_class_A*)this,_pn);
 }
 
 Func VTClass_B[] = {

@@ -30,14 +30,24 @@ public class MessageSendToMethod extends MessageSend {
 	@Override
 	public void genC(PW pw, boolean putParenthesis) {
 		KraClass kraClass = (KraClass) this.sender.getType();
+		if(this.sender instanceof MessageSendToSuper)
+		{
+			while(kraClass.getPublicMethodList().searchMethod(method) == null)
+				kraClass = kraClass.getSuperclass();
+			pw.print(kraClass.getCname());
+			pw.print(method.getCName()+"((");
+			pw.print(((KraClass)this.sender.getType()).getCTypeName() + "*)this");
+						
+		}
 		
-		if(this.method.getQualifier() == Symbol.PRIVATE)
+		else if(this.method.getQualifier() == Symbol.PRIVATE)
 		{
 			pw.print(kraClass.getCname()+this.method.getCName());
 			pw.print("(this");
 		}
 		else
 		{
+			
 			if (this.method.getType() instanceof KraClass)
 				pw.print("( ("+((KraClass) this.method.getType()).getCTypeName()+"*(*)("+kraClass.getCTypeName()+" *");
 			else
@@ -51,8 +61,8 @@ public class MessageSendToMethod extends MessageSend {
 			pw.print(")) ");
 			
 			this.sender.genC(pw,true);
-			if(!(this.sender instanceof MessageSendToSuper))
-				pw.print("->");
+			
+			pw.print("->");
 			
 			pw.print("vt["+kraClass.searchPublicMethodIndex(method)+"])(");
 			

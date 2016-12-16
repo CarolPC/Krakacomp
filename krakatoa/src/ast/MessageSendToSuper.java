@@ -28,10 +28,11 @@ public class MessageSendToSuper extends MessageSend {
     public void genC( PW pw, boolean callVt ) {
         //deve fazer nada
     	//se chamar o metodo ele vai pegar o tipo daqui e escrever o cast corretamente
-    	pw.print("(" + ((KraClass) type).getCTypeName() + " *) this");
+    	/*pw.print("(" + ((KraClass) type).getCTypeName() + " *) this");
     	
     	if (callVt)
     		pw.print("->");
+    		*/
     }
 
 	@Override

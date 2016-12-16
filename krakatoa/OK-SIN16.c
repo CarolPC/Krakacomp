@@ -26,7 +26,7 @@ void _Program_run( _class_Program *this ) {
    do {
    }
  while (_b);
-   int _n, _i, _j;
+   int _i, _j, _n;
    _i = (0);
    _j = (0);
    _n = (10);

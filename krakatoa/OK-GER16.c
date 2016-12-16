@@ -63,14 +63,14 @@ int _B_get_B( _class_B *this ) {
 }
 
 void _B_init( _class_B *this ) {
-   ( (void(*)(_class_A *)) (_class_A *) this->vt[3])((_class_A *) this);
+   _A_init((_class_A*)this);
    this->_B_k = (2);
 }
 
 void _B_print( _class_B *this ) {
    printf("%d ", ( (int(*)(_class_B *)) this->vt[4])(this));
    printf("%d ", ( (int(*)(_class_B *)) this->vt[0])(this));
-   ( (void(*)(_class_A *)) (_class_A *) this->vt[2])((_class_A *) this);
+   _A_print((_class_A*)this);
 }
 
 Func VTClass_B[] = {

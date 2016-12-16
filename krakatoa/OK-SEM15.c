@@ -47,7 +47,7 @@ typedef
 _class_B *new_B(void);
 
 void _B_m( _class_B *this ) {
-   ( (void(*)(_class_A *, _class_A*)) (_class_A *) this->vt[1])((_class_A *) this,this);
+   _A_accept((_class_A*)this,this);
 }
 
 Func VTClass_B[] = {

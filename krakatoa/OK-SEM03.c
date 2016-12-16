@@ -18,7 +18,7 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   char * _r, _s;
+   char * _s, _r;
    strcpy(_r,"Ola");
    strcpy(_s,"Tudo bem?");
    if ((((((((((_r == _s) && (_r != _s)) && (_r ==    NULL)) && (   NULL == _r)) && (_r == ("Ola"))) && (("Ola") == _r)) && (_r !=    NULL)) && (_r != ("Ola"))) && (("Ola") != _r)) && (("null") ==    NULL))

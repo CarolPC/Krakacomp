@@ -92,7 +92,7 @@ _class_B *new_B(void);
 
 int _B_get( _class_B *this ) {
    printf("%d ", this->_B_k);
-   return ( (int(*)(_class_A *)) (_class_A *) this->vt[1])((_class_A *) this);
+   return _A_get((_class_A*)this);
 }
 
 void _B_init( _class_B *this,int _pk ) {

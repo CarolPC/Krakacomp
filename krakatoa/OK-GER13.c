@@ -83,7 +83,7 @@ void _C_m1( _class_C *this ) {
 }
 
 void _C_teste( _class_C *this ) {
-   ( (void(*)(_class_B *)) (_class_B *) this->vt[2])((_class_B *) this);
+   _A_m1((_class_B*)this);
 }
 
 Func VTClass_C[] = {

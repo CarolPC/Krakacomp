@@ -48,7 +48,7 @@ _class_B *new_B(void);
 
 void _B_m2( _class_B *this,int _n ) {
    printf("%d ", _n);
-   ( (void(*)(_class_A *, int)) (_class_A *) this->vt[1])((_class_A *) this,_n + (1));
+   _A_m2((_class_A*)this,_n + (1));
 }
 
 Func VTClass_B[] = {
@@ -73,7 +73,7 @@ typedef
 _class_C *new_C(void);
 
 void _C_m1( _class_C *this ) {
-   ( (void(*)(_class_B *)) (_class_B *) this->vt[0])((_class_B *) this);
+   _A_m1((_class_B*)this);
    printf("%d ", 2);
 }
 
