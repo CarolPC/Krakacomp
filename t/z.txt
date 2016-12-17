@@ -1,0 +1,55 @@
+
+Ok-ger01
+The output should be :
+7 0 1 2 3 4 5 6 7
+7 0 1 2 3 4 5 6 7 
+Ok-ger02
+The output should be :
+6 1 2 3 4 5 6
+6 1 2 3 4 5 6 
+Ok-ger03
+The output should be :
+6 1 2 3 4 5 6
+6 1 2 3 4 5 6 
+Ok-ger04
+The output should be :
+6 1 2 3 4 5 6
+6 1 2 3 4 5 6 
+Ok-ger06
+The output should be :
+7 1 2 3 4 5 6 7
+7 1 2 3 4 5 6 7 
+Ok-ger07
+The output should be :
+0
+0 
+Ok-ger08
+The output should be :
+1 1 2 2 3 3
+1 1 2 2 3 3 
+Ok-ger09
+The output should be :
+1 1 2 2 3 3 4 4
+1 1 2 2 3 3 4 4 
+Ok-ger10
+The output should be :
+1 1 2 2 3 3 4 4
+1 1 1 2 3 3 4 4 
+Ok-ger12
+The output should be :
+1 2 1 2 1 2 1 2
+1 2 1 2 1 2 1 2 
+Ok-ger14
+The output should be :
+4 3 2 1
+4 4 4 4 
+Ok-ger15
+The output should be :
+1 2 1 2 3 4 3 4 5 6 5 6
+1 2 1 2 1 2 1 2 5 6 5 6 
+Ok-ger16
+The output should be: 
+2 2 0 0 2 0 0 0 0 0 0
+2 2 2 2 2 2 2 2 2 0 0 
+Ok-ger23
+Nested 'do-while' statement with two indexes

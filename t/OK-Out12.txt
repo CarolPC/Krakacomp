@@ -1,0 +1,5 @@
+
+Ok-ger12
+The output should be :
+1 2 1 2 1 2 1 2
+1 2 1 2 1 2 1 2 

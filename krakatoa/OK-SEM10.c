@@ -101,7 +101,7 @@ void _Program_run( _class_Program *this ) {
    ( (void(*)(_class_C *, int)) _c->vt[0])(_c,0);
    ( (void(*)(_class_B *)) _b->vt[1])(_b);
    ( (void(*)(_class_C *)) _c->vt[1])(_c);
-   ( (void(*)(_class_C *)) _c->vt[0])(_c);
+   ( (void(*)(_class_C *)) _c->vt[2])(_c);
    _a = (_class_A *) _b;
    _a = (_class_A *) _c;
    _b = (_class_B *) _c;

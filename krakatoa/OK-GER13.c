@@ -32,8 +32,8 @@ void _A_m1( _class_A *this ) {
 
 Func VTClass_A[] = {
    ( void (*)() ) _A_get,
-   ( void (*)() ) _A_m1,
-   ( void (*)() ) _A_set
+   ( void (*)() ) _A_set,
+   ( void (*)() ) _A_m1
 };
 
 _class_A *new_A()
@@ -57,9 +57,9 @@ void _B_m2( _class_B *this ) {
 
 Func VTClass_B[] = {
    ( void (*)() ) _A_get,
+   ( void (*)() ) _A_set,
    ( void (*)() ) _A_m1,
-   ( void (*)() ) _B_m2,
-   ( void (*)() ) _A_set
+   ( void (*)() ) _B_m2
 };
 
 _class_B *new_B()
@@ -88,9 +88,9 @@ void _C_teste( _class_C *this ) {
 
 Func VTClass_C[] = {
    ( void (*)() ) _A_get,
+   ( void (*)() ) _A_set,
    ( void (*)() ) _C_m1,
    ( void (*)() ) _B_m2,
-   ( void (*)() ) _A_set,
    ( void (*)() ) _C_teste
 };
 
@@ -116,9 +116,9 @@ void _D_m1( _class_D *this ) {
 
 Func VTClass_D[] = {
    ( void (*)() ) _A_get,
+   ( void (*)() ) _A_set,
    ( void (*)() ) _D_m1,
    ( void (*)() ) _B_m2,
-   ( void (*)() ) _A_set,
    ( void (*)() ) _C_teste
 };
 
@@ -146,7 +146,7 @@ void _Program_run( _class_Program *this ) {
    puts("0");
    _d = new_D();
    ( (void(*)(_class_D *, int)) _d->vt[1])(_d,0);
-   ( (void(*)(_class_D *)) _d->vt[2])(_d);
+   ( (void(*)(_class_D *)) _d->vt[4])(_d);
 }
 
 Func VTClass_Program[] = {

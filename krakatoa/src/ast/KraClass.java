@@ -16,7 +16,6 @@ package ast;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.SortedMap;
-import java.util.Stack;
 import java.util.TreeMap;
 
 /*
@@ -61,6 +60,8 @@ public class KraClass extends Type {
 	private KraClass superclass;
 	private InstanceVariableList instanceVariableList;
 	private MethodList publicMethodList, privateMethodList;
+	SortedMap<String, String> methodToClass;
+	SortedMap<Integer, String> indexToMethodToClass;
 	// métodos públicos get e set para obter e iniciar as variáveis acima,
 	// entre outros métodos
 
@@ -128,6 +129,7 @@ public class KraClass extends Type {
 	}
 	public int searchPublicMethodIndex(MethodDec m)
 	{
+		/*
 		int idx = -1;
 		int len = this.getInitMethodIndex();
 		
@@ -141,6 +143,12 @@ public class KraClass extends Type {
 		}
 		
 		return len + this.publicMethodList.searchMethodIndex(m);
+		*/
+		for (int i = 0; i < indexToMethodToClass.size(); i++) {
+			if (indexToMethodToClass.get(i).equals(m.getCName()))
+				return i;
+		}
+		return -1;
 	}
 	public InstanceVariableList getInstanceVariableList() {
 		return instanceVariableList;
@@ -269,6 +277,10 @@ public class KraClass extends Type {
 		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void);");
 		pw.println();
 		
+		methodToClass = new TreeMap<>();
+		indexToMethodToClass = new TreeMap<>();
+		buildMethodToClassMap(methodToClass, indexToMethodToClass);
+		
 		publicMethodList.genC(pw, getCname());
 		privateMethodList.genC(pw, getCname());
 		
@@ -302,14 +314,13 @@ public class KraClass extends Type {
 		pw.add();
 		
 		//stackAndPrintVTSuper(pw);
-		SortedMap<String, String> methodToClass = new TreeMap<>();
-		buildMethodToClassMap(methodToClass);
 		
-		Iterator<Entry<String, String>> iterator = methodToClass.entrySet().iterator();
+		Iterator<Entry<Integer, String>> iterator = indexToMethodToClass.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<String, String> entry = iterator.next();
+			Entry<Integer, String> entry = iterator.next();
+			System.out.println(entry);
 			
-			pw.printIdent("( void (*)() ) " + entry.getValue() + entry.getKey());
+			pw.printIdent("( void (*)() ) " + methodToClass.get(entry.getValue()) + entry.getValue());
 			
 			if (iterator.hasNext())
 				pw.println(",");
@@ -322,15 +333,22 @@ public class KraClass extends Type {
 		pw.println();
 	}
 	
-	private void buildMethodToClassMap(SortedMap<String, String> methodToClass) {
+	private void buildMethodToClassMap(SortedMap<String, String> methodToClass, SortedMap<Integer, String> indexToMethodToClass) {
 		if (superclass != null)
-			superclass.buildMethodToClassMap(methodToClass);
+			superclass.buildMethodToClassMap(methodToClass, indexToMethodToClass);
 		
 		Iterator<MethodDec> iteratorPublicMethods = publicMethodList.elements();
 		while (iteratorPublicMethods.hasNext()) {
 			MethodDec publicMethod = iteratorPublicMethods.next();
 			
-			methodToClass.put(publicMethod.getCName(), getCname());
+			if (methodToClass.containsKey(publicMethod.getCName())) {
+				methodToClass.replace(publicMethod.getCName(), getCname());
+				System.out.println("replace: " + getCname() + "::" + publicMethod.getCName());
+			} else {
+				methodToClass.put(publicMethod.getCName(), getCname());
+				indexToMethodToClass.put(indexToMethodToClass.size(), publicMethod.getCName());
+				System.out.println("put: " + getCname() + "::" + publicMethod.getCName());
+			}
 		}
 	}
 

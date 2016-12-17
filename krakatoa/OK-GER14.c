@@ -59,8 +59,8 @@ void _B_init( _class_B *this ) {
 
 Func VTClass_B[] = {
    ( void (*)() ) _A_get_A,
-   ( void (*)() ) _B_get_B,
-   ( void (*)() ) _B_init
+   ( void (*)() ) _B_init,
+   ( void (*)() ) _B_get_B
 };
 
 _class_B *new_B()
@@ -91,9 +91,9 @@ void _C_init( _class_C *this ) {
 
 Func VTClass_C[] = {
    ( void (*)() ) _A_get_A,
+   ( void (*)() ) _C_init,
    ( void (*)() ) _B_get_B,
-   ( void (*)() ) _C_get_C,
-   ( void (*)() ) _C_init
+   ( void (*)() ) _C_get_C
 };
 
 _class_C *new_C()
@@ -124,10 +124,10 @@ void _D_init( _class_D *this ) {
 
 Func VTClass_D[] = {
    ( void (*)() ) _A_get_A,
+   ( void (*)() ) _D_init,
    ( void (*)() ) _B_get_B,
    ( void (*)() ) _C_get_C,
-   ( void (*)() ) _D_get_D,
-   ( void (*)() ) _D_init
+   ( void (*)() ) _D_get_D
 };
 
 _class_D *new_D()
@@ -157,9 +157,9 @@ void _Program_run( _class_Program *this ) {
    puts("4 3 2 1");
    _d = new_D();
    ( (void(*)(_class_D *)) _d->vt[1])(_d);
-   printf("%d ", ( (int(*)(_class_D *)) _d->vt[1])(_d));
+   printf("%d ", ( (int(*)(_class_D *)) _d->vt[4])(_d));
    _c = (_class_C *) _d;
-   printf("%d ", ( (int(*)(_class_C *)) _c->vt[1])(_c));
+   printf("%d ", ( (int(*)(_class_C *)) _c->vt[3])(_c));
    _b = (_class_B *) _c;
    printf("%d ", ( (int(*)(_class_B *)) _b->vt[2])(_b));
    _a = (_class_A *) _b;

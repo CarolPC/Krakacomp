@@ -1,4 +1,4 @@
-for genc in krakatoa/*.c; do
+for genc in krakatoa/OK-GER*.c; do
 	echo "************************"
 	echo "*"
 	echo "* Compiling $genc"

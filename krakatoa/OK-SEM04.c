@@ -18,8 +18,8 @@ typedef
 _class_Program *new_Program(void);
 
 void _Program_run( _class_Program *this ) {
-   int _b, _a;
-   boolean _e, _f;
+   int _a, _b;
+   boolean _f, _e;
    _a = (1);
    _b = (1);
    _e = true;

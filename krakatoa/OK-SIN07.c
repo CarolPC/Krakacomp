@@ -167,8 +167,8 @@ void _Program_run( _class_Program *this ) {
    _class_B *_b;
    _b = new_B();
    ( (void(*)(_class_B *, int)) _b->vt[0])(_b,10);
+   ( (void(*)(_class_B *)) _b->vt[3])(_b);
    ( (void(*)(_class_B *)) _b->vt[4])(_b);
-   ( (void(*)(_class_B *)) _b->vt[5])(_b);
 }
 
 Func VTClass_Program[] = {

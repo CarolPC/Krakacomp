@@ -20,7 +20,7 @@ _class_Program *new_Program(void);
 void _Program_run( _class_Program *this ) {
    puts("");
    puts("Ok-ger23");
-   int _n, _i, _j;
+   int _j, _i, _n;
    _i = (0);
    _j = (0);
    _n = (10);
@@ -48,7 +48,6 @@ void _Program_run( _class_Program *this ) {
    if ( !( _sum == (100) ) ) {
       puts("Nested 'do-while' statement with two indexes");
    }
-   ;
 }
 
 Func VTClass_Program[] = {

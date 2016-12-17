@@ -29,8 +29,8 @@ int _A_getK( _class_A *this ) {
 }
 
 Func VTClass_A[] = {
-   ( void (*)() ) _A_getK,
-   ( void (*)() ) _A_m1
+   ( void (*)() ) _A_m1,
+   ( void (*)() ) _A_getK
 };
 
 _class_A *new_A()
@@ -62,8 +62,8 @@ int _B_getK( _class_B *this ) {
 }
 
 Func VTClass_B[] = {
-   ( void (*)() ) _B_getK,
    ( void (*)() ) _A_m1,
+   ( void (*)() ) _B_getK,
    ( void (*)() ) _B_m2
 };
 
@@ -90,14 +90,14 @@ void _C_m3( _class_C *this,int _n ) {
 }
 
 void _C_m4( _class_C *this,int _n ) {
-   ( (void(*)(_class_C *, int)) this->vt[1])(this,3);
+   ( (void(*)(_class_C *, int)) this->vt[3])(this,3);
    printf("%d ", 4);
    printf("%d ", _n);
 }
 
 Func VTClass_C[] = {
-   ( void (*)() ) _B_getK,
    ( void (*)() ) _A_m1,
+   ( void (*)() ) _B_getK,
    ( void (*)() ) _B_m2,
    ( void (*)() ) _C_m3,
    ( void (*)() ) _C_m4
@@ -126,7 +126,7 @@ void _Program_run( _class_Program *this ) {
    puts("The output should be :");
    puts("1 1 2 2 3 3 4 4");
    _c = new_C();
-   ( (void(*)(_class_C *, int)) _c->vt[1])(_c,4);
+   ( (void(*)(_class_C *, int)) _c->vt[4])(_c,4);
 }
 
 Func VTClass_Program[] = {

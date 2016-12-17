@@ -1,0 +1,3 @@
+
+Ok-ger23
+Nested 'do-while' statement with two indexes

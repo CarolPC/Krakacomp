@@ -76,7 +76,7 @@ void _C_m3( _class_C *this,int _n ) {
 }
 
 void _C_m4( _class_C *this,int _n ) {
-   ( (void(*)(_class_C *, int)) this->vt[0])(this,3);
+   ( (void(*)(_class_C *, int)) this->vt[2])(this,3);
    printf("%d ", 4);
    printf("%d ", _n);
 }
@@ -111,7 +111,7 @@ void _Program_run( _class_Program *this ) {
    puts("The output should be :");
    puts("1 1 2 2 3 3 4 4");
    _c = new_C();
-   ( (void(*)(_class_C *, int)) _c->vt[0])(_c,4);
+   ( (void(*)(_class_C *, int)) _c->vt[3])(_c,4);
 }
 
 Func VTClass_Program[] = {
