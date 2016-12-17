@@ -27,8 +27,8 @@ void _A_m( _class_A *this ) {
 }
 
 Func VTClass_A[] = {
-   ( void (*)() ) _A_m,
-   ( void (*)() ) _A_run
+   ( void (*)() ) _A_run,
+   ( void (*)() ) _A_m
 };
 
 _class_A *new_A()
@@ -55,8 +55,8 @@ void _B_m( _class_B *this ) {
 }
 
 Func VTClass_B[] = {
-   ( void (*)() ) _B_m,
-   ( void (*)() ) _B_run
+   ( void (*)() ) _B_run,
+   ( void (*)() ) _B_m
 };
 
 _class_B *new_B()
@@ -85,8 +85,8 @@ _class_B* _C_get( _class_C *this ) {
 }
 
 Func VTClass_C[] = {
-   ( void (*)() ) _C_get,
-   ( void (*)() ) _C_m
+   ( void (*)() ) _C_m,
+   ( void (*)() ) _C_get
 };
 
 _class_C *new_C()

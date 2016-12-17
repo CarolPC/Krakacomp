@@ -48,6 +48,7 @@ void _Program_run( _class_Program *this ) {
    if ( !( _sum == (100) ) ) {
       puts("Nested 'do-while' statement with two indexes");
    }
+   ;
 }
 
 Func VTClass_Program[] = {

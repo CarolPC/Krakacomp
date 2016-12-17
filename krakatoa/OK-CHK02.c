@@ -64,11 +64,11 @@ boolean _A_m_integer_boolean_String_return( _class_A *this,int _n, boolean _b, c
 
 Func VTClass_A[] = {
    ( void (*)() ) _A_m,
+   ( void (*)() ) _A_m_returns_boolean,
    ( void (*)() ) _A_m_integer,
    ( void (*)() ) _A_m_integer_boolean_String,
-   ( void (*)() ) _A_m_integer_boolean_String_return,
    ( void (*)() ) _A_m_integer_returns_boolean,
-   ( void (*)() ) _A_m_returns_boolean
+   ( void (*)() ) _A_m_integer_boolean_String_return
 };
 
 _class_A *new_A()
@@ -83,17 +83,20 @@ _class_A *new_A()
 typedef
    struct _St_B {
       Func *vt;
+      int _A_n;
+      boolean _A_b;
+      char * _A_s;
       } _class_B;
 
 _class_B *new_B(void);
 
 Func VTClass_B[] = {
    ( void (*)() ) _A_m,
+   ( void (*)() ) _A_m_returns_boolean,
    ( void (*)() ) _A_m_integer,
    ( void (*)() ) _A_m_integer_boolean_String,
-   ( void (*)() ) _A_m_integer_boolean_String_return,
    ( void (*)() ) _A_m_integer_returns_boolean,
-   ( void (*)() ) _A_m_returns_boolean
+   ( void (*)() ) _A_m_integer_boolean_String_return
 };
 
 _class_B *new_B()
@@ -164,11 +167,11 @@ boolean _C_method_integer_boolean_String_r( _class_C *this,int _n, boolean _b, c
 
 Func VTClass_C[] = {
    ( void (*)() ) _C_method,
+   ( void (*)() ) _C_method_returns_boolean,
    ( void (*)() ) _C_method_integer,
    ( void (*)() ) _C_method_integer_boolean_String,
-   ( void (*)() ) _C_method_integer_boolean_String_r,
    ( void (*)() ) _C_method_integer_returns_boolean,
-   ( void (*)() ) _C_method_returns_boolean
+   ( void (*)() ) _C_method_integer_boolean_String_r
 };
 
 _class_C *new_C()

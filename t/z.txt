@@ -34,7 +34,7 @@ The output should be :
 Ok-ger10
 The output should be :
 1 1 2 2 3 3 4 4
-1 1 1 2 3 3 4 4 
+1 1 2 2 3 3 4 4 
 Ok-ger12
 The output should be :
 1 2 1 2 1 2 1 2
@@ -42,14 +42,14 @@ The output should be :
 Ok-ger14
 The output should be :
 4 3 2 1
-4 4 4 4 
+4 3 2 1 
 Ok-ger15
 The output should be :
 1 2 1 2 3 4 3 4 5 6 5 6
-1 2 1 2 1 2 1 2 5 6 5 6 
+1 2 1 2 3 4 3 4 5 6 5 6 
 Ok-ger16
 The output should be: 
 2 2 0 0 2 0 0 0 0 0 0
-2 2 2 2 2 2 2 2 2 0 0 
+2 2 0 0 2 0 0 0 0 0 0 
 Ok-ger23
 Nested 'do-while' statement with two indexes

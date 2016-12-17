@@ -48,4 +48,5 @@ public class Variable {
 	     
 	     return v.getName().equals(this.getName());
 	 }
+	 
 }

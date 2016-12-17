@@ -27,8 +27,8 @@ int _A_get( _class_A *this ) {
 }
 
 Func VTClass_A[] = {
-   ( void (*)() ) _A_get,
-   ( void (*)() ) _A_put
+   ( void (*)() ) _A_put,
+   ( void (*)() ) _A_get
 };
 
 _class_A *new_A()
@@ -66,10 +66,10 @@ _class_A* _No_get( _class_No *this ) {
 }
 
 Func VTClass_No[] = {
-   ( void (*)() ) _No_get,
+   ( void (*)() ) _No_setNext,
    ( void (*)() ) _No_getNext,
    ( void (*)() ) _No_set,
-   ( void (*)() ) _No_setNext
+   ( void (*)() ) _No_get
 };
 
 _class_No *new_No()
@@ -84,6 +84,7 @@ _class_No *new_No()
 typedef
    struct _St_B {
       Func *vt;
+      int _A_n;
       int _B_k;
       _class_No* _B_first;
       } _class_B;
@@ -140,11 +141,11 @@ void _B_list( _class_B *this ) {
 }
 
 Func VTClass_B[] = {
-   ( void (*)() ) _B_buildList,
+   ( void (*)() ) _A_put,
    ( void (*)() ) _B_get,
    ( void (*)() ) _B_init,
-   ( void (*)() ) _B_list,
-   ( void (*)() ) _A_put
+   ( void (*)() ) _B_buildList,
+   ( void (*)() ) _B_list
 };
 
 _class_B *new_B()

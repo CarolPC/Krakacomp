@@ -36,8 +36,8 @@ public class MessageSendToVariable extends MessageSend {
     		this.sender.genC(pw,false);
     		pw.print("->");
     	}
-    	if(this.v instanceof InstanceVariable)
-    		pw.print(((InstanceVariable)this.v).getClassPrefix() + this.v.getCName());
+    	if(this.sender.getType() instanceof KraClass)
+    		pw.print(((KraClass)this.sender.getType()).getCname() + this.v.getCName());
     	else
     		pw.print(this.v.getCName());   
     }

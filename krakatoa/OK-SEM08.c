@@ -34,8 +34,8 @@ void _A_set( _class_A *this,int _i ) {
 }
 
 Func VTClass_A[] = {
-   ( void (*)() ) _A_get,
    ( void (*)() ) _A_put,
+   ( void (*)() ) _A_get,
    ( void (*)() ) _A_set
 };
 
@@ -51,6 +51,7 @@ _class_A *new_A()
 typedef
    struct _St_B {
       Func *vt;
+      int _A_i;
       } _class_B;
 
 _class_B *new_B(void);
@@ -63,8 +64,8 @@ void _B_put( _class_B *this,int _a, int _b, boolean _c ) {
 }
 
 Func VTClass_B[] = {
-   ( void (*)() ) _A_get,
    ( void (*)() ) _B_put,
+   ( void (*)() ) _A_get,
    ( void (*)() ) _A_set
 };
 

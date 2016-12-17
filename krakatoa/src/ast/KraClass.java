@@ -14,6 +14,7 @@ Nome: Henrique Manoel de Lima Sebastião
 package ast;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -60,8 +61,9 @@ public class KraClass extends Type {
 	private KraClass superclass;
 	private InstanceVariableList instanceVariableList;
 	private MethodList publicMethodList, privateMethodList;
-	SortedMap<String, String> methodToClass;
-	SortedMap<Integer, String> indexToMethodToClass;
+	LinkedHashMap<String, String> methodToClass;
+	LinkedHashMap<InstanceVariable, String> variableToClass;
+	LinkedHashMap<Integer, String> indexToMethodToClass;
 	// métodos públicos get e set para obter e iniciar as variáveis acima,
 	// entre outros métodos
 
@@ -112,38 +114,9 @@ public class KraClass extends Type {
 
 		return this.searchPrivateMethod(m);
 	}
-	private int getInitMethodIndex()
-	{
-		int len = 0;
-		
-		KraClass c = this.superclass;
-		
-		while(c != null)
-		{
-			len += c.getPublicMethodList().getSize();
-			c = c.getSuperclass();
-		}
-		
-		return len;
-		
-	}
+	
 	public int searchPublicMethodIndex(MethodDec m)
 	{
-		/*
-		int idx = -1;
-		int len = this.getInitMethodIndex();
-		
-		if(this.superclass != null)
-		{
-			
-			idx = this.superclass.searchPublicMethodIndex(m);
-			
-			if(idx != -1)
-				return idx;
-		}
-		
-		return len + this.publicMethodList.searchMethodIndex(m);
-		*/
 		for (int i = 0; i < indexToMethodToClass.size(); i++) {
 			if (indexToMethodToClass.get(i).equals(m.getCName()))
 				return i;
@@ -272,15 +245,18 @@ public class KraClass extends Type {
 	}
 
 	public void genC(PW pw) {		
+		variableToClass = new LinkedHashMap<>();
+		buildVariableToClassMap(variableToClass);
+		
 		genCClassDefinition(pw);
 		
 		pw.printlnIdent(getCTypeName() + " *" + getCNew() + "(void);");
 		pw.println();
 		
-		methodToClass = new TreeMap<>();
-		indexToMethodToClass = new TreeMap<>();
+		methodToClass = new LinkedHashMap<>();
+		indexToMethodToClass = new LinkedHashMap<>();
 		buildMethodToClassMap(methodToClass, indexToMethodToClass);
-		
+				
 		publicMethodList.genC(pw, getCname());
 		privateMethodList.genC(pw, getCname());
 		
@@ -298,9 +274,12 @@ public class KraClass extends Type {
 		pw.add();
 		pw.printlnIdent("Func *vt;");
 		
-		Iterator<InstanceVariable> iteratorVarList = instanceVariableList.elements();
+		Iterator<Entry<InstanceVariable,String>> iteratorVarList = variableToClass.entrySet().iterator();
 		while (iteratorVarList.hasNext())
-			((InstanceVariable) iteratorVarList.next()).genC(pw, getCname());
+		{
+			Entry<InstanceVariable, String> entry = iteratorVarList.next();
+			entry.getKey().genC(pw,entry.getValue());
+		}
 			
 		pw.printlnIdent("} " + getCTypeName()+";");
 		pw.set(0);
@@ -333,7 +312,7 @@ public class KraClass extends Type {
 		pw.println();
 	}
 	
-	private void buildMethodToClassMap(SortedMap<String, String> methodToClass, SortedMap<Integer, String> indexToMethodToClass) {
+	private void buildMethodToClassMap(LinkedHashMap<String, String> methodToClass, LinkedHashMap<Integer, String> indexToMethodToClass) {
 		if (superclass != null)
 			superclass.buildMethodToClassMap(methodToClass, indexToMethodToClass);
 		
@@ -348,6 +327,22 @@ public class KraClass extends Type {
 				methodToClass.put(publicMethod.getCName(), getCname());
 				indexToMethodToClass.put(indexToMethodToClass.size(), publicMethod.getCName());
 				System.out.println("put: " + getCname() + "::" + publicMethod.getCName());
+			}
+		}
+	}
+	
+	private void buildVariableToClassMap(LinkedHashMap<InstanceVariable,String> variableToClass){
+		if(superclass != null)
+			superclass.buildVariableToClassMap(variableToClass);
+		
+		Iterator<InstanceVariable> iteratorVariable = instanceVariableList.elements();
+		while (iteratorVariable.hasNext()) {
+			InstanceVariable variable = iteratorVariable.next();
+			
+			if (variableToClass.containsKey(variable)) {
+				variableToClass.replace(variable, getCname());
+			} else {
+				variableToClass.put(variable, getCname());
 			}
 		}
 	}

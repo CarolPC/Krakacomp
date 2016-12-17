@@ -43,6 +43,7 @@ _class_A *new_A()
 typedef
    struct _St_B {
       Func *vt;
+      int _A_k;
       int _B_k;
       } _class_B;
 
@@ -75,6 +76,8 @@ _class_B *new_B()
 typedef
    struct _St_C {
       Func *vt;
+      int _A_k;
+      int _B_k;
       int _C_k;
       } _class_C;
 
@@ -108,6 +111,9 @@ _class_C *new_C()
 typedef
    struct _St_D {
       Func *vt;
+      int _A_k;
+      int _B_k;
+      int _C_k;
       int _D_k;
       } _class_D;
 

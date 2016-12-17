@@ -14,13 +14,12 @@ Nome: Henrique Manoel de Lima Sebastião
 package ast;
 
 public class InstanceVariable extends Variable {
-
-	private String classPrefix;
 	
     public InstanceVariable( String name, Type type ) {
         super(name, type);
     }
     
+        
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -35,11 +34,7 @@ public class InstanceVariable extends Variable {
         return v.getName().equals(this.getName());
     }
     
-    public String getClassPrefix()
-    {
-    	return this.classPrefix;
-    }
-
+ 
 	public void genKra(PW pw) {
 		pw.printlnIdent("private " + getType().getName() + " " + getName() + ";");
 	}
@@ -54,7 +49,6 @@ public class InstanceVariable extends Variable {
 				pw.printlnIdent(kraClass.getCTypeName() + "* " + classPrefix + getCName() + ";");
 		} else
 			pw.printlnIdent(getType().getCname() + " " + classPrefix + getCName() + ";");
-		this.classPrefix = classPrefix;
 	}
 
 	public String getCName() {

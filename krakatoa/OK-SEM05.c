@@ -27,8 +27,8 @@ int _A_get( _class_A *this ) {
 }
 
 Func VTClass_A[] = {
-   ( void (*)() ) _A_get,
-   ( void (*)() ) _A_set
+   ( void (*)() ) _A_set,
+   ( void (*)() ) _A_get
 };
 
 _class_A *new_A()
@@ -43,6 +43,7 @@ _class_A *new_A()
 typedef
    struct _St_B {
       Func *vt;
+      int _A_n;
       } _class_B;
 
 _class_B *new_B(void);
@@ -53,8 +54,8 @@ void _B_set( _class_B *this,int _pn ) {
 }
 
 Func VTClass_B[] = {
-   ( void (*)() ) _A_get,
-   ( void (*)() ) _B_set
+   ( void (*)() ) _B_set,
+   ( void (*)() ) _A_get
 };
 
 _class_B *new_B()

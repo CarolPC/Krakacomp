@@ -58,14 +58,14 @@ void _Person_print( _class_Person *this ) {
 }
 
 Func VTClass_Person[] = {
-   ( void (*)() ) _Person_getAge,
    ( void (*)() ) _Person_getCourse,
-   ( void (*)() ) _Person_getName,
-   ( void (*)() ) _Person_getNumber,
-   ( void (*)() ) _Person_init,
-   ( void (*)() ) _Person_print,
    ( void (*)() ) _Person_setCourse,
-   ( void (*)() ) _Person_setNumber
+   ( void (*)() ) _Person_getNumber,
+   ( void (*)() ) _Person_setNumber,
+   ( void (*)() ) _Person_init,
+   ( void (*)() ) _Person_getName,
+   ( void (*)() ) _Person_getAge,
+   ( void (*)() ) _Person_print
 };
 
 _class_Person *new_Person()
@@ -107,10 +107,10 @@ void _Group_print( _class_Group *this ) {
 }
 
 Func VTClass_Group[] = {
+   ( void (*)() ) _Group_set,
    ( void (*)() ) _Group_getFirst,
    ( void (*)() ) _Group_getSecond,
-   ( void (*)() ) _Group_print,
-   ( void (*)() ) _Group_set
+   ( void (*)() ) _Group_print
 };
 
 _class_Group *new_Group()
