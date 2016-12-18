@@ -44,16 +44,19 @@ public class Program {
 		pw.println("typedef\n  void (*Func)();");
 		pw.println();
 		
-		for (KraClass kraClass : classList)
+		KraClass kraClassWithRun = null;
+		MethodDec runMethod = null;
+		for (KraClass kraClass : classList) {
 			kraClass.genC(pw);
 			
-		
+			if ((runMethod = kraClass.getMethodByName("run")) != null)
+				kraClassWithRun = kraClass;
+		}
 		
 		pw.println("int main() {");
 		pw.printlnIdent("_class_Program *program;");
 		pw.printlnIdent("program = new_Program();");
-		//tava no pdf que nem sempre a run vai ser indice 0
-		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[0] )(program);");
+		pw.printlnIdent("( ( void (*)(_class_Program *) ) program->vt[" + kraClassWithRun.searchPublicMethodIndex(runMethod) + "] )(program);");
 		pw.printlnIdent("return 0;");
 		pw.println("}");
 	}

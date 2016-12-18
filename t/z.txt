@@ -51,5 +51,10 @@ Ok-ger16
 The output should be: 
 2 2 0 0 2 0 0 0 0 0 0
 2 2 0 0 2 0 0 0 0 0 0 
+Ok-ger21
+The output should be :
+0
+0
+
 Ok-ger23
 Nested 'do-while' statement with two indexes
